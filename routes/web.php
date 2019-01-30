@@ -44,7 +44,7 @@ Route::get('imgs/{filename}', function($filename) {
 
 // Guest Route
 
-Route::get('/stampspv', [
+Route::get('/crud', [
     'as' => 'guest.stampspv',
     'uses' => 'Controller@stampspv']);
 
@@ -53,4 +53,13 @@ Route::get('/stampspv', [
 Route::get('/admin', [
     'as' => 'admin.index',
     'uses' => 'AdminController@index']);
+
+
+// Map
+Route::get('/map', [
+    'as' => 'admin.map',
+    'uses' => function(){
+        return view('admin.mappage');
+    }]);
+
 

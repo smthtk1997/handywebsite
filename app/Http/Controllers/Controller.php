@@ -17,7 +17,7 @@ class Controller extends BaseController
     }
 
 
-    public function stampspv()
+    public function stampspv() // crud
     {
         return view('layouts.stampspv');
     }
