@@ -55,6 +55,12 @@ Route::get('/admin', [
     'uses' => 'AdminController@index']);
 
 
+// api
+Route::get('/api/{lat}/{lng}', [
+    'as' => 'api',
+    'uses' => 'PlaceAPIController@getPlaceAPI']);
+
+
 // Map
 Route::get('/map', [
     'as' => 'admin.map',
