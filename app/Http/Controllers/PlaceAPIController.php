@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-// by stampspv5810450440
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Stream;
 use Illuminate\Http\Request;
@@ -38,20 +37,21 @@ class PlaceAPIController extends Controller
         $outputs = json_decode($outputs,true);
 
         // FOR LOOP
-        foreach ($outputs['results'] as $each){
-            echo $each['id'];
-            echo "<br>";
-            echo $each['formatted_address'];
-            echo "<br>";
-            echo $each['name'];
-            echo "<br>";
-            echo $each['geometry']['location']['lat'];
-            echo "<br>";
-            echo $each['geometry']['location']['lng'];
-            echo "<br>";
-            echo "<hr>";
-//            dd($each);
-        }
+//        foreach ($outputs['results'] as $each){
+//            echo $each['id'];
+//            echo "<br>";
+//            echo $each['formatted_address'];
+//            echo "<br>";
+//            echo $each['name'];
+//            echo "<br>";
+//            echo $each['geometry']['location']['lat'];
+//            echo "<br>";
+//            echo $each['geometry']['location']['lng'];
+//            echo "<br>";
+//            echo "<hr>";
+//        }
+
+        return view('Home.showData',['data'=>$outputs['results']]);
 
     }
 }

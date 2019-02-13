@@ -13,9 +13,9 @@
 
 Auth::routes();
 
-Route::get('/', [
-    'as' => 'home',
-    'uses' => 'Controller@index']);
+//Route::get('/handy', [
+//    'as' => 'home',
+//    'uses' => 'Controller@index']);
 
 Route::get('/home', [
     'as' => 'redirect',
@@ -68,4 +68,8 @@ Route::get('/map', [
         return view('admin.mappage');
     }]);
 
+//GoHandyHome
+Route::get('/', [
+    'as' => 'home',
+    'uses' => 'HomeController@Handy']);
 

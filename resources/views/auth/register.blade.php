@@ -15,16 +15,6 @@
                             @csrf
                             <div class="form-group row ">
                                 <div class="col-12 ">
-                                    <input id="username" type="text" class="form-control form-control-lg{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus placeholder="Username">
-                                    @if ($errors->has('username'))
-                                        <span class="invalid-feedback text-center mt-3" role="alert">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-group row ">
-                                <div class="col-12 ">
                                     <input id="name" type="text" class="form-control form-control-lg{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus placeholder="Name">
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback text-center mt-3" role="alert">
