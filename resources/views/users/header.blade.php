@@ -24,8 +24,7 @@
 
 </head>
 <body>
-<div id="main-wrapper">
-
+<div id="main-wrapper" data-header-position="fixed" data-sidebar-position="fixed">
     <header class="topbar">
         <nav class="navbar top-navbar navbar-expand-md navbar-dark">
             <div class="navbar-header">
@@ -35,10 +34,12 @@
                 <div class="navbar-brand">
                     <a href="{{route('home')}}" class="logo">
                         <b class="logo-icon">
-                            <img src="{{url('imgs/logo-light-icon.png')}}" alt="homepage" class="light-logo" />
+                            {{--<img src="{{url('imgs/logo-light-icon.png')}}" alt="homepage" class="light-logo" />--}}
+                            <img src="{{asset('images/Logofilepng/Logo_H_White.png')}}" width="35px" height="35px" class="light-logo" alt="homepage" />
                         </b>
                         <span class="logo-text">
-                            <img src="{{url('imgs/logo-light-text.png')}}" class="light-logo" alt="homepage" />
+                            <img src="{{asset('images/Logofilepng/word.png')}}" style="width: 90px; height: 20px" class="light-logo" alt="homepage" />
+                            {{--<span style="color: white;font-weight: bold">Handy</span>--}}
                         </span>
                     </a>
 

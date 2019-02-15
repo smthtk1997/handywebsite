@@ -24,17 +24,17 @@
 
         <div>
             @foreach($data as $row)
-            {{$row['id']}}
-            <br>"
-            {{$row['formatted_address']}}
-            <br>
-            {{$row['name']}}
-            <br>
-            {{$row['geometry']['location']['lat']}}
-            <br>
-            {{$row['geometry']['location']['lng']}}
-            <br>
-            <hr>
+                {{$row['formatted_address']}}
+                <br>
+                <span>Id: </span>{{$row['id']}}
+                <br>"
+                {{$row['name']}}
+                <br>
+                {{$row['geometry']['location']['lat']}}
+                <br>
+                {{$row['geometry']['location']['lng']}}
+                <br>
+                <hr>
             @endforeach
         </div>
     </div>

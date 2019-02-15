@@ -1,3 +1,32 @@
 .i-am-centered {
     margin: auto; max-width: 450px;
 }
+
+.cardStyleMargin{
+    margin-top: 30px;
+    margin-bottom: 200px;
+}
+
+.intable{
+    padding: 40px 30px;
+}
+
+.cardColor{
+    transition: 0.5s;
+    border-color: #ecebe8;
+}
+
+.cardColor:hover{
+    transition: 0.5s;
+    border-color: #c8c7c4;
+}
+.cardColor{
+    transition: 0.5s;
+    border-color: #ecebe8;
+    margin-bottom: 20px;
+}
+
+.inputField{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
