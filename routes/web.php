@@ -73,3 +73,19 @@ Route::get('/', [
     'as' => 'home',
     'uses' => 'HomeController@Handy']);
 
+// Testดึงข้อมูล Type
+Route::get('/test', [
+    'as' => 'test',
+    'uses' => 'Controller@test']);
+
+// Test Google เก็บ store
+Route::get('/google/map/place', [
+    'as' => 'google.place',
+    'uses' => 'PlaceAPIController@MarkerPin']);
+
+Route::get('/google/map/place/update', [
+    'as' => 'google.place.update',
+    'uses' => function(){
+        return view('Home.updateMap');
+    }]);
+

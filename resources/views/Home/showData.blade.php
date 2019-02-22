@@ -27,7 +27,7 @@
                 {{$row['formatted_address']}}
                 <br>
                 <span>Id: </span>{{$row['id']}}
-                <br>"
+                <br>
                 {{$row['name']}}
                 <br>
                 {{$row['geometry']['location']['lat']}}
