@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopType extends Model
 {
+
     public function shop()
     {
         return $this->belongsTo('App\Shop');
@@ -15,4 +16,6 @@ class ShopType extends Model
     {
         return $this->belongsTo('App\Type','type_id');
     }
+
+
 }

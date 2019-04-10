@@ -21,6 +21,7 @@ class PlaceAPIController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('admin');
     }
 
@@ -45,7 +46,7 @@ class PlaceAPIController extends Controller
 
 
         $outputs = json_decode($outputs,true);
-//        dd($outputs);
+        //dd($outputs);
 
 //         FOR LOOP
         foreach ($outputs['results'] as $each){
@@ -64,8 +65,6 @@ class PlaceAPIController extends Controller
             }else{
                 $shop = $check;
             }
-
-
             foreach ($each['types'] as $type){
                 $checktype = Type::where('name',$type)->first();
                 if (!$checktype){
@@ -86,6 +85,24 @@ class PlaceAPIController extends Controller
             }
 
 
+//                $checktype = Type::where('name','car_accessory')->first(); //เอาไว้เวลาจะเพิ่มแบบ manual
+//                if (!$checktype){
+//                    $checktype = new Type();
+//                    $checktype->name = 'car_accessory';
+//                    $checktype->token = str_random(16);
+//                    $checktype->save();
+//                }
+//
+//                $checkShoptype = ShopType::where('shop_id',$shop->id)->where('type_id',$checktype->id)->first();
+//                if (!$checkShoptype){
+//                    $shoptype = new ShopType();
+//                    $shoptype->shop_id = $shop->id;
+//                    $shoptype->type_id = $checktype->id;
+//                    $shoptype->token = str_random(16);
+//                    $shoptype->save();
+//                }
+
+
 
 //            echo $each['id'];
 //            echo "<br>";
@@ -99,7 +116,7 @@ class PlaceAPIController extends Controller
 //            echo "<br>";
 //            echo "<hr>";
         }
-        Alert::success('Update Map Successfully!');
+        Alert::success('Update Map Successfully!')->autoclose(2000);
         return redirect(url('/google/map/place/update'));
 
         //return 'pass';

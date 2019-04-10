@@ -1,78 +1,91 @@
-@extends('users.header')
+@extends('layouts.header')
 @section('title','Handy Driver Assist')
 @section('content')
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-bottom: 300px">
         <div class="shadow bg-white rounded">
-            <div class="card intable cardColor cardStyleMargin">
-                <p id="demo"></p>
-
-                <h1>See you location in map!</h1>
-
-                <div id="mapholder"></div>
-
-                <br>
-                {{--<p id="lat"></p>--}}
-
-                {{--<p id="lon"></p>--}}
-                <div id="load" class="i-am-centered">
-                    <img src="{{asset('images/Magnify.svg')}}" alt="loadingSVG">
+            <div class="card intable cardColor cardStyleMargin" style="padding-bottom: 100px">
+                <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
+{{--                        <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>--}}
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active">
+                            <img class="img-fluid" src="{{asset('images/slide/slide_img.jpg')}}" alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="img-fluid" src="{{asset('images/slide/slide_img2.jpg')}}" alt="Second slide">
+                        </div>
+{{--                        <div class="carousel-item">--}}
+{{--                            <img class="img-fluid" src="../../assets/images/big/img5.jpg" alt="Third slide">--}}
+{{--                        </div>--}}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">ก่อนหน้า</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">ถัดไป</span>
+                    </a>
                 </div>
-                <div>
-                    <button onclick="onShow()" class="btn waves-effect waves-light btn-rounded btn-success" id="answerbtn" style="display: none">Add Place</button>
-                    <a href="{{route('google.place')}}" class="btn waves-effect waves-light btn-rounded btn-primary" id="mapPlace" style="display: none" target="_blank">Show Place</a>
-                </div>
-                <br>
-                <label><h3>ค้นหาอู่ซ่อมรถยนต์</h3></label>
-                <form>
+                <span class="mt-4 mb-2"><h2>ค้นหาอู่ซ่อมรถยนต์ <small style="font-size: 18px">Search Garages in Handy</small></h2></span>
+                <form action="{{route('shop.search')}}" method="post">
+                    @csrf
                     <div class="form-row">
-                        <div class="col-md-5 col-sm-12 inputField">
-                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Search Garages">
+                        <div class="col-md-5 col-12 inputField">
+                            <input type="text" class="form-control" id="inputName" name="inputName" placeholder="ค้นหาอู่">
                         </div>
-                        <div class="col-md-2 col-sm-12 inputField">
-                            <select id="inputState" class="form-control">
-                                <option selected disabled>ประเภท</option>
-                                <option>...</option>
+                        <div class="col-md-2 col-12 inputField">
+                            <select id="inputType" class="form-control" name="inputType">
+                                <option value="" selected disabled>ประเภท</option>
+                                <option value="6">อู่ซ่อมรถยนต์</option>
+                                <option value="1">ศูนย์รถยนต์</option>
+                                <option value="8">ล้างรถ-เคลือบสี</option>
+                                <option value="5">ปั้มน้ำมัน</option>
+                                <option value="15">ยาง และ ล้อแม็ก</option>
+                                <option value="16">เครื่องเสียง</option>
+                                <option value="17">ประดับยนต์</option>
+                                <option value="9">บริการเช่ารถ</option>
                             </select>
                         </div>
                         <div class="col-md-2 col-sm-12 inputField">
-                            <select id="inputState" class="form-control">
-                                <option selected disabled>ทุกจังหวัด</option>
-                                <option>...</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2 col-sm-12 inputField">
-                            <select id="inputState" class="form-control">
-                                <option selected disabled>อำเภอ/เขต</option>
-                                <option>...</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2 col-sm-12 inputField">
-                            <select id="inputState" class="form-control">
+                            <select id="inputInsurance" class="form-control" name="inputInsurance">
                                 <option selected disabled>ประกันภัย</option>
                                 <option>...</option>
                             </select>
                         </div>
-                        <div class="col-md-2 col-sm-12 inputField">
-                            <select id="inputState" class="form-control">
-                                <option value="50" selected>5 kms</option>
-                                <option value="30">10 kms</option>
-                                <option value="20">15 kms</option>
-                                <option value="10">20 kms</option>
+                        <div class="col-md-2 col-12 inputField">
+                            <select id="inputRange" class="form-control" name="inputRange">
+                                <option value="0" selected>ไม่จำกัด</option>
+                                <option value="3000">3 กิโลเมตร</option>
+                                <option value="5000">5 กิโลเมตร</option>
+                                <option value="10000">10 กิโลเมตร</option>
+                                <option value="15000">15 กิโลเมตร</option>
+                                <option value="20000">20 กิโลเมตร</option>
                             </select>
                         </div>
-                        <div class="col-md-1 col-sm-12 inputField">
-                            <button type="submit" class="btn waves-effect waves-light btn-rounded btn-info" value="Submit" id="btnSubmit">Submit</button>
-                            {{--<input type="submit" class="btn waves-effect waves-light btn-rounded btn-info" value="Submit" id="btnSubmit">--}}
+                        <div class="col-md-1 col-12 inputField text-right">
+                            <input type="hidden" id="inputLat" name="inputLat" value="">
+                            <input type="hidden" id="inputLng" name="inputLng" value="">
+                            <button type="submit" class="btn waves-effect waves-light btn-danger btn-block" value="Submit" id="btnSubmit" disabled>รอสักครู่...</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-
-
     </div>
 
+
+
+{{--    Get Geolocation--}}
+
+
+@stop
+
+@section('script')
     <script src="https://maps.google.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk&libraries=places"></script>
     <script>
@@ -81,9 +94,6 @@
             getLocation()
         });
 
-
-        var latitude;
-        var longtitude;
         var x = document.getElementById("demo");
 
         function getLocation() {
@@ -95,29 +105,15 @@
         }
 
         function showPosition(position) {
-            $('#load').fadeOut('slow');
-            $('#answerbtn').slideDown('slow');
-            $('#mapPlace').slideDown('slow');
             var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
-            latitude = position.coords.latitude;
-            longtitude = position.coords.longitude;
-            //document.getElementById("lat").innerHTML = 'Latitude : =' + latitude;
-            //document.getElementById("lon").innerHTML = 'Longitude : =' + longtitude;
-            var latlon = new google.maps.LatLng(latitude, longtitude);
-            var mapholder = document.getElementById('mapholder');
-            mapholder.style.height = '500px';
-            mapholder.style.width = 'auto';
-
-            var myOptions = {
-                center:latlon,zoom:14,
-                mapTypeId:google.maps.MapTypeId.ROADMAP,
-                mapTypeControl:false,
-                navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
-            };
-
-            var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
-            var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+            var lng = position.coords.longitude;
+            console.log(lat);
+            console.log(lng);
+            $('#inputLat').val(lat);
+            $('#inputLng').val(lng);
+            $('#btnSubmit').empty();
+            $('#btnSubmit').append("<i class=\"fas fa-search\"></i>");
+            $('#btnSubmit').prop('disabled',false);
         }
 
 
@@ -138,13 +134,5 @@
             }
         }
 
-        function onShow() {
-            return window.location.href = '/api/'+latitude+'/'+longtitude+'/';
-        }
-
     </script>
-
-@stop
-
-@section('script')
 @stop

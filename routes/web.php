@@ -71,7 +71,9 @@ Route::get('/map', [
 //GoHandyHome
 Route::get('/', [
     'as' => 'home',
-    'uses' => 'HomeController@Handy']);
+    'uses' => function(){
+    return view('Home.handy');
+    }]);
 
 // Testดึงข้อมูล Type
 Route::get('/test', [
@@ -88,4 +90,11 @@ Route::get('/google/map/place/update', [
     'uses' => function(){
         return view('Home.updateMap');
     }]);
+
+
+// ค้นหา
+Route::post('/handy/shop/search', [
+    'as' => 'shop.search',
+    'uses' => 'SearchEngineController@shopSearch']);
+
 

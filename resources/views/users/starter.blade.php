@@ -1,4 +1,4 @@
-@extends('users.header')
+@extends('layouts.header')
 @section('title','Home')
 @section('style')
 <link rel="stylesheet" href="{{asset('libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}">

@@ -1,5 +1,5 @@
 @extends('layouts.header')
-@section('title','Handy Driver Assist Place')
+@section('title','Handy Driver Assist')
 @section('content')
     <div class="preloader">
         <div class="lds-ripple">
@@ -9,8 +9,29 @@
     </div>
     <div class="container-fluid">
         <div class="shadow bg-white rounded">
-            <div class="card intable cardColor cardStyleMargin">
-                <h1>A Store in our Database</h1>
+            <div class="card intable cardColor cardStyleMargin" style="padding-bottom: 100px">
+                <h3>การค้นหา:</h3>
+                <div class="row mb-3">
+                    @if (!empty($nameSearch))
+                        <div class="col-4 col-md-3 col-lg-2 d-flex align-items-stretch">
+                            <div class="badge searchInfo">คำค้นหา: {{$nameSearch}}</div>
+                        </div>
+                    @endif
+                    @if (!empty($type))
+                        <div class="col-4 col-md-3 col-lg-2 d-flex align-items-stretch">
+                            <div class="badge searchInfo">ประเภท: {{$type}}</div>
+                        </div>
+                    @endif
+                    @if ($range == 0)
+                        <div class="col-4 col-md-3 col-lg-2 d-flex align-items-stretch">
+                            <div class="badge searchInfo">ในระยะ: ไม่จำกัด</div>
+                        </div>
+                    @else
+                        <div class="col-4 col-md-3 col-lg-2 d-flex align-items-stretch">
+                            <div class="badge searchInfo">ในระยะ: {{$range/1000}} กิโลเมตร</div>
+                        </div>
+                    @endif
+                </div>
                 <div id="map"></div>
                 <div id="load" class="i-am-centered">
                     <img src="{{asset('images/Magnify.svg')}}" alt="loadingSVG">
@@ -25,42 +46,16 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk&libraries=places"></script>
     <script type="text/javascript">
 
-        var userLat;
-        var userLng;
+        var userLat = {{ $lat }};
+        var userLng = {{ $lng }};
         var userMarker;
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
-        } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
-        }
-
-
-        function showPosition(position) {
-            userLat = position.coords.latitude;
-            userLng = position.coords.longitude;
-            getPlace();
-        }
-
-        function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    x.innerHTML = "User denied the request for Geolocation.";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    x.innerHTML = "Location information is unavailable.";
-                    break;
-                case error.TIMEOUT:
-                    x.innerHTML = "The request to get user location timed out.";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    x.innerHTML = "An unknown error occurred.";
-                    break;
-            }
-        }
+        $(document).ready(function () {
+           getPlace()
+        });
 
         function getPlace() {
-            var locations = {!!  json_encode($arr); !!};
+            var locations = {!!  json_encode($results); !!};
             var iconUser = {
                 url: '{{ URL::asset('images/MapPointer/place_user.png') }}', // url
                 scaledSize: new google.maps.Size(38, 38), // scaled size
@@ -127,6 +122,7 @@
                     map: map,
                     icon: iconPlace
                 });
+
 
                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
                     return function() {

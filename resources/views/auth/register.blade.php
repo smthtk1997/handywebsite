@@ -48,14 +48,14 @@
                                     <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" required placeholder="Confirm Password">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-md-12 ">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1" required>
-                                        <label class="custom-control-label" for="customCheck1">I agree to all <a href="javascript:void(0)">Terms</a></label>
-                                    </div>
-                                </div>
-                            </div>
+{{--                            <div class="form-group row">--}}
+{{--                                <div class="col-md-12 ">--}}
+{{--                                    <div class="custom-control custom-checkbox">--}}
+{{--                                        <input type="checkbox" class="custom-control-input" id="customCheck1" required>--}}
+{{--                                        <label class="custom-control-label" for="customCheck1">I agree to all <a href="javascript:void(0)">Terms</a></label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="form-group text-center ">
                                 <div class="col-xs-12 p-b-20 ">
                                     <button class="btn btn-block btn-lg btn-info " type="submit ">SIGN UP</button>

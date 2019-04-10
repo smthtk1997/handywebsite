@@ -22,9 +22,9 @@ class User extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
-    public function shops()
-    {
-        return $this->hasMany('App\Shop');
-    }
+//    public function shops()
+//    {
+//        return $this->hasMany('App\Shop');
+//    }
 
 }
