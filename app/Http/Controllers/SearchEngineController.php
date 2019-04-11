@@ -16,19 +16,16 @@ class SearchEngineController extends Controller
         if ($request->inputRange == 0){
             $range = 0;
         }else{
-            $range = $request->inputRange;
-            $kmInLongitudeDegree = 111.320 * cos( $lng / 180.0 * M_PI);
-            $deltaLat = (($range/4)/1000) / 111.1;
-            $deltaLong = (($range/4)/1000) / $kmInLongitudeDegree;
+            $range = $request->inputRange; // ระยะจาก Input เป็น meter
+            $distance = $range/1000; // distance in KM
+            $R = 6371; //constant earth radius. You can add precision here if you wish
 
-            $minLat = $lat - $deltaLat;
-            $maxLat = $lat + $deltaLat;
-            $minLong = $lng - $deltaLong;
-            $maxLong = $lng + $deltaLong;
+            $maxLat = $lat + rad2deg($distance/$R);
+            $minLat = $lat - rad2deg($distance/$R);
+            $maxLong = $lng + rad2deg(asin($distance/$R) / cos(deg2rad($lat)));
+            $minLong = $lng - rad2deg(asin($distance/$R) / cos(deg2rad($lat)));
+            //dd($minLat.'--'.$maxLat.'--lng--'.$minLong.'--'.$maxLong );
         }
-
-        //dd($minLat.'--'.$maxLat.'--lng--'.$minLong.'--'.$maxLong );
-
 
         if (!$lat || !$lng){
             Alert::error('เกิดข้อผิดพลาดในการระบุตำแหน่ง!', 'กรุณาลองใหม่อีกครั้ง')->persistent('ปิด');
@@ -42,17 +39,17 @@ class SearchEngineController extends Controller
         }
         if ($request->inputName){ // มีชื่ออู่
             $nameSearch = $request->inputName;
-            if ($range != 0){ // จำกัด
-                $shops = Shop::where('name','LIKE','%'.$request->inputName.'%')->whereBetween('lng',[$maxLong,$minLong])->get();
-            }else{ // ไม่จำกัด มีชื่อ
+            if ($range != 0){ // จำกัดระยะ มีชื่อ
+                $shops = Shop::where('name','LIKE','%'.$request->inputName.'%')->whereBetween('lat',[$minLat,$maxLat])->whereBetween('lng',[$minLong,$maxLong])->get();
+            }else{ // ไม่จำกัดระยะ มีชื่อ
                 $shops = Shop::where('name','LIKE','%'.$request->inputName.'%')->get();
             }
 
         }else{ // ไม่มีชื่อ ก็เอาทั้งหมด ในระยะ
             $nameSearch = null;
-            if ($range != 0){ // ไม่มีชื่อ จำกัด
-                $shops = Shop::whereBetween('lat',[$minLat,$maxLat])->whereBetween('lng',[$maxLong,$minLong])->get();
-            }else{ // ไม่มีชื่อ ไม่จำกัด
+            if ($range != 0){ // ไม่มีชื่อ จำกัดระยะ
+                $shops = Shop::whereBetween('lat',[$minLat,$maxLat])->whereBetween('lng',[$minLong,$maxLong])->get();
+            }else{ // ไม่มีชื่อ ไม่จำกัดระยะ
                 $shops = Shop::all();
             }
         }

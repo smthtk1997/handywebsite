@@ -1,0 +1,8 @@
+$kmInLongitudeDegree = 111.320 * cos( $lng / 180.0 * M_PI);
+$deltaLat = (($range/4)/1000) / 111.1;
+$deltaLong = (($range/4)/1000) / $kmInLongitudeDegree;
+
+$minLat = $lat - $deltaLat;
+$maxLat = $lat + $deltaLat;
+$minLong = $lng - $deltaLong;
+$maxLong = $lng + $deltaLong;
