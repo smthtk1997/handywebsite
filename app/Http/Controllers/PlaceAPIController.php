@@ -61,6 +61,9 @@ class PlaceAPIController extends Controller
                 $shop->place_id = $each['place_id'];
                 $shop->rating = $each['rating'];
                 $shop->token = str_random(16);
+                if (array_key_exists('photos',$each)){
+                    $shop->photo_ref = $each['photos'][0]['photo_reference'];
+                }
                 $shop->save();
             }else{
                 $shop = $check;
@@ -119,7 +122,6 @@ class PlaceAPIController extends Controller
         Alert::success('Update Map Successfully!')->autoclose(2000);
         return redirect(url('/google/map/place/update'));
 
-        //return 'pass';
 
 //        return view('Home.showData',['data'=>$outputs['results']]);
 
@@ -138,5 +140,49 @@ class PlaceAPIController extends Controller
         return view('admin.MapPlace',[
             'arr' => $arr,
         ]);
+    }
+
+
+
+
+    public function updatePhoto_Ref()
+    {
+        $place_id = Shop::all();
+
+        foreach ($place_id as $id){
+            $place_id_shop = $id->place_id;
+            $endpoint = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$place_id_shop&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk";
+            $headers = [];
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $endpoint);
+            // SSL important
+            curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE );
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+            $outputs = curl_exec($ch);
+            curl_close($ch);
+
+
+            $outputs = json_decode($outputs,true);
+
+//            $url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=5000&name=BestBusiness&key=YOUR_API_KEY';
+//            $json = file_get_contents($url);
+//            $data = json_decode($json,true);
+
+            //dd($outputs);
+
+            if (array_key_exists('result',$outputs)){
+                if (array_key_exists('photos',$outputs['result'])){
+                    $ref = $outputs['result']['photos'][0]['photo_reference'];
+
+                    $id->photo_ref = $ref;
+                    //$id->save();
+                }
+            }else{
+                continue;
+            }
+        }
+        return 'updated';
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.header')
-@section('title','Handy Driver Assist')
+@section('title','การค้นหา')
 @section('content')
     <div class="preloader">
         <div class="lds-ripple">
@@ -35,6 +35,11 @@
                 <div id="map"></div>
                 <div id="load" class="i-am-centered">
                     <img src="{{asset('images/Magnify.svg')}}" alt="loadingSVG">
+                </div>
+                <div>
+                    @for ($i = 0; $i < sizeof($results); $i++)
+                        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{$results[$i][5]}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk" alt="img">
+                    @endfor
                 </div>
             </div>
         </div>

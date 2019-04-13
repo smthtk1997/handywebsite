@@ -60,7 +60,7 @@ class SearchEngineController extends Controller
                 foreach ($shop->shop_types as $type){
                     if ($type->type_id == $request->inputType){
                         $inarr = array();
-                        array_push($inarr,$shop->name,$shop->lat,$shop->lng,$shop->formatted_address,$shop->rating);
+                        array_push($inarr,$shop->name,$shop->lat,$shop->lng,$shop->formatted_address,$shop->rating,$shop->photo_ref);
                         array_push($shop_and_type,$inarr);
                         continue;
                     }
@@ -87,7 +87,7 @@ class SearchEngineController extends Controller
             $typeInput = null;
             foreach ($shops as $shop){
                 $inarr = array();
-                array_push($inarr,$shop->name,$shop->lat,$shop->lng,$shop->formatted_address,$shop->rating);
+                array_push($inarr,$shop->name,$shop->lat,$shop->lng,$shop->formatted_address,$shop->rating,$shop->photo_ref);
                 array_push($shop_and_type,$inarr);
             }
         }

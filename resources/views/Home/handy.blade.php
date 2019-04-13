@@ -1,5 +1,5 @@
 @extends('layouts.header')
-@section('title','Handy Driver Assist')
+@section('title','หน้าแรก')
 @section('content')
 
     <div class="container-fluid" style="margin-bottom: 300px">
@@ -54,7 +54,16 @@
                         <div class="col-md-2 col-sm-12 inputField">
                             <select id="inputInsurance" class="form-control" name="inputInsurance">
                                 <option selected disabled>ประกันภัย</option>
-                                <option>...</option>
+                                <option value="0">กรุงเทพประกันภัย</option>
+                                <option value="1">ทิพยประกันภัย</option>
+                                <option value="2">วิริยะประกันภัย</option>
+                                <option value="3">เมืองไทยประกันภัย</option>
+                                <option value="4">อาคเนย์ประกันภัย</option>
+                                <option value="5">สินมั่นคงประกันภัย</option>
+                                <option value="6">นวกิจประกันภัย</option>
+                                <option value="7">ไทยวิวัฒน์ประกันภัย</option>
+                                <option value="8">เอเชียประกันภัย</option>
+                                <option value="9">แอลเอ็มจีประกันภัย</option>
                             </select>
                         </div>
                         <div class="col-md-2 col-12 inputField">

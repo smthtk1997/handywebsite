@@ -85,10 +85,14 @@ Route::get('/google/map/place', [
     'as' => 'google.place',
     'uses' => 'PlaceAPIController@MarkerPin']);
 
+Route::get('/google/map/place/update/photo/ref', [
+    'as' => 'google.place.update.photo.ref',
+    'uses' => 'PlaceAPIController@updatePhoto_Ref']);
+
 Route::get('/google/map/place/update', [
     'as' => 'google.place.update',
     'uses' => function(){
-        return view('Home.updateMap');
+        return view('admin.maintenance.updateMap');
     }]);
 
 
