@@ -24,6 +24,15 @@
 
 </head>
 <body>
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
 <div id="main-wrapper" data-header-position="fixed" data-sidebar-position="fixed">
     <header class="topbar">
         <nav class="navbar top-navbar navbar-expand-md navbar-dark">

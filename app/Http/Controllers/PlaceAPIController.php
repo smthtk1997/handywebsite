@@ -46,7 +46,7 @@ class PlaceAPIController extends Controller
 
 
         $outputs = json_decode($outputs,true);
-        //dd($outputs);
+//        dd($outputs);
 
 //         FOR LOOP
         foreach ($outputs['results'] as $each){
@@ -64,6 +64,28 @@ class PlaceAPIController extends Controller
                 if (array_key_exists('photos',$each)){
                     $shop->photo_ref = $each['photos'][0]['photo_reference'];
                 }
+
+                // ไปเอา detail
+                $urlGetdata = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$shop->place_id&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk";
+                $jsonDetail = file_get_contents($urlGetdata);
+                $dataDetail = json_decode($jsonDetail,true);
+
+                if (array_key_exists('result',$dataDetail)) {
+                    if (array_key_exists('international_phone_number',$dataDetail['result'])){
+                        $phone_number = $dataDetail['result']['international_phone_number'];
+                        $phone_number = str_replace(' ','-',$phone_number);
+                    }else{
+                        $phone_number = null;
+                    }
+
+                    if (array_key_exists('url',$dataDetail['result'])){
+                        $urlNav = $dataDetail['result']['url'];
+                    }else{
+                        $urlNav = null;
+                    }
+                }
+                $shop->phone_number = $phone_number;
+                $shop->url_nav = $urlNav;
                 $shop->save();
             }else{
                 $shop = $check;
@@ -105,19 +127,6 @@ class PlaceAPIController extends Controller
 //                    $shoptype->save();
 //                }
 
-
-
-//            echo $each['id'];
-//            echo "<br>";
-//            echo $each['formatted_address'];
-//            echo "<br>";
-//            echo $each['name'];
-//            echo "<br>";
-//            echo $each['geometry']['location']['lat'];
-//            echo "<br>";
-//            echo $each['geometry']['location']['lng'];
-//            echo "<br>";
-//            echo "<hr>";
         }
         Alert::success('Update Map Successfully!')->autoclose(2000);
         return redirect(url('/google/map/place/update'));
@@ -173,12 +182,31 @@ class PlaceAPIController extends Controller
             //dd($outputs);
 
             if (array_key_exists('result',$outputs)){
+
                 if (array_key_exists('photos',$outputs['result'])){
                     $ref = $outputs['result']['photos'][0]['photo_reference'];
-
-                    $id->photo_ref = $ref;
-                    //$id->save();
+                }else{
+                    $ref = null;
                 }
+
+                if (array_key_exists('international_phone_number',$outputs['result'])){
+                    $phone_number = $outputs['result']['international_phone_number'];
+                    $phone_number = str_replace(' ','-',$phone_number);
+                }else{
+                    $phone_number = null;
+                }
+
+                if (array_key_exists('url',$outputs['result'])){
+                    $urlNav = $outputs['result']['url'];
+                }else{
+                    $urlNav = null;
+                }
+
+                $id->photo_ref = $ref;
+                $id->phone_number = $phone_number;
+                $id->url_nav = $urlNav;
+                $id->save();
+
             }else{
                 continue;
             }

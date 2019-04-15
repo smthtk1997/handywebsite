@@ -22,6 +22,8 @@ class CreateShopsTable extends Migration
             $table->string('map_id');
             $table->string('place_id');
             $table->string('photo_ref')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('url_nav')->nullable();
             $table->string('rating');
             $table->string('token',16);
             $table->softDeletes();
