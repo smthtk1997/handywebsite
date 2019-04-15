@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="shadow bg-white rounded">
             <div class="card intable cardColor cardStyleMargin" style="padding-bottom: 100px">
-                <h3>การค้นหา</h3>
+                <h3>การค้นหา:</h3>
                 <div class="row mb-3">
                     @if (!empty($nameSearch))
                         <div class="col-4 col-md-3 col-lg-2 d-flex align-items-stretch">
@@ -28,7 +28,7 @@
                 </div>
                 <div id="map"></div>
                 <div style="margin-top: 2.5rem">
-                    <h3 style="margin-bottom: 2.5rem">ผลลัพธ์การค้นหา</h3>
+                    <h3 style="margin-bottom: 1.8rem">ผลลัพธ์การค้นหา:</h3>
                     @for ($i = 0; $i < sizeof($results); $i++)
                         <div class="row">
                             <div class="col-12 col-md-4 col-lg-3">
