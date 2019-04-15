@@ -29,32 +29,31 @@
                 <div id="map"></div>
                 <div style="margin-top: 2.5rem">
                     <h3 style="margin-bottom: 2.5rem">ผลลัพธ์การค้นหา</h3>
-                    <ul class="list-unstyled m-t-40">
-                        @for ($i = 0; $i < sizeof($results); $i++)
-                            <li class="media">
-                                <img class="image-popup-vertical-fit imageGrow" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference={{$results[$i][5]}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
+                    @for ($i = 0; $i < sizeof($results); $i++)
+                        <div class="row">
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <img class="image-popup-vertical-fit imageGrow mb-md-0 mb-3" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference={{$results[$i][5]}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
                                      src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference={{$results[$i][5]}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
-                                     width="200" style="max-height: 200px;max-width: 200px;margin-right: 20px;"
+                                     width="200" style="max-height: 200px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;"
                                      alt="store">
-
-                                <div class="media-body">
-                                    <h4 class="mb-2">{{$results[$i][0]}}</h4>
-                                    <p style="margin-bottom: 0.25rem;font-size: 15px">ที่อยู่: {{$results[$i][3]}}</p>
-                                    <p style="margin-bottom: 0.25rem;font-size: 15px">
-                                        คะแนนจากเว็บ: {{$results[$i][4]}}</p>
-                                    @if ($results[$i][6] != null)
-                                        <a href="tel:{{$results[$i][6]}}" style="font-size: 15px">โทร: {{str_replace('+66-','0',$results[$i][6])}}</a>
-                                    @endif
-                                    <div class="mt-2">
-                                        <a href="{{$results[$i][7]}}"
-                                           class="btn btn-danger waves-effect waves-light btn-sm"
-                                           target="_blank">กดเพื่อนำทาง</a>
-                                    </div>
+                            </div>
+                            <div class="col-12 col-md-8 col-lg-9">
+                                <h4 style="margin-bottom: 15px">{{$results[$i][0]}}</h4>
+                                <p style="margin-bottom: 12px;font-size: 15px">ที่อยู่: {{$results[$i][3]}}</p>
+                                <p style="margin-bottom: 12px;font-size: 15px">
+                                    คะแนนจากเว็บ: {{$results[$i][4]}}</p>
+                                @if ($results[$i][6] != null)
+                                    <a href="tel:{{$results[$i][6]}}" style="font-size: 15px">โทร: {{str_replace('+66-','0',$results[$i][6])}}</a>
+                                @endif
+                                <div style="margin-top: 14px">
+                                    <a href="{{$results[$i][7]}}"
+                                       class="btn btn-danger waves-effect waves-light btn-sm"
+                                       target="_blank">กดเพื่อนำทาง</a>
                                 </div>
-                            </li>
-                            <hr>
-                        @endfor
-                    </ul>
+                            </div>
+                        </div>
+                        <hr>
+                    @endfor
                 </div>
             </div>
         </div>
