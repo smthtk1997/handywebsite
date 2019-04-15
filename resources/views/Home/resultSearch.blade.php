@@ -32,10 +32,10 @@
                     <ul class="list-unstyled m-t-40">
                         @for ($i = 0; $i < sizeof($results); $i++)
                             <li class="media">
-                                <img class="image-popup-vertical-fit" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference={{$results[$i][5]}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
+                                <img class="image-popup-vertical-fit imageGrow" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference={{$results[$i][5]}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
                                      src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference={{$results[$i][5]}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
                                      width="200" style="max-height: 200px;max-width: 200px;margin-right: 20px;"
-                                     alt="Generic placeholder image">
+                                     alt="store">
 
                                 <div class="media-body">
                                     <h4 class="mb-2">{{$results[$i][0]}}</h4>
