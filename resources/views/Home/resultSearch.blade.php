@@ -7,22 +7,22 @@
                 <h3>การค้นหา:</h3>
                 <div class="row mb-3">
                     @if (!empty($nameSearch))
-                        <div class="col-4 col-md-3 col-lg-2 d-flex align-items-stretch">
-                            <div class="badge searchInfo">คำค้นหา: {{$nameSearch}}</div>
+                        <div class="col-12 col-md-2 d-flex align-items-stretch">
+                            <div class="text-center searchInfo centerOfRow w-100">คำค้นหา: {{$nameSearch}}</div>
                         </div>
                     @endif
                     @if (!empty($type))
-                        <div class="col-4 col-md-3 col-lg-2 d-flex align-items-stretch">
-                            <div class="badge searchInfo">ประเภท: {{$type}}</div>
+                        <div class="col-12 col-md-2 d-flex align-items-stretch">
+                            <div class="text-center searchInfo centerOfRow w-100">ประเภท: {{$type}}</div>
                         </div>
                     @endif
                     @if ($range == 0)
-                        <div class="col-4 col-md-3 col-lg-2 d-flex align-items-stretch">
-                            <div class="badge searchInfo">ในระยะ: ไม่จำกัด</div>
+                        <div class="col-12 col-md-2 d-flex align-items-stretch">
+                            <div class="text-center searchInfo centerOfRow w-100">ในระยะ: ไม่จำกัด</div>
                         </div>
                     @else
-                        <div class="col-4 col-md-3 col-lg-2 d-flex align-items-stretch">
-                            <div class="badge searchInfo">ในระยะ: {{$range/1000}} กิโลเมตร</div>
+                        <div class="col-12 col-md-2 d-flex align-items-stretch">
+                            <div class="text-center searchInfo centerOfRow w-100">ในระยะ: {{$range/1000}} กิโลเมตร</div>
                         </div>
                     @endif
                 </div>
