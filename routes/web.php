@@ -102,3 +102,35 @@ Route::post('/handy/shop/search', [
     'uses' => 'SearchEngineController@shopSearch']);
 
 
+
+
+//FuelLog App
+Route::get('/fuellog/application/index', [ //หน้าแรกของการเติมน้ำมัน
+    'as' => 'fuellog.app.index',
+    'uses' => 'FuelLogController@fuelLogIndex']);
+
+Route::get('/fuellog/application/create/car', [ // หน้าเพิ่มรถยนต์ใหม่
+    'as' => 'fuellog.app.create.car',
+    'uses' => 'UserCarsController@createCarIndex']);
+
+Route::post('/fuellog/application/create/car/store', [ // เพิ่มรถยนต์ใหม่
+    'as' => 'fuellog.app.create.car.store',
+    'uses' => 'UserCarsController@storeCar']);
+
+Route::get('/files/user_car_img/{filename}', function($filename)
+{
+    $filePath = storage_path().'/files/user_car_img/'.$filename;
+
+    if (!File::exists($filePath))
+    {
+//        return Response::make("File does not exist.", 404);
+        return null;
+    }
+
+    $fileContents = File::get($filePath);
+
+    // Image
+    return Response::make($fileContents, 200);
+});
+
+

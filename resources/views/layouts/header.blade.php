@@ -396,6 +396,186 @@
                 </div>
             </aside>
             @endif
+            @if (\Illuminate\Support\Facades\Auth::user()->role == 0)
+                <aside class="left-sidebar">
+                    <!-- Sidebar scroll-->
+                    <div class="scroll-sidebar">
+                        <!-- Sidebar navigation-->
+                        <nav class="sidebar-nav">
+                            <ul id="sidebarnav">
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('fuellog.app.index')}}" aria-expanded="false">
+                                        <i class="mdi mdi-gas-station"></i>
+                                        <span class="hide-menu">แอพลิเคชั่นการเติมน้ำมัน</span>
+                                    </a>
+                                </li>
+{{--                                <li class="sidebar-item">--}}
+{{--                                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">--}}
+{{--                                        <i class="mdi mdi-tune"></i>--}}
+{{--                                        <span class="hide-menu">Submenu Type </span>--}}
+{{--                                    </a>--}}
+{{--                                    <ul aria-expanded="false" class="collapse  first-level">--}}
+{{--                                        <li class="sidebar-item">--}}
+{{--                                            <a href="#" class="sidebar-link">--}}
+{{--                                                <i class="mdi mdi-view-quilt"></i>--}}
+{{--                                                <span class="hide-menu"> Submenu 1 </span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+{{--                                        <li class="sidebar-item">--}}
+{{--                                            <a href="#" class="sidebar-link">--}}
+{{--                                                <i class="mdi mdi-view-parallel"></i>--}}
+{{--                                                <span class="hide-menu"> Submenu 2 </span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+{{--                                    </ul>--}}
+{{--                                </li>--}}
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                        <i class="mdi mdi-phone"></i>
+                                        <span class="hide-menu">บริการรถยนต์</span>
+                                    </a>
+                                    <ul aria-expanded="false" class="collapse  first-level">
+                                        <li class="sidebar-item">
+                                            <a href="tel:1620" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">รถสไลด์/รถยก</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:0879084528" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">เปลี่ยนแบตเตอรี่</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1153" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">ยางรถยนต์</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                        <i class="mdi mdi-phone"></i>
+                                        <span class="hide-menu">ติดต่อประกัน</span>
+                                    </a>
+                                    <ul aria-expanded="false" class="collapse  first-level">
+                                        <li class="sidebar-item">
+                                            <a href="tel:1620" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">กรุงเทพประกันภัย</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1736" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">ทิพยประกันภัย</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1557" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">วิริยะประกันภัย</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1484" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">เมืองไทยประกันภัย</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1726" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">อาคเนย์ประกันภัย</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1596" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">สินมั่นคงประกันภัย</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1748" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">นวกิจประกันภัย</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:02-695-0700" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">ไทยวิวัฒน์ประกันภัย</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:+6628693333" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">เอเชียประกันภัย</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1790" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">แอลเอ็มจีประกันภัย</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                        <i class="mdi mdi-phone"></i>
+                                        <span class="hide-menu">แจ้งเหตุฉุกเฉิน</span>
+                                    </a>
+                                    <ul aria-expanded="false" class="collapse  first-level">
+                                        <li class="sidebar-item">
+                                            <a href="tel:191" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">เหตุด่วนเหตุร้าย</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1669" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">กู้ภัย</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1543" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">กู้ภัยทางหลวง</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1193" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">ตำรวจทางหลวง</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1155" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">ตำรวจท่องเที่ยว</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1146" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">กรมทางหลวงชนบท</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="tel:1192" class="sidebar-link">
+                                                <i class="mdi mdi-chevron-right"></i>
+                                                <span class="hide-menu">แจ้งรถหาย</span>
+                                            </a>
+                                        </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </aside>
+            @endif
     @endguest
 
 

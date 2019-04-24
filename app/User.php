@@ -12,6 +12,8 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
 
+    // 0 for user ,1 for admin
+
     protected $fillable = [
         'name', 'email', 'password','token'
     ];
@@ -22,9 +24,5 @@ class User extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
-//    public function shops()
-//    {
-//        return $this->hasMany('App\Shop');
-//    }
 
 }
