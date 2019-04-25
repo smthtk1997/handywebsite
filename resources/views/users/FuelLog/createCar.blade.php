@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="" id="display_img1" style="display: none;margin: auto;">
                             <div class="i-am-centered" style="margin-bottom: 30px;">
-                                <img id="preview_img" class="centerOfRow rounded-circle" src="" alt="car_img" style="object-fit: cover;width: auto;height: 150px;border-radius: 50%">
+                                <img id="preview_img" class="centerOfRow rounded-circle" src="" alt="car_img" style="object-fit: cover;width: 200px;height: 200px;border-radius: 50%">
                                 <img id="car_logo" class="centerOfRow" src="" alt="car_logo" style="width: auto;height: 70px;margin-top: 25px;display: none">
                             </div>
                         </div>

@@ -18,6 +18,11 @@
         .card:hover{
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.38), 0 6px 20px 0 rgba(0, 0, 0, 0.23);
         }
+        /*@media only screen and (max-width: 800px) {*/
+        /*    #imgCar{*/
+        /*        height: 210px!important*/
+        /*    }*/
+        /*}*/
     </style>
 @stop
 @section('content')
@@ -38,8 +43,8 @@
                                             <!-- Carousel items -->
                                             <div class="carousel-inner">
                                                 <div class="carousel-item flex-column active">
-                                                    <img class="centerOfRow" src="{{url('/files/user_car_img/'.$car->img_path)}}" style="object-fit: cover;width: 100%;height: 15vw;padding: 0px">
-                                                    <div class="text-white m-t-10" style="padding: 0.5rem;">
+                                                    <img class="centerOfRow" src="{{url('/files/user_car_img/'.$car->img_path)}}" style="object-fit: cover;width: 100%;height: 217px;padding: 0px" id="imgCar">
+                                                    <div class="text-white m-t-10" style="padding: 0.4rem;">
                                                         <span><i class="ti-car font-20 text-white"></i>&nbsp;<i>-- {{$car->name}}</i></span>
                                                     </div>
                                                 </div>
