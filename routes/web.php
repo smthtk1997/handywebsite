@@ -117,13 +117,28 @@ Route::post('/fuellog/application/create/car/store', [ // เพิ่มรถ�
     'as' => 'fuellog.app.create.car.store',
     'uses' => 'UserCarsController@storeCar']);
 
-Route::get('/files/user_car_img/{filename}', function($filename)
+Route::get('/files/user_car_img/{filename}', function($filename) // แสดงรูปของหน้า app fuel index
 {
     $filePath = storage_path().'/files/user_car_img/'.$filename;
 
     if (!File::exists($filePath))
     {
 //        return Response::make("File does not exist.", 404);
+        return null;
+    }
+
+    $fileContents = File::get($filePath);
+
+    // Image
+    return Response::make($fileContents, 200);
+});
+
+Route::get('/files/brand_logo/{filename}', function($filename) // แสดงรูปโลโก้ยี่ห้อ
+{
+    $filePath = storage_path().'/imgs/logo_Car/'.$filename;
+
+    if (!File::exists($filePath))
+    {
         return null;
     }
 

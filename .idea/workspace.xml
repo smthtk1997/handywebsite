@@ -2,9 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e29b2d4-80ad-4575-82c4-3b2cc09b10d6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Audi.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/BMW.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Chevrolet.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Ford.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Honda.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Isuzu.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/MG.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Mazda.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Mercedes-Benz.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Mitsubishi.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Nissan.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Subaru.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Suzuki.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Toyota.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo_Car/Volvo.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/users/FuelLog/fuellogIndex.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/FuelLog/fuellogIndex.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,34 +41,48 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1251">
-              <caret line="60" column="58" selection-start-line="60" selection-start-column="58" selection-end-line="60" selection-end-column="58" />
+            <state relative-caret-position="265">
+              <caret line="135" column="67" lean-forward="true" selection-start-line="135" selection-start-column="67" selection-end-line="135" selection-end-column="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/fuellogIndex.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="470">
+              <caret line="81" column="10" lean-forward="true" selection-start-line="81" selection-start-column="10" selection-end-line="81" selection-end-column="10" />
               <folding>
-                <element signature="e#1489#1559#0#HTML" expanded="true" />
-                <element signature="e#1654#1717#0#HTML" expanded="true" />
+                <element signature="e#1313#1347#0#HTML" expanded="true" />
+                <element signature="e#1408#1429#0#HTML" expanded="true" />
+                <element signature="e#1903#1967#0#HTML" expanded="true" />
+                <element signature="e#4211#4263#0#HTML" expanded="true" />
+                <element signature="e#4289#4327#0#HTML" expanded="true" />
+                <element signature="e#5231#5276#0#HTML" expanded="true" />
+                <element signature="e#4409#4432#0#HTML" expanded="true" />
+                <element signature="e#4481#4563#0#HTML" expanded="true" />
+                <element signature="e#5441#5520#0#HTML" expanded="true" />
+                <element signature="e#4729#4769#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/fuellogIndex.blade.php">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.env">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="31" column="36" lean-forward="true" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+            <state relative-caret-position="447">
+              <caret line="150" lean-forward="true" selection-start-line="150" selection-end-line="150" />
               <folding>
-                <element signature="e#586#607#0#HTML" expanded="true" />
-                <element signature="e#1156#1190#0#HTML" expanded="true" />
-                <element signature="e#1251#1272#0#HTML" expanded="true" />
-                <element signature="e#1746#1809#0#HTML" expanded="true" />
-                <element signature="e#1894#1918#0#HTML" expanded="true" />
-                <element signature="e#3973#3995#0#HTML" expanded="true" />
-                <element signature="e#4048#4082#0#HTML" expanded="true" />
-                <element signature="e#4135#4156#0#HTML" expanded="true" />
-                <element signature="e#4628#4667#0#HTML" expanded="true" />
+                <element signature="e#7#389#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -147,7 +176,6 @@
         <option value="$PROJECT_DIR$/database/migrations/2019_04_24_122045_create_user_cars_table.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserCarsController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FuelLogController.php" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/UserCars.php" />
         <option value="$PROJECT_DIR$/public/css/style.css" />
         <option value="$PROJECT_DIR$/resources/views/Home/resultSearch.blade.php" />
@@ -155,6 +183,7 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/users/FuelLog/fuellogIndex.blade.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
       </list>
     </option>
   </component>
@@ -268,6 +297,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -329,13 +359,6 @@
               <item name="handywebsite" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="handywebsite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="handywebsite" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-              <item name="logo_Car" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="handywebsite" type="b2602c69:ProjectViewProjectNode" />
@@ -407,11 +430,16 @@
               <item name="files" type="462c0819:PsiDirectoryNode" />
               <item name="user_car_img" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="handywebsite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="handywebsite" type="462c0819:PsiDirectoryNode" />
+              <item name="storage" type="462c0819:PsiDirectoryNode" />
+              <item name="imgs" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -535,17 +563,18 @@
       <workItem from="1556131039603" duration="218000" />
       <workItem from="1556131487432" duration="68000" />
       <workItem from="1556158387587" duration="1418000" />
+      <workItem from="1556206790710" duration="2884000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176510000" />
+    <option name="totallyTimeSpent" value="179394000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="833" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23319027" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2360515" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -558,7 +587,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.16869096" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.16869096" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.32928476" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -571,13 +600,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Type.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/Home/resultSearch_blade.php" />
     <entry file="file://$PROJECT_DIR$/public/css/app.css">
       <provider selected="true" editor-type-id="text-editor">
@@ -828,16 +850,6 @@
         <state relative-caret-position="-251" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1346">
-          <caret line="119" column="42" selection-start-line="119" selection-start-column="12" selection-end-line="119" selection-end-column="42" />
-          <folding>
-            <element signature="e#7#389#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SearchEngineController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -923,32 +935,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php">
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/fuellogIndex.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1251">
-          <caret line="60" column="58" selection-start-line="60" selection-start-column="58" selection-end-line="60" selection-end-column="58" />
+        <state relative-caret-position="470">
+          <caret line="81" column="10" lean-forward="true" selection-start-line="81" selection-start-column="10" selection-end-line="81" selection-end-column="10" />
           <folding>
-            <element signature="e#1489#1559#0#HTML" expanded="true" />
-            <element signature="e#1654#1717#0#HTML" expanded="true" />
+            <element signature="e#1313#1347#0#HTML" expanded="true" />
+            <element signature="e#1408#1429#0#HTML" expanded="true" />
+            <element signature="e#1903#1967#0#HTML" expanded="true" />
+            <element signature="e#4211#4263#0#HTML" expanded="true" />
+            <element signature="e#4289#4327#0#HTML" expanded="true" />
+            <element signature="e#5231#5276#0#HTML" expanded="true" />
+            <element signature="e#4409#4432#0#HTML" expanded="true" />
+            <element signature="e#4481#4563#0#HTML" expanded="true" />
+            <element signature="e#5441#5520#0#HTML" expanded="true" />
+            <element signature="e#4729#4769#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/fuellogIndex.blade.php">
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="31" column="36" lean-forward="true" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+        <state relative-caret-position="447">
+          <caret line="150" lean-forward="true" selection-start-line="150" selection-end-line="150" />
           <folding>
-            <element signature="e#586#607#0#HTML" expanded="true" />
-            <element signature="e#1156#1190#0#HTML" expanded="true" />
-            <element signature="e#1251#1272#0#HTML" expanded="true" />
-            <element signature="e#1746#1809#0#HTML" expanded="true" />
-            <element signature="e#1894#1918#0#HTML" expanded="true" />
-            <element signature="e#3973#3995#0#HTML" expanded="true" />
-            <element signature="e#4048#4082#0#HTML" expanded="true" />
-            <element signature="e#4135#4156#0#HTML" expanded="true" />
-            <element signature="e#4628#4667#0#HTML" expanded="true" />
+            <element signature="e#7#389#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="135" column="67" lean-forward="true" selection-start-line="135" selection-start-column="67" selection-end-line="135" selection-end-column="67" />
         </state>
       </provider>
     </entry>

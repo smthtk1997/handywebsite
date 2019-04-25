@@ -6,11 +6,6 @@
             background-color: #e13031;
         }
 
-        .plus-car{
-            background-color: rgba(235, 235, 235, 0.2);
-        }
-
-
         .card{
             transition: 350ms;
         }
@@ -31,7 +26,6 @@
         <div class="shadow bg-white rounded" style="padding: 35px">
             <h3>รถของคุณทั้งหมด</h3>
             <hr style="margin-bottom: 20px">
-{{--            <a class="btn btn-info waves-effect wave-light" href="{{route('fuellog.app.create.car')}}">เพิ่มรถคันใหม่</a>--}}
             <div class="row">
                 @if (!empty($cars))
                     @foreach($cars as $car)
@@ -69,24 +63,20 @@
                             </div>
                         @endforeach
                 @endif
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                        <a href="{{route('fuellog.app.create.car')}}" style="color: #bdc3c7">
-                        <div class="card plus-car" style="width: 21rem;height: 16rem">
-                            <div class="card-body" style="padding: 0px;">
-                                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                    <!-- Carousel items -->
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item flex-column active">
-                                            <div class="centerOfRow text-center">
-                                                <i class="fas fa-plus-circle" style="font-size: 50px;margin-top: 30%"></i>
-                                            </div>
-                                        </div>
-                                    </div>
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                    <div class="card" style="width: 21rem;height: 16rem;">
+                        <div class="card-body" style="padding: 0px;">
+                            <div style="position: relative;text-align: center">
+                                <a href="{{route('fuellog.app.create.car')}}" style="color: #727f8c;">
+                                <img src="{{asset('images/bg_tranparant.png')}}" style="object-fit: cover;width: 100%;height: 217px;padding: 0px;">
+                                <div style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+                                    <i class="fas fa-plus-circle" style="font-size: 50px;margin-top: 15px"></i>
                                 </div>
+                                </a>
                             </div>
                         </div>
-                        </a>
                     </div>
+                </div>
             </div>
         </div>
     </div>

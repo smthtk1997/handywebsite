@@ -125,7 +125,7 @@
                 if ($('#brand option:selected').val() != ''){
                     let brand_select = ($('#brand option:selected').val());
                     $('#modelCar').prop('disabled',false);
-                    let pathimg = '{{ asset('images/logo_Car') }}'+"/"+brand_select+'.jpg';
+                    let pathimg = '{{ url('/files/brand_logo') }}'+"/"+brand_select+'.jpg';
                     $('#car_logo').attr('src',pathimg);
                     $('#car_logo').fadeIn('slow');
                 }
