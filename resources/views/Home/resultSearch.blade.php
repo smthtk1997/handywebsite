@@ -1,5 +1,8 @@
 @extends('layouts.header')
 @section('title','การค้นหา')
+@section('style')
+    <link href="{{asset('libs/magnific-popup/dist/magnific-popup.css')}}" rel="stylesheet">
+@stop
 @section('content')
     <div class="container-fluid">
         <div class="shadow bg-white rounded">
@@ -70,6 +73,8 @@
 @endsection
 
 @section('script')
+    <script src="{{asset('libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('libs/magnific-popup/meg.init.js')}}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk&libraries=places"></script>
     <script type="text/javascript">
 
