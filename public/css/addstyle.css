@@ -17,17 +17,18 @@ body{
 .cardColor{
     transition: 0.5s;
     border-color: #ecebe8;
+    margin-bottom: 20px;
 }
 
 .cardColor:hover{
     transition: 0.5s;
     border-color: #c8c7c4;
 }
-.cardColor{
-    transition: 0.5s;
-    border-color: #ecebe8;
-    margin-bottom: 20px;
-}
+/*.cardColor{*/
+/*    transition: 0.5s;*/
+/*    border-color: #ecebe8;*/
+/*    */
+/*}*/
 
 .inputField{
     margin-top: 5px;
