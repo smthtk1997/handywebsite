@@ -68,7 +68,6 @@ class SearchEngineController extends Controller
                         $inarr['shop_photo_ref'] = $shop->photo_ref;
                         $inarr['shop_phone_number'] = $shop->phone_number;
                         $inarr['shop_url_nav'] = $shop->url_nav;
-//                        array_push($inarr,$shop->name,$shop->lat,$shop->lng,$shop->formatted_address,$shop->rating,$shop->photo_ref,$shop->phone_number,$shop->url_nav);
                         array_push($shop_and_type,$inarr);
                         continue;
                     }
@@ -103,7 +102,6 @@ class SearchEngineController extends Controller
                 $inarr['shop_photo_ref'] = $shop->photo_ref;
                 $inarr['shop_phone_number'] = $shop->phone_number;
                 $inarr['shop_url_nav'] = $shop->url_nav;
-//                array_push($inarr,$shop->name,$shop->lat,$shop->lng,$shop->formatted_address,$shop->rating,$shop->photo_ref,$shop->phone_number,$shop->url_nav);
                 array_push($shop_and_type,$inarr);
             }
         }
