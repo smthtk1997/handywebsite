@@ -60,7 +60,15 @@ class SearchEngineController extends Controller
                 foreach ($shop->shop_types as $type){
                     if ($type->type_id == $request->inputType){
                         $inarr = array();
-                        array_push($inarr,$shop->name,$shop->lat,$shop->lng,$shop->formatted_address,$shop->rating,$shop->photo_ref,$shop->phone_number,$shop->url_nav);
+                        $inarr['shop_name'] = $shop->name;
+                        $inarr['shop_lat'] = $shop->lat;
+                        $inarr['shop_lng'] = $shop->lng;
+                        $inarr['formatted_address'] = $shop->formatted_address;
+                        $inarr['shop_rating'] = $shop->rating;
+                        $inarr['shop_photo_ref'] = $shop->photo_ref;
+                        $inarr['shop_phone_number'] = $shop->phone_number;
+                        $inarr['shop_url_nav'] = $shop->url_nav;
+//                        array_push($inarr,$shop->name,$shop->lat,$shop->lng,$shop->formatted_address,$shop->rating,$shop->photo_ref,$shop->phone_number,$shop->url_nav);
                         array_push($shop_and_type,$inarr);
                         continue;
                     }
@@ -87,10 +95,19 @@ class SearchEngineController extends Controller
             $typeInput = null;
             foreach ($shops as $shop){
                 $inarr = array();
-                array_push($inarr,$shop->name,$shop->lat,$shop->lng,$shop->formatted_address,$shop->rating,$shop->photo_ref,$shop->phone_number,$shop->url_nav);
+                $inarr['shop_name'] = $shop->name;
+                $inarr['shop_lat'] = $shop->lat;
+                $inarr['shop_lng'] = $shop->lng;
+                $inarr['formatted_address'] = $shop->formatted_address;
+                $inarr['shop_rating'] = $shop->rating;
+                $inarr['shop_photo_ref'] = $shop->photo_ref;
+                $inarr['shop_phone_number'] = $shop->phone_number;
+                $inarr['shop_url_nav'] = $shop->url_nav;
+//                array_push($inarr,$shop->name,$shop->lat,$shop->lng,$shop->formatted_address,$shop->rating,$shop->photo_ref,$shop->phone_number,$shop->url_nav);
                 array_push($shop_and_type,$inarr);
             }
         }
+
 
         return view('Home.resultSearch',['results'=>$shop_and_type,'nameSearch'=>$nameSearch,'type'=>$typeInput,'range'=>$range,'lat'=>$lat,'lng'=>$lng]);
 

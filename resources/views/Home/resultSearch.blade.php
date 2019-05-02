@@ -33,12 +33,12 @@
                 <div id="map"></div>
                 <div style="margin-top: 2.5rem">
                     <h3 style="margin-bottom: 1.8rem">ผลลัพธ์การค้นหา:</h3>
-                    @for ($i = 0; $i < sizeof($results); $i++)
+                    @foreach ($results as $shop)
                         <div class="row">
                             <div class="col-12 col-md-4 col-lg-3">
-                                @if ($results[$i][5] != null)
-                                    <img class="image-popup-vertical-fit imageGrow mb-md-0 mb-3" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference={{$results[$i][5]}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
-                                         src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference={{$results[$i][5]}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
+                                @if ($shop['shop_photo_ref'] != null)
+                                    <img class="image-popup-vertical-fit imageGrow mb-md-0 mb-3" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference={{$shop['shop_photo_ref']}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
+                                         src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference={{$shop['shop_photo_ref']}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
                                          width="200" style="max-height: 200px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;"
                                          alt="store">
                                     @else
@@ -49,22 +49,33 @@
                                 @endif
                             </div>
                             <div class="col-12 col-md-8 col-lg-9">
-                                <h4 style="margin-bottom: 15px">{{$results[$i][0]}}</h4>
-                                <p style="margin-bottom: 12px;font-size: 15px">ที่อยู่: {{$results[$i][3]}}</p>
+                                <h4 style="margin-bottom: 15px">{{$shop['shop_name']}}</h4>
+                                <p style="margin-bottom: 12px;font-size: 15px">ที่อยู่: {{$shop['formatted_address']}}</p>
                                 <p style="margin-bottom: 12px;font-size: 15px">
-                                    คะแนนจากเว็บ: {{$results[$i][4]}}</p>
-                                @if ($results[$i][6] != null)
-                                    <a href="tel:{{$results[$i][6]}}" style="font-size: 15px">โทร: {{str_replace('+66-','0',$results[$i][6])}}</a>
+                                    คะแนนจากเว็บ:
+                                    @if (!$shop['shop_rating'])
+                                        @for ($i = 0; $i < 5; $i++)
+                                            <img src="{{asset('images/star/star-off.png')}}" alt="{{$shop['shop_name']}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
+                                        @endfor
+                                        @else
+                                        @for ($i = 0; $i < (int)$shop['shop_rating']; $i++)
+                                            <img src="{{asset('images/star/star-on.png')}}" alt="{{$shop['shop_name']}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
+                                        @endfor
+                                    @endif
+                                </p>
+
+                                @if ($shop['shop_phone_number'] != null)
+                                    <a href="tel:{{$shop['shop_phone_number']}}" style="font-size: 15px">โทร: {{str_replace('+66-','0',$shop['shop_phone_number'])}}</a>
                                 @endif
                                 <div style="margin-top: 14px">
-                                    <a href="{{$results[$i][7]}}"
+                                    <a href="{{$shop['shop_url_nav']}}"
                                        class="btn btn-danger waves-effect waves-light btn-sm"
                                        target="_blank">กดเพื่อนำทาง</a>
                                 </div>
                             </div>
                         </div>
                         <hr>
-                    @endfor
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -78,8 +89,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk&libraries=places"></script>
     <script type="text/javascript">
 
-        var userLat = {{ $lat }};
-        var userLng = {{ $lng }};
+        var userLat = '{{ $lat }}';
+        var userLng = '{{ $lng }}';
         var userMarker;
 
         $(document).ready(function () {
@@ -87,7 +98,7 @@
         });
 
         function getPlace() {
-            var locations = {!!  json_encode($results); !!};
+            var locations = {!! json_encode($results) !!};
             var iconUser = {
                 url: '{{ URL::asset('images/MapPointer/place_user.png') }}', // url
                 scaledSize: new google.maps.Size(38, 38), // scaled size
@@ -124,9 +135,10 @@
 
             var marker, i;
 
+
             for (i = 0; i < locations.length; i++) {
                 marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    position: new google.maps.LatLng(locations[i].shop_lat, locations[i].shop_lng),
                     map: map,
                     icon: iconPlace
                 });
@@ -135,18 +147,18 @@
                 google.maps.event.addListener(marker, 'click', (function (marker, i) {
                     return function () {
                         infowindow.setContent("<div id='content' style='padding: 5px'>\n" +
-                            "        <h4 id='firstHeading' class='firstHeading'>"+locations[i][0]+"</h4>\n" +
+                            "        <h4 id='firstHeading' class='firstHeading'>"+locations[i].shop_name+"</h4>\n" +
                             "\n" +
                             "        <div id=\"bodyContent\">\n" +
                             "            <p style=\"margin-bottom: 0.25rem;font-size: 15px\">\n" +
-                            "                ที่อยู่: "+locations[i][3]+"\n" +
+                            "                ที่อยู่: "+locations[i].formatted_address+"\n" +
                             "            </p>\n" +
                             "            <p style=\"margin-bottom: 0.25rem;font-size: 15px\">\n" +
-                            "                คะแนนจากเว็บ: "+locations[i][4].toString()+"\n" +
+                            "                คะแนนจากเว็บ: "+locations[i].shop_rating.toString()+"\n" +
                             "            </p>\n" +
-                            "            <a href='"+locations[i][6]+"' style=\"font-size: 15px\">โทร: "+locations[i][6]+"</a>\n" +
+                            "            <a href='tel:"+locations[i][6]+"' style=\"font-size: 15px\">โทร: "+locations[i].shop_phone_number+"</a>\n" +
 
-                            "            <div style=\"top: 10px;\"><a href='"+locations[i][7]+"' class=\"btn btn-googleplus waves-light waves-effect btn-sm float-right\" target='_blank'>นำทาง</a></div>\n" +
+                            "            <div style=\"top: 10px;\"><a href='"+locations[i].shop_url_nav+"' class=\"btn btn-googleplus waves-light waves-effect btn-sm float-right\" target='_blank'>นำทาง</a></div>\n" +
                             "        </div>\n" +
                             "\n" +
                             "    </div>");

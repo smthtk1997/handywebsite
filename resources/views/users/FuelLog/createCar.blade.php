@@ -28,19 +28,24 @@
                             </ul>
                         </div>
                     @endif
+                    @php
+                        $rand = random_int(0,5);
+                        $array_img = ['carBlue.png','carGreen.png','carHatch.png','carOrange.png','racing.png','suv.png']
+                    @endphp
                     <div class="row">
-                        <div class="" id="display_img1" style="display: none;margin: auto;">
+                        <div class="col-12 col-md-3" id="display_img1" style="margin: auto;">
                             <div class="i-am-centered" style="margin-bottom: 30px;">
-                                <img id="preview_img" class="centerOfRow rounded-circle" src="" alt="car_img" style="object-fit: cover;width: 200px;height: 200px;border-radius: 50%">
+                                <img id="preview_img" class="centerOfRow rounded-circle" src="{{url('/files/user_car_img/'.$array_img[$rand])}}" alt="car_img" style="object-fit: cover;width: 200px;height: 200px;border-radius: 50%">
                                 <img id="car_logo" class="centerOfRow" src="" alt="car_logo" style="width: auto;height: 70px;margin-top: 25px;display: none">
                             </div>
                         </div>
-                        <div class="" id="form_tag">
+                        <div class="col-12 col-md-9" id="form_tag">
                             {!! Form::open(['method' => 'post','route'=>['fuellog.app.create.car.store'],'files' => true]) !!}
                             <div class="form-row" style="margin-bottom: 20px">
                                 <div class="form-group col-12 col-md-6">
                                     <label for="carName">ชื่อรถ</label>
                                     <input type="text" id="carName" class="mt-1 mb-1 form-control" name="carName" placeholder="ชื่อ" required>
+                                    <input type="hidden" name="no_img" value="{{$array_img[$rand]}}">
                                 </div>
                                 <div class="form-group col-12 col-md-6">
                                     <label for="carLicense">เลขทะเบียน</label>
@@ -133,9 +138,6 @@
 
             $("#car_img").change(function() {
                 readURL(this);
-                $('#display_img1').attr('class','col-12 col-md-3');
-                $('#form_tag').attr('class','col-12 col-md-9');
-                $('#display_img1').fadeIn('slow');
                 if ($('#car_logo').attr('src') != '') {
                     $('#car_logo').fadeIn('slow');
                 }

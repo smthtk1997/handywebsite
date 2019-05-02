@@ -33,7 +33,7 @@ class UserCarsController extends Controller
             $file_path_toDB = $path;
 
         }else{
-            $file_path_toDB = null;
+            $file_path_toDB = $request->no_img;
         }
 
         $userCar = new UserCars([

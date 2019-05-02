@@ -9,7 +9,7 @@
     <meta name="author" content="wittylight">
 
     <!-- Favicon icon & Title -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{url('imgs/favicon.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/Logofilepng/Logo_H_White.png')}}">
     <title>@yield('title', 'Home') | Handy Driver Assist</title>
     {{--script--}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -143,16 +143,22 @@
                     @endauth
 
                     @guest
-                        <li>
-                            <a class="btn btn-success waves-light waves-effect" href="{{ route('login') }}">ลงชื่อเข้าใช้</a>
 
-                            <a class="btn btn-warning text-white waves-light waves-effect ml-3" href="{{ route('register') }}">สมัครสมาชิก</a>
+                        <li class="nav-item dropdown">
+                            <div class="nav-link  waves-effect waves-dark" aria-haspopup="true" aria-expanded="true">
+                                <div class="btn-group">
+                                    <a class="btn btn-info btn-rounded waves-light waves-effect" href="{{ route('login') }}">ลงชื่อเข้าใช้</a>
+                                    <a class="btn btn-warning btn-rounded text-white waves-light waves-effect ml-3" href="{{ route('register') }}">สมัครสมาชิก</a>
+                                </div>
+
+                            </div>
                         </li>
+
                     @else
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="{{url('imgs/'.Auth::user()->avatar)}}" alt="user" class="rounded-circle mr-2" width="40">
-                                <span class="m-l-5 font-medium d-none d-sm-inline-block">{{Auth::user()->username}} <i class="mdi mdi-chevron-down"></i></span>
+                                <span class="m-l-5 font-medium d-none d-sm-inline-block">{{Auth::user()->name}} <i class="mdi mdi-chevron-down"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <span class="with-arrow">
@@ -406,7 +412,7 @@
                                 <li class="sidebar-item">
                                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('fuellog.app.index')}}" aria-expanded="false">
                                         <i class="mdi mdi-gas-station"></i>
-                                        <span class="hide-menu">แอพลิเคชั่นการเติมน้ำมัน</span>
+                                        <span class="hide-menu">myFuelLog</span>
                                     </a>
                                 </li>
 {{--                                <li class="sidebar-item">--}}

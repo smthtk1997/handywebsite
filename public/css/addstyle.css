@@ -54,6 +54,7 @@ body{
 
 .imageGrow{
     transition: all .4s;
+    cursor: pointer;
 }
 .imageGrow:hover{
     -ms-transform: scale(1.08) translateZ(0);
