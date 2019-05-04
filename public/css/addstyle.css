@@ -11,7 +11,7 @@ body{
 }
 
 .intable{
-    padding: 40px 30px;
+    padding: 30px 30px;
 }
 
 .cardColor{
@@ -65,4 +65,52 @@ body{
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.myNowrap{
+    white-space: nowrap!important;
+}
+
+.image-popup-vertical-fit:hover{
+    cursor: pointer;
+}
+
+.section-wrapper{
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    padding: 25px;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #343a40;
+    text-transform: uppercase;
+    margin-top: 20px;
+    display: block;
+    letter-spacing: 1px;
+}
+
+.slim-pagetitle {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: #343a40;
+    padding-left: 10px;
+    border-left: 4px solid #e13031;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 18px;
+    letter-spacing: .5px;
+}
+
+.myResponsiveTable{
+    overflow-x: auto;
+    display: block;
+    width: 100%
+}
+
+.containerStyle{
+    padding: 0px;
+    margin-bottom: 200px;
 }

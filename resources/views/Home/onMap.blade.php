@@ -31,9 +31,14 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="{{route('home')}}">หน้าหลัก</a>
+                                <a href="#">หน้าหลัก</a>
                             </li>
-                            <li class="breadcrumb-item active">การค้นหา</li>
+                            <li class="breadcrumb-item">
+                                <a href="#">สินค้าของฉัน</a>
+                            </li>
+                            <li class="breadcrumb-item active">รายการสั่งซื้อ</li>
+
+                            <li class="breadcrumb-item active" aria-current="page">รายการที่เข้ามา</li>
                         </ol>
                     </nav>
                 </div>
@@ -43,75 +48,7 @@
     <div class="container-fluid containerStyle">
         <div class="shadow bg-white rounded">
             <div class="card intable" style="padding-bottom: 100px">
-                <div class="row mb-3">
-                    @if (!empty($nameSearch))
-                        <div class="col-12 col-md-2 d-flex align-items-stretch">
-                            <div class="text-center searchInfo centerOfRow w-100">คำค้นหา: {{$nameSearch}}</div>
-                        </div>
-                    @endif
-                    @if (!empty($type))
-                        <div class="col-12 col-md-2 d-flex align-items-stretch">
-                            <div class="text-center searchInfo centerOfRow w-100">ประเภท: {{$type}}</div>
-                        </div>
-                    @endif
-                    @if ($range == 0)
-                        <div class="col-12 col-md-2 d-flex align-items-stretch">
-                            <div class="text-center searchInfo centerOfRow w-100">ในระยะ: ไม่จำกัด</div>
-                        </div>
-                    @else
-                        <div class="col-12 col-md-2 d-flex align-items-stretch">
-                            <div class="text-center searchInfo centerOfRow w-100">ในระยะ: {{$range/1000}} กิโลเมตร</div>
-                        </div>
-                    @endif
-                </div>
                 <div id="map"></div>
-                <a href="{{route('search.on.map.view')}}"><button class="mt-3 btn btn-outline-danger btn-block waves-effect waves-light">ค้นหาบนแผนที่</button></a>
-                <div style="margin-top: 2.5rem">
-                    <h3 style="margin-bottom: 1.8rem">ผลลัพธ์การค้นหา:</h3>
-                    @foreach ($results as $shop)
-                        <div class="row shopEach" data-lat="{{$shop['shop_lat']}}" data-lng="{{$shop['shop_lng']}}">
-                            <div class="col-12 col-md-4 col-lg-3">
-                                @if ($shop['shop_photo_ref'] != null)
-                                    <img class="image-popup-vertical-fit imageGrow mb-md-0 mb-3" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference={{$shop['shop_photo_ref']}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
-                                         src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference={{$shop['shop_photo_ref']}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
-                                         width="200" style="max-height: 200px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;"
-                                         alt="store">
-                                    @else
-                                        <img class="image-popup-vertical-fit imageGrow mb-md-0 mb-3" href="{{asset('images/API-Logo.png')}}"
-                                             src="{{asset('images/API-Logo.png')}}"
-                                             width="200" style="max-height: 200px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;"
-                                             alt="store">
-                                @endif
-                            </div>
-                            <div class="col-12 col-md-8 col-lg-9">
-                                <h4 style="margin-bottom: 15px">{{$shop['shop_name']}}</h4>
-                                <p style="margin-bottom: 12px;font-size: 15px">ที่อยู่: {{$shop['formatted_address']}}</p>
-                                <p style="margin-bottom: 12px;font-size: 15px">
-                                    คะแนนจากเว็บ:
-                                    @if (!$shop['shop_rating'])
-                                        @for ($i = 0; $i < 5; $i++)
-                                            <img src="{{asset('images/star/star-off.png')}}" alt="{{$shop['shop_name']}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
-                                        @endfor
-                                        @else
-                                        @for ($i = 0; $i < (int)$shop['shop_rating']; $i++)
-                                            <img src="{{asset('images/star/star-on.png')}}" alt="{{$shop['shop_name']}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
-                                        @endfor
-                                    @endif
-                                </p>
-
-                                @if ($shop['shop_phone_number'] != null)
-                                    <a href="tel:{{$shop['shop_phone_number']}}" style="font-size: 15px">โทร: {{str_replace('+66-','0',$shop['shop_phone_number'])}}</a>
-                                @endif
-                                <div style="margin-top: 14px">
-                                    <a href="{{$shop['shop_url_nav']}}"
-                                       class="btn btn-danger waves-effect waves-light btn-sm"
-                                       target="_blank">กดเพื่อนำทาง</a>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                    @endforeach
-                </div>
             </div>
         </div>
     </div>
@@ -124,8 +61,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk&libraries=places"></script>
     <script type="text/javascript">
 
-        var userLat = '{{ $lat }}';
-        var userLng = '{{ $lng }}';
+        {{--var userLat = '{{ $lat }}';--}}
+        {{--var userLng = '{{ $lng }}';--}}
         var userMarker;
 
         $(document).ready(function () {
@@ -133,7 +70,7 @@
         });
 
         function getPlace() {
-            var locations = {!! json_encode($results) !!};
+            {{--var locations = {!! json_encode($results) !!};--}}
             var iconUser = {
                 url: '{{ URL::asset('images/MapPointer/place_user.png') }}', // url
                 scaledSize: new google.maps.Size(38, 38), // scaled size
@@ -219,7 +156,7 @@
                     }
                 })(marker, i));
             }
-            
+
             $('.shopEach').on('click tap',function () {
                 let lat = parseFloat($(this).attr('data-lat'));
                 let lng = parseFloat($(this).attr('data-lng'));

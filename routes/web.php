@@ -148,4 +148,15 @@ Route::get('/files/brand_logo/{filename}', function($filename) // แสดง�
     return Response::make($fileContents, 200);
 });
 
+Route::get('/search/on/map/view', [ // ค้นหาบนแผนที่
+    'as' => 'search.on.map.view',
+    'uses' => 'SearchEngineController@search_on_map_view']);
+
+
+////////////// Map Bound API ////////////////
+
+Route::post('/api/map/bound.api', [
+    'as' => 'api.map.bound',
+    'uses' => 'SearchEngineController@get_Place_inBound']);
+
 

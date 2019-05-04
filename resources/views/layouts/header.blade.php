@@ -148,7 +148,7 @@
                             <div class="nav-link  waves-effect waves-dark" aria-haspopup="true" aria-expanded="true">
                                 <div class="btn-group">
                                     <a class="btn btn-info btn-rounded waves-light waves-effect" href="{{ route('login') }}">ลงชื่อเข้าใช้</a>
-                                    <a class="btn btn-warning btn-rounded text-white waves-light waves-effect ml-3" href="{{ route('register') }}">สมัครสมาชิก</a>
+                                    <a class="btn btn-warning btn-rounded text-white waves-light waves-effect" href="{{ route('register') }}">สมัครสมาชิก</a>
                                 </div>
 
                             </div>

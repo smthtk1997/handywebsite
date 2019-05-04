@@ -112,4 +112,31 @@ class SearchEngineController extends Controller
     }
 
 
+    public function get_Place_inBound()
+    {
+        $form_data = array();
+        $aNord = $_POST['aNord'];
+        $aEst = $_POST['aEst'];
+        $aSud = $_POST['aSud'];
+        $aOvest = $_POST['aOvest'];
+
+        $places = Shop::whereBetween('lat',[$aSud,$aNord])->whereBetween('lng',[$aOvest,$aEst])->get();
+
+        if ($places->count() > 0){
+            $form_data['places'] = $places;
+            $form_data['status'] = true;
+        }else{
+            $form_data['status'] = false;
+        }
+
+        return json_encode($form_data, JSON_UNESCAPED_UNICODE);
+
+    }
+
+    public function search_on_map_view()
+    {
+        return view('Home.onMap');
+    }
+
+
 }

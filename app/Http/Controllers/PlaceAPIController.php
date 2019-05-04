@@ -213,4 +213,5 @@ class PlaceAPIController extends Controller
         }
         return 'updated';
     }
+
 }
