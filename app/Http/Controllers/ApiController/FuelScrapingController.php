@@ -10,7 +10,7 @@ class FuelScrapingController extends Controller
     public function getFuelPriceApi_Ptt() // ptt and other
     {
         libxml_use_internal_errors(true);
-        $html = file_get_contents("http://www.pttplc.com/th/getoilprice.aspx/");
+        $html = file_get_contents("http://gasprice.kapook.com/gasprice.php");
         $DOM = new \DOMDocument();
         $DOM->loadHTML($html);
         $finder = new \DomXPath($DOM);
@@ -22,25 +22,25 @@ class FuelScrapingController extends Controller
         $fuel_type = $_POST['fuel_type'];
 
         if ($fuel_type == 'เบนซิน-95'){
-            $nodes = $finder->query("//*[@id='g_2963d969_94e5_4921_b8c3_9739b0799200_ctl00_uxGasoline95PriceDiv']");
+            $nodes = $finder->query("/html/body/section/article[1]/ul/li[5]/em");
             $showvalue = $nodes[0]->nodeValue;
         }elseif ($fuel_type == 'แก๊สโซฮอล์-91'){
-            $nodes = $finder->query("//*[@id='g_2963d969_94e5_4921_b8c3_9739b0799200_ctl00_uxGasohol91PriceDiv']");
+            $nodes = $finder->query("/html/body/section/article[1]/ul/li[4]/em");
             $showvalue = $nodes[0]->nodeValue;
         }elseif ($fuel_type == 'แก๊สโซฮอล์-95'){
-            $nodes = $finder->query("//*[@id='g_2963d969_94e5_4921_b8c3_9739b0799200_ctl00_uxGasohol95PriceDiv']");
+            $nodes = $finder->query("/html/body/section/article[1]/ul/li[1]/em");
             $showvalue = $nodes[0]->nodeValue;
         }elseif ($fuel_type == 'แก๊สโซฮอล์-E20'){
-            $nodes = $finder->query("//*[@id='g_2963d969_94e5_4921_b8c3_9739b0799200_ctl00_uxGasoholE20PriceDiv']");
+            $nodes = $finder->query("/html/body/section/article[1]/ul/li[2]/em");
             $showvalue = $nodes[0]->nodeValue;
         }elseif ($fuel_type == 'แก๊สโซฮอล์-E85'){
-            $nodes = $finder->query("//*[@id='g_2963d969_94e5_4921_b8c3_9739b0799200_ctl00_uxGasoholE85PriceDiv']");
+            $nodes = $finder->query("/html/body/section/article[1]/ul/li[3]/em");
             $showvalue = $nodes[0]->nodeValue;
         }elseif ($fuel_type == 'ดีเซล'){
-            $nodes = $finder->query("//*[@id='g_2963d969_94e5_4921_b8c3_9739b0799200_ctl00_uxDieselPriceDiv']");
+            $nodes = $finder->query("/html/body/section/article[1]/ul/li[6]/em");
             $showvalue = $nodes[0]->nodeValue;
         }elseif ($fuel_type == 'ดีเซลพรีเมี่ยม'){
-            $nodes = $finder->query("//*[@id='g_2963d969_94e5_4921_b8c3_9739b0799200_ctl00_uxHyForcePremiumDieselDiv']");
+            $nodes = $finder->query("/html/body/section/article[1]/ul/li[8]/em");
             $showvalue = $nodes[0]->nodeValue;
         }
 
@@ -56,7 +56,7 @@ class FuelScrapingController extends Controller
 
 
 
-    public function getFuelPriceApi_Shell() // shell and other
+    public function getFuelPriceApi_Shell() // shell
     {
         libxml_use_internal_errors(true);
         $html = file_get_contents("https://www.shell.co.th/th_th/motorists/shell-fuels/fuel-price/app-fuel-prices.html");

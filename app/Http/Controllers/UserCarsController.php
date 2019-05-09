@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
 use App\UserCars;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,8 @@ use Alert;
 class UserCarsController extends Controller
 {
     public function createCarIndex(){
-        return view('users.FuelLog.createCar');
+        $brands = Brand::orderBy('name','asc')->get();
+        return view('users.FuelLog.createCar',['brands'=>$brands]);
     }
 
     public function storeCar(Request $request){

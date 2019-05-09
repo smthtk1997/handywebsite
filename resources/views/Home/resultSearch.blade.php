@@ -18,6 +18,10 @@
             background-color: #efefef;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
     </style>
 @stop
 @section('content')
@@ -86,9 +90,9 @@
                                 </div>
                                 <div class="col-12 col-md-8 col-lg-9">
                                     <h4 style="margin-bottom: 15px">{{$shop['shop_name']}}</h4>
-                                    <p style="margin-bottom: 12px;font-size: 15px">ที่อยู่: {{$shop['formatted_address']}}</p>
+                                    <p style="margin-bottom: 12px;font-size: 15px"><i class="fas fa-map-marker-alt"></i> ที่อยู่: {{$shop['formatted_address']}}</p>
                                     <p style="margin-bottom: 12px;font-size: 15px">
-                                        คะแนนจากเว็บ:
+                                        <i class="far fa-smile"></i> คะแนนจากเว็บ:
                                         @if (!$shop['shop_rating'])
                                             @for ($i = 0; $i < 5; $i++)
                                                 <img src="{{asset('images/star/star-off.png')}}" alt="{{$shop['shop_name']}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
@@ -101,9 +105,14 @@
                                     </p>
 
                                     @if ($shop['shop_phone_number'] != null)
-                                        <a href="tel:{{$shop['shop_phone_number']}}" style="font-size: 15px">โทร: {{str_replace('+66-','0',$shop['shop_phone_number'])}}</a>
+                                        <div>
+                                            <a href="tel:{{$shop['shop_phone_number']}}" style="font-size: 15px"><i class="fas fa-mobile-alt"></i> &nbsp;โทร: {{str_replace('+66-','0',$shop['shop_phone_number'])}}</a>
+                                        </div>
                                     @endif
-                                    <div style="margin-top: 14px">
+                                    <div class="btn-group float-right float-md-left" style="margin-top: 14px">
+                                        <a href="{{route('shop.search.detail',['place_id'=>$shop['place_id']])}}"
+                                           class="btn btn-info waves-effect waves-light btn-sm mr-2"
+                                           target="_blank">ดูรายละเอียด</a>
                                         <a href="{{$shop['shop_url_nav']}}"
                                            class="btn btn-danger waves-effect waves-light btn-sm"
                                            target="_blank">กดเพื่อนำทาง</a>
@@ -172,22 +181,22 @@
 
 
 
-            google.maps.event.addListener(map, 'idle', function() {
-                let aNord   =   map.getBounds().getNorthEast().lat();
-                let aEst    =   map.getBounds().getNorthEast().lng();
-                let aSud    =   map.getBounds().getSouthWest().lat();
-                let aOvest  =   map.getBounds().getSouthWest().lng();
-                //console.log(aNord+'-'+aEst+"-"+aSud+"-"+'-'+aOvest);
-                apiAjax(aNord,aEst,aSud,aOvest);
-                $.blockUI({ message: null});
-            });
+            // google.maps.event.addListener(map, 'idle', function() {
+            //     let aNord   =   map.getBounds().getNorthEast().lat();
+            //     let aEst    =   map.getBounds().getNorthEast().lng();
+            //     let aSud    =   map.getBounds().getSouthWest().lat();
+            //     let aOvest  =   map.getBounds().getSouthWest().lng();
+            //     //console.log(aNord+'-'+aEst+"-"+aSud+"-"+'-'+aOvest);
+            //     apiAjax(aNord,aEst,aSud,aOvest);
+            //     $.blockUI({ message: null});
+            // });
 
 
             var infowindow = new google.maps.InfoWindow();
 
             var marker, i;
 
-
+            var detail_path = '{!! url('/handy/shop/detail') !!}';
             for (i = 0; i < locations.length; i++) {
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng(locations[i].shop_lat, locations[i].shop_lng),
@@ -210,7 +219,10 @@
                             "            </p>\n" +
                             "            <a href='tel:"+locations[i][6]+"' style=\"font-size: 15px\">โทร: "+locations[i].shop_phone_number+"</a>\n" +
 
-                            "            <div style=\"top: 10px;\"><a href='"+locations[i].shop_url_nav+"' class=\"btn btn-googleplus waves-light waves-effect btn-sm float-right\" target='_blank'>นำทาง</a></div>\n" +
+                            "            <div class='btn-group float-right mt-2 mt-md-0'>" +
+                            "<a href='"+detail_path+"/"+locations[i].place_id+"' class=\"btn btn-info waves-light waves-effect btn-sm mr-2\" target='_blank'>ดูรายละเอียด</a>" +
+                            "<a href='"+locations[i].shop_url_nav+"' class=\"btn btn-googleplus waves-light waves-effect btn-sm\" target='_blank'>นำทาง</a>" +
+                            "</div>\n" +
                             "        </div>\n" +
                             "\n" +
                             "    </div>");
@@ -236,29 +248,30 @@
                 let lng = parseFloat($(this).attr('data-lng'));
                 map.panTo({lat: lat,lng: lng});
                 map.setZoom(16);
-            })
-        }
-
-        function apiAjax(aNord,aEst,aSud,aOvest) {
-            $.ajax({
-                url: '{!! url('/api/map/bound.api') !!}',
-                method: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {aNord: aNord,aEst: aEst,aSud: aSud,aOvest: aOvest}
-            }).done(function (msg) {
-                let data = JSON.parse(JSON.parse(JSON.stringify(msg)));
-                console.log(data.places);
-                $.unblockUI();
-                if (data.status == true) {
-                    $.each(data.model, function (index, val) {
-
-                    });
-
-                }
+                //window.location = '#map';
             });
         }
+
+        {{--function apiAjax(aNord,aEst,aSud,aOvest) {--}}
+        {{--    $.ajax({--}}
+        {{--        url: '{!! url('/api/map/bound.api') !!}',--}}
+        {{--        method: "POST",--}}
+        {{--        headers: {--}}
+        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+        {{--        },--}}
+        {{--        data: {aNord: aNord,aEst: aEst,aSud: aSud,aOvest: aOvest}--}}
+        {{--    }).done(function (msg) {--}}
+        {{--        let data = JSON.parse(JSON.parse(JSON.stringify(msg)));--}}
+        {{--        console.log(data.places);--}}
+        {{--        $.unblockUI();--}}
+        {{--        if (data.status == true) {--}}
+        {{--            $.each(data.model, function (index, val) {--}}
+
+        {{--            });--}}
+
+        {{--        }--}}
+        {{--    });--}}
+        {{--}--}}
     </script>
 
 @stop

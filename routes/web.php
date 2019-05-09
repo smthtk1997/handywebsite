@@ -41,6 +41,12 @@ Route::get('imgs/{filename}', function($filename) {
 });
 
 
+Route::get('/backpage', [
+    'as' => 'back.page',
+    'uses' => function(){
+        return redirect()->back();
+    }]);
+
 
 // Guest Route
 
@@ -104,6 +110,10 @@ Route::get('/search/on/map/view', [ // ค้นหาบนแผนที่
 Route::post('/handy/shop/search', [
     'as' => 'shop.search',
     'uses' => 'SearchEngineController@shopSearch']);
+
+Route::get('/handy/shop/detail/{place_id}', [
+    'as' => 'shop.search.detail',
+    'uses' => 'SearchEngineController@placeDetail']);
 
 
 

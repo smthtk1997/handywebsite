@@ -31,7 +31,7 @@
                         <span class="sr-only">ถัดไป</span>
                     </a>
                 </div>
-                <span class="mt-4 mb-2"><h2>ค้นหาอู่ซ่อมรถยนต์ <small style="font-size: 18px">Search Garages in Handy</small></h2></span>
+                <span class="mt-4 mb-2"><h2><span style="color: #df3031">ค้นหา</span>บริการรถยนต์ <small style="font-size: 18px">Search Car Service in Handy</small></h2></span>
                 <form action="{{route('shop.search')}}" method="post">
                     @csrf
                     <div class="form-row">

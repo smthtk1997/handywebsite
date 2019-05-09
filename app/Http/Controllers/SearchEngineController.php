@@ -60,6 +60,7 @@ class SearchEngineController extends Controller
                 foreach ($shop->shop_types as $type){
                     if ($type->type_id == $request->inputType){
                         $inarr = array();
+                        $inarr['place_id'] = $shop->place_id;
                         $inarr['shop_name'] = $shop->name;
                         $inarr['shop_lat'] = $shop->lat;
                         $inarr['shop_lng'] = $shop->lng;
@@ -94,6 +95,7 @@ class SearchEngineController extends Controller
             $typeInput = null;
             foreach ($shops as $shop){
                 $inarr = array();
+                $inarr['place_id'] = $shop->place_id;
                 $inarr['shop_name'] = $shop->name;
                 $inarr['shop_lat'] = $shop->lat;
                 $inarr['shop_lng'] = $shop->lng;
@@ -137,6 +139,72 @@ class SearchEngineController extends Controller
     {
 
         return view('Home.onMap');
+    }
+
+    public function placeDetail($place_id)
+    {
+        $shop = Shop::where('place_id',$place_id)->first();
+        // ไปเอา detail
+        $urlGetdata = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$place_id&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk";
+        $jsonDetail = file_get_contents($urlGetdata);
+        $dataDetail = json_decode($jsonDetail,true);
+
+
+        //ตัวแปรที่จะส่งไป
+        $openNow = null;
+        $weekdays = null;
+        $photo_toshow = null;
+        $reviews_toshow = null;
+
+        if (array_key_exists('result',$dataDetail)) {
+            if (array_key_exists('international_phone_number',$dataDetail['result'])){
+                $phone_number = $dataDetail['result']['international_phone_number'];
+                $phone_number = str_replace(' ','-',$phone_number);
+                $shop->phone_number = $phone_number;
+            }
+
+            if (array_key_exists('opening_hours',$dataDetail['result'])){
+                $openNow = $dataDetail['result']['opening_hours']['open_now']; // เปิด/ปิด หรือไม่
+                $weekdays = $dataDetail['result']['opening_hours']['weekday_text']; // เวลาทำการ
+            }
+            if (array_key_exists('photos',$dataDetail['result'])){ // เปิด/ปิด หรือไม่
+                $photos_arr = $dataDetail['result']['photos'];
+                $photo_toshow = array();
+                if ($photos_arr){
+                    $shop->photo_ref = $photos_arr[0]['photo_reference'];
+                    foreach ($photos_arr as $photo){
+                        array_push($photo_toshow,$photo['photo_reference']);
+                    }
+                }
+            }
+            if (array_key_exists('reviews',$dataDetail['result'])){
+                $reviews = $dataDetail['result']['reviews']; // มีรีวิว
+                $reviews_toshow = array();
+                if ($reviews){
+                    foreach ($reviews as $in_review){
+                        $in_text = array();
+                        $in_text['user_name'] = $in_review['author_name'];
+                        $in_text['profile_photo'] = $in_review['profile_photo_url'];
+                        $in_text['give_rate'] = $in_review['rating'];
+                        $in_text['text'] = $in_review['text'];
+                        array_push($reviews_toshow,$in_text);
+                    }
+                }
+            }
+        }
+
+        try{
+            $shop->save();
+        }catch (\Exception $x){
+        }
+
+        return view('Home.placeDetail',[
+            'shop'=>$shop,
+            'openNow'=>$openNow,
+            'weekdays'=>$weekdays,
+            'photo_toshow'=>$photo_toshow,
+            'reviews_toshow'=>$reviews_toshow
+        ]);
     }
 
 

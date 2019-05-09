@@ -39,7 +39,7 @@
             <div class="card intable cardColor cardStyleMargin" style="padding-bottom: 100px">
                 <div class="i-am-centered" id="loadingRadio" style="margin-bottom: 20px">
                     <img class="loading text-center"  src="{{asset('images/Radio-1s-200px.svg')}}" alt="" height="120px"><br>
-                    <small class="text-danger">ค้นหาสัญญาณ GPS</small>
+                    <small class="text-danger">กำลังค้นหาสัญญาณ GPS</small>
                 </div>
                 <div id="map" style="margin-bottom: 10px;display: none"></div>
                 <hr style="margin-bottom: 25px">
@@ -74,15 +74,14 @@
                             <input id="selectorTime" class="flatpickr flatpickr-input  form-control"
                                    type="text" name="selectorTime">
                         </div>
-                        <div class="form-group col-12 col-md-2">
-                            <label for="date_now">&nbsp;</label>
-                            <button type="button" id="date_now" class="btn btn-outline-info waves-effect waves-light btn-block">ตอนนี้</button>
+                        <div class="form-group col-12 col-md-2 mt-md-4 mt-0">
+                            <button type="button" id="date_now" class="btn btn-outline-info waves-effect waves-light btn-block" style="margin-top: 0.3rem">ตอนนี้</button>
                         </div>
 
                         <div class="form-group col-12 col-md-4">
                             <label for="mileage">ระยะทางรวม (กิโลเมตร)</label>
                             <input type="number" id="mileage" class="form-control" placeholder="ระยะทางรวม" name="mileage">
-                            <small class="text-muted">ระยะทางรวมล่าสุด: </small>
+                            <small class="text-muted">ระยะทางรวมล่าสุด: {{$last_refuel->mileage}}</small>
                         </div>
                         <div class="col-12 col-md-4" style="margin-top: 0.25rem;">
                             <label for="gas_station">ปั้มน้ำมัน</label>
@@ -132,7 +131,7 @@
                         <div class="form-group col-4 text-center"></div>
 
                         <div class="form-group col-4">
-                            <input type="submit" class="btn btn-success btn-lg float-right" value="ยืนยัน" id="btnSubmit" disabled onclick="$.blockUI({ message: null});">
+                            <input type="submit" class="btn btn-success btn-lg float-right" value="ยืนยัน" id="btnSubmit" disabled onclick="return check()">
                         </div>
                     </div>
                     <input type="hidden" name="user_lat" id="user_lat">
@@ -165,10 +164,12 @@
             $("#selectorDate").flatpickr({
                 dateFormat: "d/m/y",
                 mode: 'single',
-                maxDate: "today"
+                defaultDate: 'today',
+                maxDate: "today",
+                time_24hr: false,
             });
 
-            //$('#selectorTime').val(hour+":"+minute);
+            $('#selectorTime').val(hour+":"+minute);
 
             $("#selectorTime").flatpickr({
                 enableTime: true,
@@ -338,9 +339,9 @@
         function fuelPrice(station,type) {
             let path_url = null;
             if (gas_station === 'เชลล์'){
-                path_url = '{!! url('/api/fuel/shell/price.api') !!}';
+                path_url = '{{url('/api/fuel/shell/price.api')}}';
             }else{
-                path_url = '{!! url('/api/fuel/ptt/price.api') !!}';
+                path_url = '{{route('api.fuel.ptt.price')}}';
             }
             $.ajax({
                 url: path_url,
@@ -463,6 +464,23 @@
             reader.onerror = function (error) {
                 console.log('Error: ', error);
             };
+        }
+
+        function check() {
+            let mile = $('#mileage').val();
+            let old_mile = '{!! $last_refuel->mileage !!}';
+
+            if (mile >= old_mile){
+                $.blockUI({ message: null});
+                return true
+            }else{
+                Swal.fire({
+                    type: 'warning',
+                    title: 'ระยะทางรวมน้อยกว่าครั้งก่อน!',
+                    text: 'กรุณาใส่ระยะทางรวมใหม่',
+                });
+                return false;
+            }
         }
 
 

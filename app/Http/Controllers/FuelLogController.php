@@ -30,7 +30,8 @@ class FuelLogController extends Controller
     }
 
     public function myLogRefuel(UserCars $car){
-        return view('users.FuelLog.reFuel',['car'=>$car]);
+        $last_fuel = FuelLog::where('car_id',$car->id)->orderBy('created_at','desc')->first();
+        return view('users.FuelLog.reFuel',['car'=>$car,'last_refuel'=>$last_fuel]);
     }
 
     public function myLogRefuel_save(Request $request,UserCars $car)
@@ -38,7 +39,7 @@ class FuelLogController extends Controller
         $this->validate($request,[
             'selectorDate' => 'required',
             'selectorTime' => 'required',
-            'mileage' => 'required|integer',
+            'mileage' => 'required|integer|min:'.$car->mileage,
             'gas_station'=> 'required',
             'fuel_type'=>'required',
             'price_liter'=>'required',
@@ -80,8 +81,11 @@ class FuelLogController extends Controller
             'token'=>str_random(16),
         ]);
 
+        $car->mileage = $request->mileage;
+
         try{
             $refuel->save();
+            $car->save();
             Alert::success('บันทึกข้อมูลเรียบร้อย','สำเร็จ!')->autoclose(2000);
             return redirect()->route('fuellog.myLog',['car'=>$car]);
 

@@ -54,13 +54,13 @@
                         $array_img = ['carBlue.png','carGreen.png','carHatch.png','carOrange.png','racing.png','suv.png']
                     @endphp
                     <div class="row">
-                        <div class="col-12 col-md-3" id="display_img1" style="margin: auto;">
+                        <div class="col-12 col-md-4" id="display_img1" style="margin: auto;">
                             <div class="i-am-centered" style="margin-bottom: 30px;">
                                 <img id="preview_img" class="centerOfRow rounded-circle" src="{{url('/files/user_car_img/'.$array_img[$rand])}}" alt="car_img" style="object-fit: cover;width: 200px;height: 200px;border-radius: 50%">
                                 <img id="car_logo" class="centerOfRow" src="" alt="car_logo" style="width: auto;height: 70px;margin-top: 25px;display: none">
                             </div>
                         </div>
-                        <div class="col-12 col-md-9" id="form_tag">
+                        <div class="col-12 col-md-8" id="form_tag">
                             {!! Form::open(['method' => 'post','route'=>['fuellog.app.create.car.store'],'files' => true]) !!}
                             <div class="form-row" style="margin-bottom: 20px">
                                 <div class="form-group col-12 col-md-6">
@@ -76,21 +76,9 @@
                                     <label for="brand">ยี่ห้อรถ</label>
                                     <select id="brand" class="form-control" name="brand" required>
                                         <option value="" selected disabled>เลือกยี่ห้อ</option>
-                                        <option value="Toyota">Toyota</option>
-                                        <option value="Honda">Honda</option>
-                                        <option value="Isuzu">Isuzu</option>
-                                        <option value="Suzuki">Suzuki</option>
-                                        <option value="Subaru">Subaru</option>
-                                        <option value="Nissan">Nissan</option>
-                                        <option value="Mitsubishi">Mitsubishi</option>
-                                        <option value="Mazda">Mazda</option>
-                                        <option value="MG">MG</option>
-                                        <option value="Ford">Ford</option>
-                                        <option value="Chevrolet">Chevrolet</option>
-                                        <option value="Mercedes-Benz">Mercedes-Benz</option>
-                                        <option value="BMW">BMW</option>
-                                        <option value="Audi">Audi</option>
-                                        <option value="Volvo">Volvo</option>
+                                        @foreach($brands as $brand)
+                                            <option value="{{$brand}}" data-img="{{$brand->img_logo}}" >{{ucfirst($brand->name)}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -149,9 +137,9 @@
             });
             $('#brand').on('change',function () {
                 if ($('#brand option:selected').val() != ''){
-                    let brand_select = ($('#brand option:selected').val());
+                    let brand_select = ($('#brand option:selected').attr('data-img'));
                     $('#modelCar').prop('disabled',false);
-                    let pathimg = '{{ url('/files/brand_logo') }}'+"/"+brand_select+'.jpg';
+                    let pathimg = '{{ url('/files/brand_logo') }}'+"/"+brand_select;
                     $('#car_logo').attr('src',pathimg);
                     $('#car_logo').fadeIn('slow');
                 }
