@@ -31,14 +31,9 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="#">หน้าหลัก</a>
+                                <a href="{{route('home')}}">หน้าหลัก</a>
                             </li>
-                            <li class="breadcrumb-item">
-                                <a href="#">สินค้าของฉัน</a>
-                            </li>
-                            <li class="breadcrumb-item active">รายการสั่งซื้อ</li>
-
-                            <li class="breadcrumb-item active" aria-current="page">รายการที่เข้ามา</li>
+                            <li class="breadcrumb-item active">ค้นหาบนแผนที่</li>
                         </ol>
                     </nav>
                 </div>
@@ -66,11 +61,46 @@
         var userMarker;
 
         $(document).ready(function () {
-            getPlace();
+            getLocation();
         });
 
+        var x = document.getElementById("demo");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            console.log(lat);
+            console.log(lng);
+            getPlace();
+        }
+
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    x.innerHTML = "User denied the request for Geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    x.innerHTML = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    x.innerHTML = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    x.innerHTML = "An unknown error occurred.";
+                    break;
+            }
+        }
+
         function getPlace() {
-            {{--var locations = {!! json_encode($results) !!};--}}
             var iconUser = {
                 url: '{{ URL::asset('images/MapPointer/place_user.png') }}', // url
                 scaledSize: new google.maps.Size(38, 38), // scaled size
@@ -102,13 +132,16 @@
                 animation: google.maps.Animation.BOUNCE
             });
 
-            google.maps.event.addListener(map, 'bounds_changed', function() {
+
+            google.maps.event.addListener(map, 'idle', function() {
                 let aNord   =   map.getBounds().getNorthEast().lat();
                 let aEst    =   map.getBounds().getNorthEast().lng();
                 let aSud    =   map.getBounds().getSouthWest().lat();
                 let aOvest  =   map.getBounds().getSouthWest().lng();
                 //console.log(aNord+'-'+aEst+"-"+aSud+"-"+'-'+aOvest);
                 apiAjax(aNord,aEst,aSud,aOvest);
+                $.blockUI({ message: null});
+
             });
 
 
@@ -137,7 +170,7 @@
                             "            <p style=\"margin-bottom: 0.25rem;font-size: 15px\">\n" +
                             "                คะแนนจากเว็บ: "+locations[i].shop_rating.toString()+"\n" +
                             "            </p>\n" +
-                            "            <a href='tel:"+locations[i][6]+"' style=\"font-size: 15px\">โทร: "+locations[i].shop_phone_number+"</a>\n" +
+                            "            <a href='tel:"+locations[i].shop_phone_number+"' style=\"font-size: 15px\">โทร: "+locations[i].shop_phone_number+"</a>\n" +
 
                             "            <div style=\"top: 10px;\"><a href='"+locations[i].shop_url_nav+"' class=\"btn btn-googleplus waves-light waves-effect btn-sm float-right\" target='_blank'>นำทาง</a></div>\n" +
                             "        </div>\n" +
@@ -176,6 +209,7 @@
             }).done(function (msg) {
                 let data = JSON.parse(JSON.parse(JSON.stringify(msg)));
                 console.log(data.places);
+                $.unblockUI();
                 if (data.status == true) {
                     $.each(data.model, function (index, val) {
 

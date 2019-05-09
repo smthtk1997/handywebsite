@@ -6,7 +6,28 @@
     </style>
 @stop
 @section('content')
-
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-5 align-self-center">
+                <h3 class="slim-pagetitle">เพิ่มรถคันใหม่</h3>
+            </div>
+            <div class="col-7 align-self-center">
+                <div class="d-flex align-items-center justify-content-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{route('home')}}">หน้าหลัก</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{route('fuellog.app.index')}}">myFuelLog</a>
+                            </li>
+                            <li class="breadcrumb-item active">เพิ่มรถคันใหม่</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid" style="margin-bottom: 300px">
         <div class="shadow bg-white rounded">
             <div class="card intable cardColor cardStyleMargin" style="padding-bottom: 100px">
@@ -79,7 +100,7 @@
                                 </div>
 
                                 <div class="form-group col-12 col-md-6">
-                                    <label for="milleage">ระยะทางวิ่งทั้งหมด (กิโลเมตร)</label>
+                                    <label for="milleage">ระยะทางรวม (กิโลเมตร)</label>
                                     <input type="number" min="0" id="milleage" class="mt-1 mb-1 form-control" name="milleage" placeholder="ระยะทาง" required>
                                 </div>
 

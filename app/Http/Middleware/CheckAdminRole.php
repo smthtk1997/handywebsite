@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Alert;
+use Illuminate\Support\Facades\Auth;
 
 class CheckAdminRole
 {
@@ -17,6 +18,7 @@ class CheckAdminRole
     public function handle($request, Closure $next)
     {
         if ($request->user()->role != 1) {
+            Auth::logout();
             return response()->view('guest.404', [], 404);
         }
         return $next($request);

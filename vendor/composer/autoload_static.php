@@ -432,6 +432,7 @@ class ComposerStaticInit3b94e4b16d4e0681beb3ad57c09d00d2
     );
 
     public static $classMap = array (
+        'App\\Brand' => __DIR__ . '/../..' . '/app/Brand.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\FuelLog' => __DIR__ . '/../..' . '/app/FuelLog.php',
@@ -447,6 +448,7 @@ class ComposerStaticInit3b94e4b16d4e0681beb3ad57c09d00d2
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\PlaceAPIController' => __DIR__ . '/../..' . '/app/Http/Controllers/PlaceAPIController.php',
         'App\\Http\\Controllers\\SearchEngineController' => __DIR__ . '/../..' . '/app/Http/Controllers/SearchEngineController.php',
+        'App\\Http\\Controllers\\UserCarsController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserCarsController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',

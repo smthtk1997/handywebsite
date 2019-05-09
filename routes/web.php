@@ -95,6 +95,10 @@ Route::get('/google/map/place/update', [
         return view('admin.maintenance.updateMap');
     }]);
 
+Route::get('/search/on/map/view', [ // ค้นหาบนแผนที่
+    'as' => 'search.on.map.view',
+    'uses' => 'SearchEngineController@search_on_map_view']);
+
 
 // ค้นหา
 Route::post('/handy/shop/search', [
@@ -148,9 +152,27 @@ Route::get('/files/brand_logo/{filename}', function($filename) // แสดง�
     return Response::make($fileContents, 200);
 });
 
-Route::get('/search/on/map/view', [ // ค้นหาบนแผนที่
-    'as' => 'search.on.map.view',
-    'uses' => 'SearchEngineController@search_on_map_view']);
+
+
+Route::get('/fuellog/application/myLog/{car}', [ // หน้าดูประวัติแต่ละคัน
+    'as' => 'fuellog.myLog',
+    'uses' => 'FuelLogController@myLogIndex']);
+
+Route::get('/fuellog/application/myLog/refuel/{car}', [ // ไปหน้าเติมน้ำมัน
+    'as' => 'fuellog.myLog.refuel',
+    'uses' => 'FuelLogController@myLogRefuel']);
+
+Route::post('/fuellog/application/myLog/refuel/save/{car}', [ // save log
+    'as' => 'fuellog.myLog.refuel.save',
+    'uses' => 'FuelLogController@myLogRefuel_save']);
+
+Route::get('admin/fuellog/application/brand', [ // ไปหน้ายี่ห้อทั้งหมด
+    'as' => 'admin.fuellog.brand',
+    'uses' => 'AdminController@myFuelLog_brand']);
+
+Route::post('admin/fuellog/application/brand/store', [ // เก็บยี่ห้อใหม่
+    'as' => 'admin.fuellog.brand.store',
+    'uses' => 'AdminController@myFuelLog_brand_store']);
 
 
 ////////////// Map Bound API ////////////////
@@ -158,5 +180,21 @@ Route::get('/search/on/map/view', [ // ค้นหาบนแผนที่
 Route::post('/api/map/bound.api', [
     'as' => 'api.map.bound',
     'uses' => 'SearchEngineController@get_Place_inBound']);
+
+
+////////////// Fuel Price API ////////////////
+Route::post('/api/fuel/ptt/price.api', [
+    'as' => 'api.fuel.ptt.price',
+    'uses' => 'ApiController\FuelScrapingController@getFuelPriceApi_Ptt']);
+
+Route::post('/api/fuel/shell/price.api', [
+    'as' => 'api.fuel.shell.price',
+    'uses' => 'ApiController\FuelScrapingController@getFuelPriceApi_Shell']);
+
+////////////// Vision API ////////////////
+Route::post('/api/vision/imageProcess.api', [
+    'as' => 'api.vision.imageProcess',
+    'uses' => 'ApiController\VisionController@imageProcessing_api']);
+
 
 

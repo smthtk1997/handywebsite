@@ -610,6 +610,8 @@
 <script src="{{asset('js/sidebarmenu.js')}}"></script>
 <script src="{{asset('js/custom.min.js')}}"></script>
 <script src="{{asset('js/pages/dashboards/dashboard1.js')}}"></script>
+<script src="{{asset('libs/block-ui/jquery.blockUI.js')}}"></script>
+<script src="{{asset('extra-libs/block-ui/block-ui.js')}}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @include('sweetalert::alert')
 @yield('script')

@@ -67,50 +67,55 @@
                 <div id="map"></div>
                 <a href="{{route('search.on.map.view')}}"><button class="mt-3 btn btn-outline-danger btn-block waves-effect waves-light">ค้นหาบนแผนที่</button></a>
                 <div style="margin-top: 2.5rem">
-                    <h3 style="margin-bottom: 1.8rem">ผลลัพธ์การค้นหา:</h3>
-                    @foreach ($results as $shop)
-                        <div class="row shopEach" data-lat="{{$shop['shop_lat']}}" data-lng="{{$shop['shop_lng']}}">
-                            <div class="col-12 col-md-4 col-lg-3">
-                                @if ($shop['shop_photo_ref'] != null)
-                                    <img class="image-popup-vertical-fit imageGrow mb-md-0 mb-3" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference={{$shop['shop_photo_ref']}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
-                                         src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference={{$shop['shop_photo_ref']}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
-                                         width="200" style="max-height: 200px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;"
-                                         alt="store">
+                    <h3 style="margin-bottom: 1.8rem">ผลลัพธ์การค้นหาทั้งหมด: {{$results ? count($results).' ร้าน':''}}</h3>
+                    @if ($results)
+                        @foreach ($results as $shop)
+                            <div class="row shopEach" data-lat="{{$shop['shop_lat']}}" data-lng="{{$shop['shop_lng']}}">
+                                <div class="col-12 col-md-4 col-lg-3">
+                                    @if ($shop['shop_photo_ref'] != null)
+                                        <img class="image-popup-vertical-fit imageGrow mb-md-0 mb-3" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference={{$shop['shop_photo_ref']}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
+                                             src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference={{$shop['shop_photo_ref']}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
+                                             width="200" style="max-height: 200px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;"
+                                             alt="store">
                                     @else
                                         <img class="image-popup-vertical-fit imageGrow mb-md-0 mb-3" href="{{asset('images/API-Logo.png')}}"
                                              src="{{asset('images/API-Logo.png')}}"
                                              width="200" style="max-height: 200px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;"
                                              alt="store">
-                                @endif
-                            </div>
-                            <div class="col-12 col-md-8 col-lg-9">
-                                <h4 style="margin-bottom: 15px">{{$shop['shop_name']}}</h4>
-                                <p style="margin-bottom: 12px;font-size: 15px">ที่อยู่: {{$shop['formatted_address']}}</p>
-                                <p style="margin-bottom: 12px;font-size: 15px">
-                                    คะแนนจากเว็บ:
-                                    @if (!$shop['shop_rating'])
-                                        @for ($i = 0; $i < 5; $i++)
-                                            <img src="{{asset('images/star/star-off.png')}}" alt="{{$shop['shop_name']}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
-                                        @endfor
-                                        @else
-                                        @for ($i = 0; $i < (int)$shop['shop_rating']; $i++)
-                                            <img src="{{asset('images/star/star-on.png')}}" alt="{{$shop['shop_name']}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
-                                        @endfor
                                     @endif
-                                </p>
+                                </div>
+                                <div class="col-12 col-md-8 col-lg-9">
+                                    <h4 style="margin-bottom: 15px">{{$shop['shop_name']}}</h4>
+                                    <p style="margin-bottom: 12px;font-size: 15px">ที่อยู่: {{$shop['formatted_address']}}</p>
+                                    <p style="margin-bottom: 12px;font-size: 15px">
+                                        คะแนนจากเว็บ:
+                                        @if (!$shop['shop_rating'])
+                                            @for ($i = 0; $i < 5; $i++)
+                                                <img src="{{asset('images/star/star-off.png')}}" alt="{{$shop['shop_name']}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
+                                            @endfor
+                                        @else
+                                            @for ($i = 0; $i < (int)$shop['shop_rating']; $i++)
+                                                <img src="{{asset('images/star/star-on.png')}}" alt="{{$shop['shop_name']}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
+                                            @endfor
+                                        @endif
+                                    </p>
 
-                                @if ($shop['shop_phone_number'] != null)
-                                    <a href="tel:{{$shop['shop_phone_number']}}" style="font-size: 15px">โทร: {{str_replace('+66-','0',$shop['shop_phone_number'])}}</a>
-                                @endif
-                                <div style="margin-top: 14px">
-                                    <a href="{{$shop['shop_url_nav']}}"
-                                       class="btn btn-danger waves-effect waves-light btn-sm"
-                                       target="_blank">กดเพื่อนำทาง</a>
+                                    @if ($shop['shop_phone_number'] != null)
+                                        <a href="tel:{{$shop['shop_phone_number']}}" style="font-size: 15px">โทร: {{str_replace('+66-','0',$shop['shop_phone_number'])}}</a>
+                                    @endif
+                                    <div style="margin-top: 14px">
+                                        <a href="{{$shop['shop_url_nav']}}"
+                                           class="btn btn-danger waves-effect waves-light btn-sm"
+                                           target="_blank">กดเพื่อนำทาง</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                    @endforeach
+                            <hr>
+                        @endforeach
+                        @else
+                        <p class="text-danger">ไม่มีร้านที่คุณกำลังค้นหา</p>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -149,7 +154,7 @@
             mapholder.style.width = 'auto';
 
             var myOptions = {
-                zoom: 12,
+                zoom: 14,
                 center: new google.maps.LatLng(userLat, userLng),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL}
@@ -165,13 +170,16 @@
                 animation: google.maps.Animation.BOUNCE
             });
 
-            google.maps.event.addListener(map, 'bounds_changed', function() {
+
+
+            google.maps.event.addListener(map, 'idle', function() {
                 let aNord   =   map.getBounds().getNorthEast().lat();
                 let aEst    =   map.getBounds().getNorthEast().lng();
                 let aSud    =   map.getBounds().getSouthWest().lat();
                 let aOvest  =   map.getBounds().getSouthWest().lng();
                 //console.log(aNord+'-'+aEst+"-"+aSud+"-"+'-'+aOvest);
                 apiAjax(aNord,aEst,aSud,aOvest);
+                $.blockUI({ message: null});
             });
 
 
@@ -216,6 +224,9 @@
                             }, 2150);
                         }
                         map.setZoom(16);
+                        google.maps.event.addListener(infowindow, 'closeclick', function() {
+                            map.setZoom(14);
+                        });
                     }
                 })(marker, i));
             }
@@ -239,6 +250,7 @@
             }).done(function (msg) {
                 let data = JSON.parse(JSON.parse(JSON.stringify(msg)));
                 console.log(data.places);
+                $.unblockUI();
                 if (data.status == true) {
                     $.each(data.model, function (index, val) {
 

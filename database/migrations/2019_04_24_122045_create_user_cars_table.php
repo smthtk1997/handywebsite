@@ -18,7 +18,7 @@ class CreateUserCarsTable extends Migration
             $table->integer('user_id');
             $table->string('name');
             $table->string('license');
-            $table->string('brand');
+            $table->integer('brand_id');
             $table->string('model');
             $table->string('mileage');
             $table->string('img_path')->nullable();

@@ -135,6 +135,7 @@ class SearchEngineController extends Controller
 
     public function search_on_map_view()
     {
+
         return view('Home.onMap');
     }
 
