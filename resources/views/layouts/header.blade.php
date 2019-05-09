@@ -217,7 +217,7 @@
 {{--                        </li>--}}
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                                <i class="mdi mdi-phone"></i>
+                                <i class="mdi mdi-wrench"></i>
                                 <span class="hide-menu">บริการรถยนต์</span>
                             </a>
                             <ul aria-expanded="false" class="collapse  first-level">
@@ -243,7 +243,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                                <i class="mdi mdi-phone"></i>
+                                <i class="mdi mdi-book-open-variant"></i>
                                 <span class="hide-menu">ติดต่อประกัน</span>
                             </a>
                             <ul aria-expanded="false" class="collapse  first-level">
