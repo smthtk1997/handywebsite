@@ -124,7 +124,6 @@
                         @else
                         <p class="text-danger">ไม่มีร้านที่คุณกำลังค้นหา</p>
                     @endif
-
                 </div>
             </div>
         </div>

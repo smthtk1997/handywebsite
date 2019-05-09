@@ -2,23 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e29b2d4-80ad-4575-82c4-3b2cc09b10d6" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/Home/placeDetail.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ApiController/FuelScrapingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ApiController/FuelScrapingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ApiController/VisionController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FuelLogController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FuelLogController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SearchEngineController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SearchEngineController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserCarsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserCarsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/Facebook-1s-200px.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/Home/handy.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Home/handy.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/addstyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/addstyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Home/placeDetail.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Home/placeDetail.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/Home/resultSearch.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Home/resultSearch.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/users/FuelLog/myLog.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/FuelLog/myLog.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/users/FuelLog/reFuel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/FuelLog/reFuel.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,44 +20,14 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SearchEngineController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="198" column="9" selection-start-line="198" selection-start-column="9" selection-end-line="198" selection-end-column="9" />
-              <folding>
-                <element signature="e#40#53#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/Home/placeDetail.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="35" column="32" lean-forward="true" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
+            <state relative-caret-position="481">
+              <caret line="78" column="29" lean-forward="true" selection-start-line="78" selection-start-column="29" selection-end-line="78" selection-end-column="29" />
               <folding>
-                <element signature="e#1080#1108#0#HTML" expanded="true" />
-                <element signature="e#1304#1333#0#HTML" expanded="true" />
-                <element signature="e#2530#2598#0#HTML" expanded="true" />
-                <element signature="e#3555#3599#0#HTML" expanded="true" />
-                <element signature="e#3653#3676#0#HTML" expanded="true" />
-                <element signature="e#3812#3838#0#HTML" expanded="true" />
-                <element signature="e#3837#3879#0#HTML" expanded="true" />
-                <element signature="e#3895#3918#0#HTML" expanded="true" />
-                <element signature="e#4043#4086#0#HTML" expanded="true" />
-                <element signature="e#4435#4477#0#HTML" expanded="true" />
-                <element signature="e#4825#4867#0#HTML" expanded="true" />
-                <element signature="e#5034#5057#0#HTML" expanded="true" />
-                <element signature="e#5091#5135#0#HTML" expanded="true" />
-                <element signature="e#5336#5359#0#HTML" expanded="true" />
-                <element signature="e#3300#3321#0#HTML" expanded="true" />
-                <element signature="e#3337#3366#0#HTML" expanded="true" />
-                <element signature="e#2321#2350#0#HTML" expanded="true" />
-                <element signature="e#3788#3817#0#HTML" expanded="true" />
-                <element signature="e#4590#4616#0#HTML" expanded="true" />
+                <element signature="e#7265#7352#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -79,10 +36,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/Home/resultSearch.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="88" column="42" lean-forward="true" selection-start-line="88" selection-start-column="42" selection-end-line="88" selection-end-column="42" />
+            <state relative-caret-position="489">
+              <caret line="125" column="26" selection-start-line="125" selection-start-column="26" selection-end-line="125" selection-end-column="26" />
               <folding>
-                <element signature="e#6269#6275#0#HTML" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -161,7 +117,6 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/config/app.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PlaceAPIController.php" />
-        <option value="$PROJECT_DIR$/public/css/addstyle.css" />
         <option value="$PROJECT_DIR$/public/css/style.css" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/CheckStatusActive.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/CheckAdminRole.php" />
@@ -192,6 +147,7 @@
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/resources/views/layouts/header.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/SearchEngineController.php" />
+        <option value="$PROJECT_DIR$/public/css/addstyle.css" />
         <option value="$PROJECT_DIR$/resources/views/Home/resultSearch.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/Home/placeDetail.blade.php" />
       </list>
@@ -307,6 +263,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -359,7 +316,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -537,16 +493,19 @@
       <workItem from="1557405173464" duration="359000" />
       <workItem from="1557410547092" duration="1268000" />
       <workItem from="1557413241324" duration="17751000" />
+      <workItem from="1557432850507" duration="359000" />
+      <workItem from="1557433241793" duration="2065000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="267200000" />
+    <option name="totallyTimeSpent" value="269624000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="833" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19170243" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19742489" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -659,13 +618,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/indexLog.blade.php" />
-    <entry file="file://$PROJECT_DIR$/public/css/addstyle.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-413">
-          <caret line="49" column="29" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -918,12 +870,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/addstyle.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/Home/resultSearch.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="88" column="42" lean-forward="true" selection-start-line="88" selection-start-column="42" selection-end-line="88" selection-end-column="42" />
+        <state relative-caret-position="489">
+          <caret line="125" column="26" selection-start-line="125" selection-start-column="26" selection-end-line="125" selection-end-column="26" />
           <folding>
-            <element signature="e#6269#6275#0#HTML" expanded="true" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -934,28 +892,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/Home/placeDetail.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="35" column="32" lean-forward="true" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
+        <state relative-caret-position="481">
+          <caret line="78" column="29" lean-forward="true" selection-start-line="78" selection-start-column="29" selection-end-line="78" selection-end-column="29" />
           <folding>
-            <element signature="e#1080#1108#0#HTML" expanded="true" />
-            <element signature="e#1304#1333#0#HTML" expanded="true" />
-            <element signature="e#2530#2598#0#HTML" expanded="true" />
-            <element signature="e#3555#3599#0#HTML" expanded="true" />
-            <element signature="e#3653#3676#0#HTML" expanded="true" />
-            <element signature="e#3812#3838#0#HTML" expanded="true" />
-            <element signature="e#3837#3879#0#HTML" expanded="true" />
-            <element signature="e#3895#3918#0#HTML" expanded="true" />
-            <element signature="e#4043#4086#0#HTML" expanded="true" />
-            <element signature="e#4435#4477#0#HTML" expanded="true" />
-            <element signature="e#4825#4867#0#HTML" expanded="true" />
-            <element signature="e#5034#5057#0#HTML" expanded="true" />
-            <element signature="e#5091#5135#0#HTML" expanded="true" />
-            <element signature="e#5336#5359#0#HTML" expanded="true" />
-            <element signature="e#3300#3321#0#HTML" expanded="true" />
-            <element signature="e#3337#3366#0#HTML" expanded="true" />
-            <element signature="e#2321#2350#0#HTML" expanded="true" />
-            <element signature="e#3788#3817#0#HTML" expanded="true" />
-            <element signature="e#4590#4616#0#HTML" expanded="true" />
+            <element signature="e#7265#7352#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>

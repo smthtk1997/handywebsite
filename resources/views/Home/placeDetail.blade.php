@@ -1,6 +1,10 @@
 @extends('layouts.header')
 @section('title','รายละเอียดสถานที่')
 @section('style')
+    <link href="{{asset('libs/magnific-popup/dist/magnific-popup.css')}}" rel="stylesheet">
+    <style>
+
+    </style>
 @stop
 @section('content')
 
@@ -59,30 +63,63 @@
                             </div>
                         @endif
                         <hr style="margin-top: 30px;margin-bottom: 30px">
-                        <h4><i class="fas fa-map-marker-alt"></i> ที่อยู่ร้าน</h4>
-                        <p style="font-size: 15px">{{$shop->formatted_address}}</p>
-                        @if ($shop->phone_number)
-                            <h5 style="margin-bottom: 13px"><i class="fas fa-mobile-alt"></i> เบอร์โทรติดต่อ: <span><a style="font-size: 15px;" href="tel:{{$shop->phone_number}}" style="font-size: 15px">{{str_replace('+66-','0',$shop->phone_number)}}</a></span></h5>
-                        @endif
-                        <p style="font-size: 15px">
-                            <i class="far fa-smile"></i> คะแนนจากเว็บ:
-                            @if (!$shop->rating)
-                                @for ($i = 0; $i < 5; $i++)
-                                    <img src="{{asset('images/star/star-off.png')}}" alt="{{$shop->rating}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
-                                @endfor
-                            @else
-                                @for ($i = 0; $i < (int)$shop->rating; $i++)
-                                    <img src="{{asset('images/star/star-on.png')}}" alt="{{$shop->rating}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
-                                @endfor
-                            @endif
-                        </p>
-                        @if ($weekdays)
-                            <hr style="margin-top: 0px">
-                            <h5 style="margin-bottom: 18px;margin-top: 5px" class="{{$openNow == true ? 'text-success':'text-danger'}}"><i class="far fa-clock"></i> เวลาเปิดทำการ</h5>
-                            @foreach ($weekdays as $work)
-                                <p style="font-size: 15px">{{$work}}</p>
-                            @endforeach
-                        @endif
+
+
+                        <ul class="nav nav-tabs mb-4" role="tablist">
+                            <li role="presentation" class="nav-item">
+                                <a href="#information" class="nav-link active" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true">
+                                    <span class="visible-xs"><i class="mdi mdi-information"></i> รายละเอียด</span>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item">
+                                <a href="#gallery" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">
+                                    <span class="visible-xs"><i class="ti ti-gallery"></i> อัลบั้ม</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="information">
+                                <h4><i class="fas fa-map-marker-alt"></i> ที่อยู่ร้าน</h4>
+                                <p style="font-size: 15px">{{$shop->formatted_address}}</p>
+                                @if ($shop->phone_number)
+                                    <h5 style="margin-bottom: 13px"><i class="fas fa-mobile-alt"></i> เบอร์โทรติดต่อ: <span><a style="font-size: 15px;" href="tel:{{$shop->phone_number}}" style="font-size: 15px">{{str_replace('+66-','0',$shop->phone_number)}}</a></span></h5>
+                                @endif
+                                <p style="font-size: 15px">
+                                    <i class="far fa-smile"></i> คะแนนจากเว็บ:
+                                    @if (!$shop->rating)
+                                        @for ($i = 0; $i < 5; $i++)
+                                            <img src="{{asset('images/star/star-off.png')}}" alt="{{$shop->rating}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
+                                        @endfor
+                                    @else
+                                        @for ($i = 0; $i < (int)$shop->rating; $i++)
+                                            <img src="{{asset('images/star/star-on.png')}}" alt="{{$shop->rating}}" width="18px" height="18px" style="object-fit: cover;margin-top: -4px">
+                                        @endfor
+                                    @endif
+                                </p>
+                                @if ($weekdays)
+                                    <hr style="margin-top: 0px">
+                                    <h5 style="margin-bottom: 18px;margin-top: 5px" class="{{$openNow == true ? 'text-success':'text-danger'}}"><i class="far fa-clock"></i> เวลาเปิดทำการ</h5>
+                                    @foreach ($weekdays as $work)
+                                        <p style="font-size: 15px">{{$work}}</p>
+                                    @endforeach
+                                @endif
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="gallery">
+                                @if ($photo_toshow)
+                                    <div class="row">
+                                        @foreach($photo_toshow as $photo_shop)
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <img class="centerOfRow image-popup-vertical-fit imageGrow mb-3" style="width: 100%;height: 200px;max-height: 200px;object-fit: cover;border-radius: 2%" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{$photo_shop}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk" alt="{{$loop->iteration.'slide'}}" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference={{$photo_shop}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    @else
+                                    <p class="text-danger">ไม่มีรูปให้แสดง</p>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,6 +163,8 @@
 @stop
 
 @section('script')
+    <script src="{{asset('libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('libs/magnific-popup/meg.init.js')}}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk&libraries=places"></script>
 
     <script>
