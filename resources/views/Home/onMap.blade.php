@@ -43,7 +43,13 @@
     <div class="container-fluid containerStyle">
         <div class="shadow bg-white rounded">
             <div class="card intable" style="padding-bottom: 100px">
-                <div id="map"></div>
+                <h3 style="margin-bottom: 20px">ค้นหาบนแผนที่</h3>
+                <div class="i-am-centered" id="loadingRadio" style="margin-bottom: 20px">
+                    <img class="loading text-center"  src="{{asset('images/Radio-1s-200px.svg')}}" alt="" height="120px"><br>
+                    <small class="text-danger">กำลังค้นหาสัญญาณ GPS</small>
+                </div>
+                <div id="map" style="display: none"></div>
+                <h4 style="margin-top: 20px">เลื่อนแผนที่เพื่อค้นหาร้าน</h4>
             </div>
         </div>
     </div>
@@ -56,15 +62,18 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk&libraries=places"></script>
     <script type="text/javascript">
 
-        {{--var userLat = '{{ $lat }}';--}}
-        {{--var userLng = '{{ $lng }}';--}}
+        var userLat;
+        var userLng;
         var userMarker;
+        var map;
+        var placeMarker;
+        var marker_inmap, i_lap;
+        var marker_array = [];
 
         $(document).ready(function () {
             getLocation();
         });
 
-        var x = document.getElementById("demo");
 
         function getLocation() {
             if (navigator.geolocation) {
@@ -77,6 +86,8 @@
         function showPosition(position) {
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
+            userLat = lat;
+            userLng = lng;
             console.log(lat);
             console.log(lng);
             getPlace();
@@ -102,12 +113,7 @@
 
         function getPlace() {
             var iconUser = {
-                url: '{{ URL::asset('images/MapPointer/place_user.png') }}', // url
-                scaledSize: new google.maps.Size(38, 38), // scaled size
-            };
-
-            var iconPlace = {
-                url: '{{ URL::asset('images/MapPointer/place_star.png') }}', // url
+                url: '{{ URL::asset('images/MapPointer/place_user.png') }}', // url marker user
                 scaledSize: new google.maps.Size(38, 38), // scaled size
             };
 
@@ -116,13 +122,13 @@
             mapholder.style.width = 'auto';
 
             var myOptions = {
-                zoom: 12,
+                zoom: 14,
                 center: new google.maps.LatLng(userLat, userLng),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL}
             };
 
-            var map = new google.maps.Map(document.getElementById("map"), myOptions);
+            map = new google.maps.Map(document.getElementById("map"), myOptions);
 
             userMarker = new google.maps.Marker({
                 position: new google.maps.LatLng(userLat, userLng),
@@ -132,6 +138,8 @@
                 animation: google.maps.Animation.BOUNCE
             });
 
+            $('#loadingRadio').fadeOut('fast');
+            $('#map').fadeIn('slow');
 
             google.maps.event.addListener(map, 'idle', function() {
                 let aNord   =   map.getBounds().getNorthEast().lat();
@@ -143,52 +151,6 @@
                 $.blockUI({ message: null});
 
             });
-
-
-            var infowindow = new google.maps.InfoWindow();
-
-            var marker, i;
-
-
-            for (i = 0; i < locations.length; i++) {
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(locations[i].shop_lat, locations[i].shop_lng),
-                    map: map,
-                    icon: iconPlace
-                });
-
-
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                    return function () {
-                        infowindow.setContent("<div id='content' style='padding: 5px'>\n" +
-                            "        <h4 id='firstHeading' class='firstHeading'>"+locations[i].shop_name+"</h4>\n" +
-                            "\n" +
-                            "        <div id=\"bodyContent\">\n" +
-                            "            <p style=\"margin-bottom: 0.25rem;font-size: 15px\">\n" +
-                            "                ที่อยู่: "+locations[i].formatted_address+"\n" +
-                            "            </p>\n" +
-                            "            <p style=\"margin-bottom: 0.25rem;font-size: 15px\">\n" +
-                            "                คะแนนจากเว็บ: "+locations[i].shop_rating.toString()+"\n" +
-                            "            </p>\n" +
-                            "            <a href='tel:"+locations[i].shop_phone_number+"' style=\"font-size: 15px\">โทร: "+locations[i].shop_phone_number+"</a>\n" +
-
-                            "            <div style=\"top: 10px;\"><a href='"+locations[i].shop_url_nav+"' class=\"btn btn-googleplus waves-light waves-effect btn-sm float-right\" target='_blank'>นำทาง</a></div>\n" +
-                            "        </div>\n" +
-                            "\n" +
-                            "    </div>");
-                        infowindow.open(map, marker);
-                        if (marker.getAnimation() !== null) {
-                            marker.setAnimation(null);
-                        } else {
-                            marker.setAnimation(google.maps.Animation.BOUNCE);
-                            setTimeout(function () {
-                                marker.setAnimation(null);
-                            }, 2150);
-                        }
-                        map.setZoom(16);
-                    }
-                })(marker, i));
-            }
 
             $('.shopEach').on('click tap',function () {
                 let lat = parseFloat($(this).attr('data-lat'));
@@ -209,14 +171,87 @@
             }).done(function (msg) {
                 let data = JSON.parse(JSON.parse(JSON.stringify(msg)));
                 console.log(data.places);
-                $.unblockUI();
-                if (data.status == true) {
-                    $.each(data.model, function (index, val) {
-
-                    });
-
+                if (data.status === true) {
+                    setMarker(data.places);
+                    // $.each(data.model, function (index, val) {
+                    //
+                    // });
+                }else{
+                    $.unblockUI();
                 }
             });
+        }
+
+        function setMarker(place) {
+            removeMarker();
+            var locations = place;
+            var iconPlace = {
+                url: '{{ URL::asset('images/MapPointer/place_star.png') }}', // url marker place
+                scaledSize: new google.maps.Size(38, 38), // scaled size
+            };
+
+            var infowindow = new google.maps.InfoWindow();
+
+            var detail_path = '{!! url('/handy/shop/detail') !!}';
+
+
+            for (i_lap = 0; i_lap < locations.length; i_lap++) {
+                marker_inmap = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i_lap].lat, locations[i_lap].lng),
+                    map: map,
+                    icon: iconPlace
+                });
+
+                marker_array.push(marker_inmap);
+
+                google.maps.event.addListener(marker_inmap, 'click', (function (marker_inmap, i) {
+                    return function () {
+                        infowindow.setContent("<div id='content' style='padding: 5px'>\n" +
+                            "        <h4 id='firstHeading' class='firstHeading'>"+locations[i].name+"</h4>\n" +
+                            "\n" +
+                            "        <div id=\"bodyContent\">\n" +
+                            "            <p style=\"margin-bottom: 0.25rem;font-size: 15px\">\n" +
+                            "                ที่อยู่: "+locations[i].formatted_address+"\n" +
+                            "            </p>\n" +
+                            "            <p style=\"margin-bottom: 0.25rem;font-size: 15px\">\n" +
+                            "                คะแนนจากเว็บ: "+locations[i].rating.toString()+"\n" +
+                            "            </p>\n" +
+                            "            <a href='tel:"+locations[i][6]+"' style=\"font-size: 15px\">โทร: "+locations[i].phone_number+"</a>\n" +
+
+                            "            <div class='btn-group float-right mt-2 mt-md-0'>" +
+                            "<a href='"+detail_path+"/"+locations[i].place_id+"' class=\"btn btn-info waves-light waves-effect btn-sm mr-2\" target='_blank'>ดูรายละเอียด</a>" +
+                            "<a href='"+locations[i].url_nav+"' class=\"btn btn-googleplus waves-light waves-effect btn-sm\" target='_blank'>นำทาง</a>" +
+                            "</div>\n" +
+                            "        </div>\n" +
+                            "\n" +
+                            "    </div>");
+                        infowindow.open(map, marker_inmap);
+                        if (marker_inmap.getAnimation() !== null) {
+                            marker_inmap.setAnimation(null);
+                        } else {
+                            marker_inmap.setAnimation(google.maps.Animation.BOUNCE);
+                            setTimeout(function () {
+                                marker_inmap.setAnimation(null);
+                            }, 2150);
+                        }
+                    }
+                })(marker_inmap, i_lap));
+
+            }
+
+            $.unblockUI();
+        }
+
+
+        function removeMarker() {
+            if (marker_array.length > 0) {
+                for (var i=0; i<marker_array.length; i++) {
+                    if (marker_array[i] != null) {
+                        marker_array[i].setMap(null);
+                    }
+                }
+            }
+            marker_array = [];
         }
     </script>
 

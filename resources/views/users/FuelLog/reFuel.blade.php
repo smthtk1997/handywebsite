@@ -81,7 +81,9 @@
                         <div class="form-group col-12 col-md-4">
                             <label for="mileage">ระยะทางรวม (กิโลเมตร)</label>
                             <input type="number" id="mileage" class="form-control" placeholder="ระยะทางรวม" name="mileage">
-                            <small class="text-muted">ระยะทางรวมล่าสุด: {{$last_refuel->mileage}}</small>
+                            @if ($last_fuel)
+                                <small class="text-muted">ระยะทางรวมล่าสุด: {{$last_fuel->mileage}}</small>
+                            @endif
                         </div>
                         <div class="col-12 col-md-4" style="margin-top: 0.25rem;">
                             <label for="gas_station">ปั้มน้ำมัน</label>
@@ -284,7 +286,6 @@
             userLng = lng;
             $('#user_lat').val(userLat);
             $('#user_lng').val(userLng);
-            $('#loadingRadio').fadeOut('fast');
             showMap();
         }
 
@@ -333,6 +334,8 @@
                 icon: iconUser,
                 animation: google.maps.Animation.BOUNCE
             });
+
+            $('#loadingRadio').fadeOut('fast');
             $('#map').fadeIn('slow');
         }
 
@@ -468,7 +471,7 @@
 
         function check() {
             let mile = $('#mileage').val();
-            let old_mile = '{!! $last_refuel->mileage !!}';
+            let old_mile = '{!! $last_fuel ? $last_fuel->mileage:null !!}';
 
             if (mile >= old_mile){
                 $.blockUI({ message: null});

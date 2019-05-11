@@ -49,21 +49,26 @@
             <div class="card intable" style="padding-bottom: 100px">
                 <div class="row mb-3">
                     @if (!empty($nameSearch))
-                        <div class="col-12 col-md-2 d-flex align-items-stretch">
+                        <div class="col-12 col-md-3 d-flex align-items-stretch">
                             <div class="text-center searchInfo centerOfRow w-100">คำค้นหา: {{$nameSearch}}</div>
                         </div>
                     @endif
                     @if (!empty($type))
-                        <div class="col-12 col-md-2 d-flex align-items-stretch">
+                        <div class="col-12 col-md-3 d-flex align-items-stretch">
                             <div class="text-center searchInfo centerOfRow w-100">ประเภท: {{$type}}</div>
                         </div>
                     @endif
+                    @if (!empty($insurance))
+                        <div class="col-12 col-md-3 d-flex align-items-stretch">
+                            <div class="text-center searchInfo centerOfRow w-100">ศูนย์บริการในเครือ: {{$insurance}}</div>
+                        </div>
+                    @endif
                     @if ($range == 0)
-                        <div class="col-12 col-md-2 d-flex align-items-stretch">
+                        <div class="col-12 col-md-3 d-flex align-items-stretch">
                             <div class="text-center searchInfo centerOfRow w-100">ในระยะ: ไม่จำกัด</div>
                         </div>
                     @else
-                        <div class="col-12 col-md-2 d-flex align-items-stretch">
+                        <div class="col-12 col-md-3 d-flex align-items-stretch">
                             <div class="text-center searchInfo centerOfRow w-100">ในระยะ: {{$range/1000}} กิโลเมตร</div>
                         </div>
                     @endif
@@ -178,19 +183,6 @@
                 animation: google.maps.Animation.BOUNCE
             });
 
-
-
-            // google.maps.event.addListener(map, 'idle', function() {
-            //     let aNord   =   map.getBounds().getNorthEast().lat();
-            //     let aEst    =   map.getBounds().getNorthEast().lng();
-            //     let aSud    =   map.getBounds().getSouthWest().lat();
-            //     let aOvest  =   map.getBounds().getSouthWest().lng();
-            //     //console.log(aNord+'-'+aEst+"-"+aSud+"-"+'-'+aOvest);
-            //     apiAjax(aNord,aEst,aSud,aOvest);
-            //     $.blockUI({ message: null});
-            // });
-
-
             var infowindow = new google.maps.InfoWindow();
 
             var marker, i;
@@ -206,6 +198,7 @@
 
                 google.maps.event.addListener(marker, 'click', (function (marker, i) {
                     return function () {
+
                         infowindow.setContent("<div id='content' style='padding: 5px'>\n" +
                             "        <h4 id='firstHeading' class='firstHeading'>"+locations[i].shop_name+"</h4>\n" +
                             "\n" +
@@ -216,7 +209,7 @@
                             "            <p style=\"margin-bottom: 0.25rem;font-size: 15px\">\n" +
                             "                คะแนนจากเว็บ: "+locations[i].shop_rating.toString()+"\n" +
                             "            </p>\n" +
-                            "            <a href='tel:"+locations[i][6]+"' style=\"font-size: 15px\">โทร: "+locations[i].shop_phone_number+"</a>\n" +
+                            "            <a href='"+(locations[i].shop_phone_number != null ? 'tel:'+locations[i].shop_phone_number : '#')+"' style=\"font-size: 15px\">"+(locations[i].shop_phone_number != null ? 'โทร: '+locations[i].shop_phone_number:'')+"</a>\n" +
 
                             "            <div class='btn-group float-right mt-2 mt-md-0'>" +
                             "<a href='"+detail_path+"/"+locations[i].place_id+"' class=\"btn btn-info waves-light waves-effect btn-sm mr-2\" target='_blank'>ดูรายละเอียด</a>" +
@@ -250,27 +243,6 @@
                 //window.location = '#map';
             });
         }
-
-        {{--function apiAjax(aNord,aEst,aSud,aOvest) {--}}
-        {{--    $.ajax({--}}
-        {{--        url: '{!! url('/api/map/bound.api') !!}',--}}
-        {{--        method: "POST",--}}
-        {{--        headers: {--}}
-        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-        {{--        },--}}
-        {{--        data: {aNord: aNord,aEst: aEst,aSud: aSud,aOvest: aOvest}--}}
-        {{--    }).done(function (msg) {--}}
-        {{--        let data = JSON.parse(JSON.parse(JSON.stringify(msg)));--}}
-        {{--        console.log(data.places);--}}
-        {{--        $.unblockUI();--}}
-        {{--        if (data.status == true) {--}}
-        {{--            $.each(data.model, function (index, val) {--}}
-
-        {{--            });--}}
-
-        {{--        }--}}
-        {{--    });--}}
-        {{--}--}}
     </script>
 
 @stop

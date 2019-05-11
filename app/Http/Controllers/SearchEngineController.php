@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\ApiController\InsuranceScrapingController;
 use App\Shop;
 use App\ShopType;
 use App\Type;
@@ -11,8 +12,10 @@ class SearchEngineController extends Controller
 {
 
     public function shopSearch(Request $request){
+
         $lat = $request->inputLat;
         $lng = $request->inputLng;
+
         if ($request->inputRange == 0){
             $range = 0;
         }else{
@@ -54,11 +57,18 @@ class SearchEngineController extends Controller
             }
         }
 
+
+
         $shop_and_type = array();
-        if ($request->inputType){ // ไม่ type
+
+        if ($request->inputInsurance){
+
+            $get_insurance_name = Type::select('name')->where('id',$request->inputInsurance)->first();
+            $insurance_input = $get_insurance_name->name;
+
             foreach ($shops as $shop){
                 foreach ($shop->shop_types as $type){
-                    if ($type->type_id == $request->inputType){
+                    if ($type->type_id == $request->inputInsurance){
                         $inarr = array();
                         $inarr['place_id'] = $shop->place_id;
                         $inarr['shop_name'] = $shop->name;
@@ -74,42 +84,72 @@ class SearchEngineController extends Controller
                     }
                 }
             }
-            if ($request->inputType == 6){
-                $typeInput = 'อู่ซ่อมรถยนต์';
-            }elseif ($request->inputType == 1){
-                $typeInput = 'ศูนย์รถยนต์';
-            }elseif ($request->inputType == 8){
-                $typeInput = 'ล้างรถ-เคลือบสี';
-            }elseif ($request->inputType == 5){
-                $typeInput = 'ปั้มน้ำมัน';
-            }elseif ($request->inputType == 15){
-                $typeInput = 'ยาง และ ล้อแม็ก';
-            }elseif ($request->inputType == 16){
-                $typeInput = 'เครื่องเสียง';
-            }elseif ($request->inputType == 17){
-                $typeInput = 'ประดับยนต์';
-            }elseif ($request->inputType == 9){
-                $typeInput = 'บริการเช่ารถ';
+
+        }else{
+            $insurance_input = null;
+        }
+
+        if ($insurance_input == null){
+            if ($request->inputType){ // ไม่ type
+                foreach ($shops as $shop){
+                    foreach ($shop->shop_types as $type){
+                        if ($type->type_id == $request->inputType){
+                            $inarr = array();
+                            $inarr['place_id'] = $shop->place_id;
+                            $inarr['shop_name'] = $shop->name;
+                            $inarr['shop_lat'] = $shop->lat;
+                            $inarr['shop_lng'] = $shop->lng;
+                            $inarr['formatted_address'] = $shop->formatted_address;
+                            $inarr['shop_rating'] = $shop->rating;
+                            $inarr['shop_photo_ref'] = $shop->photo_ref;
+                            $inarr['shop_phone_number'] = $shop->phone_number;
+                            $inarr['shop_url_nav'] = $shop->url_nav;
+                            array_push($shop_and_type,$inarr);
+                            continue;
+                        }
+                    }
+                }
+                if ($request->inputType == 6){
+                    $typeInput = 'อู่ซ่อมรถยนต์';
+                }elseif ($request->inputType == 1){
+                    $typeInput = 'ศูนย์รถยนต์';
+                }elseif ($request->inputType == 8){
+                    $typeInput = 'ล้างรถ-เคลือบสี';
+                }elseif ($request->inputType == 5){
+                    $typeInput = 'ปั้มน้ำมัน';
+                }elseif ($request->inputType == 15){
+                    $typeInput = 'ยาง และ ล้อแม็ก';
+                }elseif ($request->inputType == 16){
+                    $typeInput = 'เครื่องเสียง';
+                }elseif ($request->inputType == 17){
+                    $typeInput = 'ประดับยนต์';
+                }elseif ($request->inputType == 9){
+                    $typeInput = 'บริการเช่ารถ';
+                }
+            }else{
+                $typeInput = null;
+                foreach ($shops as $shop){
+                    $inarr = array();
+                    $inarr['place_id'] = $shop->place_id;
+                    $inarr['shop_name'] = $shop->name;
+                    $inarr['shop_lat'] = $shop->lat;
+                    $inarr['shop_lng'] = $shop->lng;
+                    $inarr['formatted_address'] = $shop->formatted_address;
+                    $inarr['shop_rating'] = $shop->rating;
+                    $inarr['shop_photo_ref'] = $shop->photo_ref;
+                    $inarr['shop_phone_number'] = $shop->phone_number;
+                    $inarr['shop_url_nav'] = $shop->url_nav;
+                    array_push($shop_and_type,$inarr);
+                }
             }
         }else{
             $typeInput = null;
-            foreach ($shops as $shop){
-                $inarr = array();
-                $inarr['place_id'] = $shop->place_id;
-                $inarr['shop_name'] = $shop->name;
-                $inarr['shop_lat'] = $shop->lat;
-                $inarr['shop_lng'] = $shop->lng;
-                $inarr['formatted_address'] = $shop->formatted_address;
-                $inarr['shop_rating'] = $shop->rating;
-                $inarr['shop_photo_ref'] = $shop->photo_ref;
-                $inarr['shop_phone_number'] = $shop->phone_number;
-                $inarr['shop_url_nav'] = $shop->url_nav;
-                array_push($shop_and_type,$inarr);
-            }
         }
 
-
-        return view('Home.resultSearch',['results'=>$shop_and_type,'nameSearch'=>$nameSearch,'type'=>$typeInput,'range'=>$range,'lat'=>$lat,'lng'=>$lng]);
+        if ($shop_and_type == null){
+            Alert::warning('ไม่พบข้อมูลที่คุณต้องการ','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+        }
+        return view('Home.resultSearch',['results'=>$shop_and_type,'nameSearch'=>$nameSearch,'type'=>$typeInput,'insurance'=>$insurance_input,'range'=>$range,'lat'=>$lat,'lng'=>$lng]);
 
     }
 
@@ -137,7 +177,6 @@ class SearchEngineController extends Controller
 
     public function search_on_map_view()
     {
-
         return view('Home.onMap');
     }
 

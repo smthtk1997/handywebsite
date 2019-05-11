@@ -42,7 +42,7 @@ class UserCarsController extends Controller
             'user_id'=>Auth::user()->id,
             'name'=>$request->carName,
             'license'=>$request->carLicense,
-            'brand'=>strtolower($request->brand),
+            'brand_id'=>$request->brand,
             'model'=>strtolower($request->modelCar),
             'mileage'=>$request->milleage,
             'img_path'=>$file_path_toDB,
@@ -55,7 +55,8 @@ class UserCarsController extends Controller
             return redirect()->route('fuellog.app.index');
 
         }catch (\Exception $x){
-            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('Close');
+            dd($x);
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
             return back()->withInput();
         }
     }

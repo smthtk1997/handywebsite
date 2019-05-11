@@ -38,7 +38,7 @@ class AdminController extends Controller
 
         $checkExist = Brand::where('name',strtolower($request->addBrand))->first();
         if ($checkExist){
-            Alert::error('มียี่ห้อนี้แล้ว','กรุณาลองอีกครั้ง!')->persistent('Close');
+            Alert::error('มียี่ห้อนี้แล้ว','กรุณาลองอีกครั้ง!')->persistent('ปิด');
             return redirect()->back()->withInput();
         }
 
@@ -65,7 +65,7 @@ class AdminController extends Controller
             return redirect()->back();
 
         }catch (\Exception $x){
-            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('Close');
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
             return back()->withInput();
         }
     }

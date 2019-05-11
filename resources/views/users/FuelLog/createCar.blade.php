@@ -77,7 +77,7 @@
                                     <select id="brand" class="form-control" name="brand" required>
                                         <option value="" selected disabled>เลือกยี่ห้อ</option>
                                         @foreach($brands as $brand)
-                                            <option value="{{$brand}}" data-img="{{$brand->img_logo}}" >{{ucfirst($brand->name)}}</option>
+                                            <option value="{{$brand->id}}" data-img="{{$brand->img_logo}}" >{{ucfirst($brand->name)}}</option>
                                         @endforeach
                                     </select>
                                 </div>

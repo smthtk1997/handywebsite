@@ -54,16 +54,16 @@
                         <div class="col-md-2 col-sm-12 inputField">
                             <select id="inputInsurance" class="form-control" name="inputInsurance">
                                 <option selected disabled>ประกันภัย</option>
-                                <option value="0">กรุงเทพประกันภัย</option>
-                                <option value="1">ทิพยประกันภัย</option>
-                                <option value="2">วิริยะประกันภัย</option>
-                                <option value="3">เมืองไทยประกันภัย</option>
-                                <option value="4">อาคเนย์ประกันภัย</option>
-                                <option value="5">สินมั่นคงประกันภัย</option>
-                                <option value="6">นวกิจประกันภัย</option>
-                                <option value="7">ไทยวิวัฒน์ประกันภัย</option>
-                                <option value="8">เอเชียประกันภัย</option>
-                                <option value="9">แอลเอ็มจีประกันภัย</option>
+                                <option value="20">กรุงเทพประกันภัย</option>
+                                <option value="21">ทิพยประกันภัย</option>
+                                <option value="18">วิริยะประกันภัย</option>
+                                <option value="เมืองไทยประกันภัย">เมืองไทยประกันภัย</option>
+                                <option value="อาคเนย์ประกันภัย">อาคเนย์ประกันภัย</option>
+                                <option value="สินมั่นคงประกันภัย">สินมั่นคงประกันภัย</option>
+                                <option value="นวกิจประกันภัย">นวกิจประกันภัย</option>
+                                <option value="ไทยวิวัฒน์ประกันภัย">ไทยวิวัฒน์ประกันภัย</option>
+                                <option value="เอเชียประกันภัย">เอเชียประกันภัย</option>
+                                <option value="แอลเอ็มจีประกันภัย">แอลเอ็มจีประกันภัย</option>
                             </select>
                         </div>
                         <div class="col-md-2 col-12 inputField">

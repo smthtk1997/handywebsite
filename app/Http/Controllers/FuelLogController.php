@@ -31,7 +31,7 @@ class FuelLogController extends Controller
 
     public function myLogRefuel(UserCars $car){
         $last_fuel = FuelLog::where('car_id',$car->id)->orderBy('created_at','desc')->first();
-        return view('users.FuelLog.reFuel',['car'=>$car,'last_refuel'=>$last_fuel]);
+        return view('users.FuelLog.reFuel',['car'=>$car,'last_fuel'=>$last_fuel]);
     }
 
     public function myLogRefuel_save(Request $request,UserCars $car)
@@ -90,7 +90,7 @@ class FuelLogController extends Controller
             return redirect()->route('fuellog.myLog',['car'=>$car]);
 
         }catch (\Exception $x){
-            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('Close');
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
             return back()->withInput();
         }
 

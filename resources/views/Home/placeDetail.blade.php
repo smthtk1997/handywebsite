@@ -101,11 +101,21 @@
                                     <hr style="margin-top: 0px">
                                     <h5 style="margin-bottom: 18px;margin-top: 5px" class="{{$openNow == true ? 'text-success':'text-danger'}}"><i class="far fa-clock"></i> เวลาเปิดทำการ</h5>
                                     @foreach ($weekdays as $work)
-                                        <p style="font-size: 15px">{{$work}}</p>
+                                        @php
+                                        $string = explode(":",$work);
+                                        @endphp
+
+                                        @if ($string[0] == \Carbon\Carbon::now()->englishDayOfWeek)
+
+                                            <p style="font-size: 15px" class="{{ $openNow ? "text-success" : "text-danger"}}">{{$work}}</p>
+
+                                            @else
+                                            <p style="font-size: 15px">{{$work}}</p>
+                                        @endif
+
                                     @endforeach
                                 @endif
                             </div>
-
                             <div role="tabpanel" class="tab-pane" id="gallery">
                                 @if ($photo_toshow)
                                     <div class="row">

@@ -46,68 +46,69 @@ class PlaceAPIController extends Controller
 
 
         $outputs = json_decode($outputs,true);
-//        dd($outputs);
+        //dd($outputs);
 
 //         FOR LOOP
-        foreach ($outputs['results'] as $each){
-            $check = Shop::where('map_id',$each['id'])->first();
-            if (!$check){
-                $shop = new Shop();
-                $shop->name = $each['name'];
-                $shop->formatted_address = $each['formatted_address'];
-                $shop->lat = $each['geometry']['location']['lat'];
-                $shop->lng = $each['geometry']['location']['lng'];
-                $shop->map_id = $each['id'];
-                $shop->place_id = $each['place_id'];
-                $shop->rating = $each['rating'];
-                $shop->token = str_random(16);
-                if (array_key_exists('photos',$each)){
-                    $shop->photo_ref = $each['photos'][0]['photo_reference'];
-                }
-
-                // ไปเอา detail
-                $urlGetdata = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$shop->place_id&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk";
-                $jsonDetail = file_get_contents($urlGetdata);
-                $dataDetail = json_decode($jsonDetail,true);
-
-                if (array_key_exists('result',$dataDetail)) {
-                    if (array_key_exists('international_phone_number',$dataDetail['result'])){
-                        $phone_number = $dataDetail['result']['international_phone_number'];
-                        $phone_number = str_replace(' ','-',$phone_number);
-                    }else{
-                        $phone_number = null;
+        if ($outputs){
+            foreach ($outputs['results'] as $each){
+                $check = Shop::where('map_id',$each['id'])->first();
+                if (!$check){
+                    $shop = new Shop();
+                    $shop->name = $each['name'];
+                    $shop->formatted_address = $each['formatted_address'];
+                    $shop->lat = $each['geometry']['location']['lat'];
+                    $shop->lng = $each['geometry']['location']['lng'];
+                    $shop->map_id = $each['id'];
+                    $shop->place_id = $each['place_id'];
+                    $shop->rating = $each['rating'];
+                    $shop->token = str_random(16);
+                    if (array_key_exists('photos',$each)){
+                        $shop->photo_ref = $each['photos'][0]['photo_reference'];
                     }
 
-                    if (array_key_exists('url',$dataDetail['result'])){
-                        $urlNav = $dataDetail['result']['url'];
-                    }else{
-                        $urlNav = null;
+                    // ไปเอา detail
+                    $urlGetdata = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$shop->place_id&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk";
+                    $jsonDetail = file_get_contents($urlGetdata);
+                    $dataDetail = json_decode($jsonDetail,true);
+
+                    if (array_key_exists('result',$dataDetail)) {
+                        if (array_key_exists('international_phone_number',$dataDetail['result'])){
+                            $phone_number = $dataDetail['result']['international_phone_number'];
+                            $phone_number = str_replace(' ','-',$phone_number);
+                        }else{
+                            $phone_number = null;
+                        }
+
+                        if (array_key_exists('url',$dataDetail['result'])){
+                            $urlNav = $dataDetail['result']['url'];
+                        }else{
+                            $urlNav = null;
+                        }
+                    }
+                    $shop->phone_number = $phone_number;
+                    $shop->url_nav = $urlNav;
+                    $shop->save();
+                }else{
+                    $shop = $check;
+                }
+                foreach ($each['types'] as $type){
+                    $checktype = Type::where('name',$type)->first();
+                    if (!$checktype){
+                        $checktype = new Type();
+                        $checktype->name = $type;
+                        $checktype->token = str_random(16);
+                        $checktype->save();
+                    }
+
+                    $checkShoptype = ShopType::where('shop_id',$shop->id)->where('type_id',$checktype->id)->first();
+                    if (!$checkShoptype){
+                        $shoptype = new ShopType();
+                        $shoptype->shop_id = $shop->id;
+                        $shoptype->type_id = $checktype->id;
+                        $shoptype->token = str_random(16);
+                        $shoptype->save();
                     }
                 }
-                $shop->phone_number = $phone_number;
-                $shop->url_nav = $urlNav;
-                $shop->save();
-            }else{
-                $shop = $check;
-            }
-            foreach ($each['types'] as $type){
-                $checktype = Type::where('name',$type)->first();
-                if (!$checktype){
-                    $checktype = new Type();
-                    $checktype->name = $type;
-                    $checktype->token = str_random(16);
-                    $checktype->save();
-                }
-
-                $checkShoptype = ShopType::where('shop_id',$shop->id)->where('type_id',$checktype->id)->first();
-                if (!$checkShoptype){
-                    $shoptype = new ShopType();
-                    $shoptype->shop_id = $shop->id;
-                    $shoptype->type_id = $checktype->id;
-                    $shoptype->token = str_random(16);
-                    $shoptype->save();
-                }
-            }
 
 
 //                $checktype = Type::where('name','car_accessory')->first(); //เอาไว้เวลาจะเพิ่มแบบ manual
@@ -127,8 +128,12 @@ class PlaceAPIController extends Controller
 //                    $shoptype->save();
 //                }
 
+            }
+            Alert::success('Update Map Successfully!')->autoclose(2000);
+        }else{
+            Alert::warning('ไม่พบสถานที่')->autoclose(2000);
         }
-        Alert::success('Update Map Successfully!')->autoclose(2000);
+
         return redirect(url('/google/map/place/update'));
 
 

@@ -207,4 +207,18 @@ Route::post('/api/vision/imageProcess.api', [
     'uses' => 'ApiController\VisionController@imageProcessing_api']);
 
 
+////////////// Insurance Scraping /////////////
+Route::get('/insurance/scraping/viriyah', [
+    'as' => 'insurance.scraping.viriyah',
+    'uses' => 'ApiController\InsuranceScrapingController@viriyahScraping']);
+
+Route::get('/insurance/scraping/bangkok', [
+    'as' => 'insurance.scraping.bangkok',
+    'uses' => 'ApiController\InsuranceScrapingController@bangkokScraping']);
+
+Route::get('/insurance/scraping/dhipaya', [
+    'as' => 'insurance.scraping.dhipaya',
+    'uses' => 'ApiController\InsuranceScrapingController@dhipayaScraping']);
+
+
 
