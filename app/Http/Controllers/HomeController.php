@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Insurance;
 use Illuminate\Http\Request;
 use Alert;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,8 @@ class HomeController extends Controller
 
     public function redirect()
     {
-        return redirect(route('home'));
+        $insurances = Insurance::all();
+        return view('Home.handy',['insurances'=>$insurances]);
     }
 
 
