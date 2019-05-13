@@ -78,7 +78,8 @@ Route::get('/map', [
 Route::get('/', [
     'as' => 'home',
     'uses' => function(){
-    return view('Home.handy');
+    $insurances = \App\Insurance::all();
+    return view('Home.handy',['insurances'=>$insurances]);
     }]);
 
 // Testดึงข้อมูล Type
@@ -219,6 +220,34 @@ Route::get('/insurance/scraping/bangkok', [
 Route::get('/insurance/scraping/dhipaya', [
     'as' => 'insurance.scraping.dhipaya',
     'uses' => 'ApiController\InsuranceScrapingController@dhipayaScraping']);
+
+Route::get('/insurance/scraping/muangthai', [
+    'as' => 'insurance.scraping.muangthai',
+    'uses' => 'ApiController\InsuranceScrapingController@MuangThaiScraping']);
+
+Route::get('/insurance/scraping/seic', [
+    'as' => 'insurance.scraping.seic',
+    'uses' => 'ApiController\InsuranceScrapingController@SEICScraping']);
+
+Route::get('/insurance/scraping/thaivivat', [
+    'as' => 'insurance.scraping.thaivivat',
+    'uses' => 'ApiController\InsuranceScrapingController@thaivivatScraping']);
+
+Route::get('/insurance/scraping/asia', [
+    'as' => 'insurance.scraping.asia',
+    'uses' => 'ApiController\InsuranceScrapingController@asiaScraping']);
+
+Route::get('/insurance/scraping/lmg', [
+    'as' => 'insurance.scraping.lmg',
+    'uses' => 'ApiController\InsuranceScrapingController@lmgScraping']);
+
+Route::get('/insurance/scraping/smk', [
+    'as' => 'insurance.scraping.smk',
+    'uses' => 'ApiController\InsuranceScrapingController@smkScraping']);
+
+Route::get('/insurance/scraping/navakij', [
+    'as' => 'insurance.scraping.navakij',
+    'uses' => 'ApiController\InsuranceScrapingController@navakijScraping']);
 
 
 

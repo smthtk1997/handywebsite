@@ -38,11 +38,12 @@
                         <div class="col-md-5 col-12 inputField">
                             <input type="text" class="form-control" id="inputName" name="inputName" placeholder="ค้นหาอู่">
                         </div>
-                        <div class="col-md-2 col-12 inputField">
+                        <div id="typeDiv" class="col-md-4 col-12 inputField">
                             <select id="inputType" class="form-control" name="inputType">
                                 <option value="" selected disabled>ประเภท</option>
                                 <option value="6">อู่ซ่อมรถยนต์</option>
                                 <option value="1">ศูนย์รถยนต์</option>
+                                <option value="">ในเครือประกันภัย</option>
                                 <option value="8">ล้างรถ-เคลือบสี</option>
                                 <option value="5">ปั้มน้ำมัน</option>
                                 <option value="15">ยาง และ ล้อแม็ก</option>
@@ -51,19 +52,12 @@
                                 <option value="9">บริการเช่ารถ</option>
                             </select>
                         </div>
-                        <div class="col-md-2 col-sm-12 inputField">
+                        <div id="insuranceDiv" class="col-md-2 col-12 inputField" style="display: none">
                             <select id="inputInsurance" class="form-control" name="inputInsurance">
-                                <option selected disabled>ประกันภัย</option>
-                                <option value="20">กรุงเทพประกันภัย</option>
-                                <option value="21">ทิพยประกันภัย</option>
-                                <option value="18">วิริยะประกันภัย</option>
-                                <option value="เมืองไทยประกันภัย">เมืองไทยประกันภัย</option>
-                                <option value="อาคเนย์ประกันภัย">อาคเนย์ประกันภัย</option>
-                                <option value="สินมั่นคงประกันภัย">สินมั่นคงประกันภัย</option>
-                                <option value="นวกิจประกันภัย">นวกิจประกันภัย</option>
-                                <option value="ไทยวิวัฒน์ประกันภัย">ไทยวิวัฒน์ประกันภัย</option>
-                                <option value="เอเชียประกันภัย">เอเชียประกันภัย</option>
-                                <option value="แอลเอ็มจีประกันภัย">แอลเอ็มจีประกันภัย</option>
+                                <option value="" selected disabled>ประกันภัย</option>
+                                @foreach ($insurances as $insurance)
+                                    <option value="{{$insurance->type_id}}">{{$insurance->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-2 col-12 inputField">
@@ -87,11 +81,6 @@
         </div>
     </div>
 
-
-
-{{--    Get Geolocation--}}
-
-
 @stop
 
 @section('script')
@@ -100,7 +89,21 @@
     <script>
 
         $(document).ready(function () {
-            getLocation()
+            getLocation();
+
+            $('#inputType').on('change',function () {
+                let choose = $('#inputType option:selected').text();
+                if (choose === 'ในเครือประกันภัย'){
+                    $('#typeDiv').removeClass('col-md-4');
+                    $('#typeDiv').addClass('col-md-2');
+                    $('#insuranceDiv').fadeIn('slow');
+                }else{
+                    $('#insuranceDiv').hide();
+                    $('#inputInsurance').val("");
+                    $('#typeDiv').removeClass('col-md-2');
+                    $('#typeDiv').addClass('col-md-4');
+                }
+            })
         });
 
         var x = document.getElementById("demo");

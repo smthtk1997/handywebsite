@@ -76,7 +76,7 @@
                 <div id="map"></div>
                 <a href="{{route('search.on.map.view')}}"><button class="mt-3 btn btn-outline-danger btn-block waves-effect waves-light">ค้นหาบนแผนที่</button></a>
                 <div style="margin-top: 2.5rem">
-                    <h3 style="margin-bottom: 1.8rem">ผลลัพธ์การค้นหาทั้งหมด: {{$results ? count($results).' ร้าน':''}}</h3>
+                    <h3 style="margin-bottom: 1.8rem">ผลลัพธ์การค้นหาทั้งหมด: {{$results ? count($results).' ที่':''}}</h3>
                     @if ($results)
                         @foreach ($results as $shop)
                             <div class="row shopEach" data-lat="{{$shop['shop_lat']}}" data-lng="{{$shop['shop_lng']}}">
@@ -84,12 +84,12 @@
                                     @if ($shop['shop_photo_ref'] != null)
                                         <img class="image-popup-vertical-fit imageGrow mb-md-0 mb-3" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference={{$shop['shop_photo_ref']}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
                                              src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference={{$shop['shop_photo_ref']}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
-                                             width="200" style="max-height: 200px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;"
+                                             width="200" style="max-height: 200px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;object-fit: cover"
                                              alt="store">
                                     @else
                                         <img class="image-popup-vertical-fit imageGrow mb-md-0 mb-3" href="{{asset('images/API-Logo.png')}}"
                                              src="{{asset('images/API-Logo.png')}}"
-                                             width="200" style="max-height: 200px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;"
+                                             width="200" style="max-height: 200px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;object-fit: cover"
                                              alt="store">
                                     @endif
                                 </div>
@@ -133,6 +133,7 @@
             </div>
         </div>
     </div>
+    <a href="#" id="toTop" class="toTop mdi mdi-chevron-up"></a>
 
 @endsection
 
@@ -141,6 +142,15 @@
     <script src="{{asset('libs/magnific-popup/meg.init.js')}}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk&libraries=places"></script>
     <script type="text/javascript">
+
+        $(window).scroll(function (event) {
+            var scroll = $(window).scrollTop();
+            if (scroll >= 40){
+                $('#toTop').fadeIn();
+            }else{
+                $('#toTop').fadeOut();
+            }
+        });
 
         var userLat = '{{ $lat }}';
         var userLng = '{{ $lng }}';

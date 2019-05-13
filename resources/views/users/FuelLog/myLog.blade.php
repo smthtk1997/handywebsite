@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-
+    <a href="#" id="toTop" class="toTop mdi mdi-chevron-up" style="display: block"></a>
 
 @stop
 

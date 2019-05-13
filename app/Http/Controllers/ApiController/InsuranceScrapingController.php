@@ -132,6 +132,263 @@ class InsuranceScrapingController extends Controller
 
     }
 
+    public function MuangThaiScraping(){
+        $data_arr = array();
+        libxml_use_internal_errors(true);
+        $html = file_get_contents("https://www.prakunrod.com/ViewArticle.aspx?ArticleID=100");
+        $DOM = new \DOMDocument();
+        $DOM->loadHTML($html);
+        $finder = new \DomXPath($DOM);
+        $classname = 'td_text_columns_two_cols';
+
+        for ($j = 0;$j <= 111;$j++){
+            $nodes = $finder->query("/html/body/div[1]/main/section[contains(@class, '$classname')]div[$j]/div");
+            $place_data = trim($nodes[0]->nodeValue);
+            $place_data = str_replace('  ',' ',$place_data);
+            array_push($data_arr,$place_data);
+        }
+
+        $this_type = Type::where('name','เมืองไทยประกันภัย')->first();
+        if (!$this_type){
+            $this_type = new Type();
+            $this_type->name = 'เมืองไทยประกันภัย';
+            $this_type->token = str_random(16);
+            try{
+                $this_type->save();
+            }catch (\Exception $x){
+            }
+        }
+
+        $save_result = $this->MakeAndSave($data_arr,$this_type);
+
+        if ($save_result){
+            Alert::success('อัพเดทข้อมูลสมบูรณ์!')->autoclose(2000);
+        }else{
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+        }
+
+    }
+
+    public function smkScraping(){
+        $data_arr = array();
+        libxml_use_internal_errors(true);
+        $html = file_get_contents("https://www.smk.co.th/garage.aspx");
+        $DOM = new \DOMDocument();
+        $DOM->loadHTML($html);
+        $finder = new \DomXPath($DOM);
+        $classname = '';
+        for ($j = 1;$j <= 427;$j+=2){
+            $nodes = $finder->query("//*[@id=\"content\"]/div/div/div[3]/div[3]/div[2]/div/div[$j]/text()");
+            $place_data = trim($nodes[0]->nodeValue);
+            $place_data = str_replace('  ',' ',$place_data);
+            array_push($data_arr,$place_data);
+        }
+
+        $this_type = Type::where('name','สินมั่นคงประกันภัย')->first();
+        if (!$this_type){
+            $this_type = new Type();
+            $this_type->name = 'สินมั่นคงประกันภัย';
+            $this_type->token = str_random(16);
+            try{
+                $this_type->save();
+            }catch (\Exception $x){
+            }
+        }
+
+        $save_result = $this->MakeAndSave($data_arr,$this_type);
+
+        if ($save_result){
+            Alert::success('อัพเดทข้อมูลสมบูรณ์!')->autoclose(2000);
+        }else{
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+        }
+
+    }
+
+    public function SEICScraping(){
+        $data_arr = array();
+
+        $file = fopen(storage_path("/files/store_csv/seic.csv"),"r");
+
+        while(! feof($file))
+        {
+            array_push($data_arr,fgetcsv($file)[2]);
+        }
+
+        fclose($file);
+
+        $this_type = Type::where('name','อาคเนย์ประกันภัย')->first();
+        if (!$this_type){
+            $this_type = new Type();
+            $this_type->name = 'อาคเนย์ประกันภัย';
+            $this_type->token = str_random(16);
+            try{
+                $this_type->save();
+            }catch (\Exception $x){
+            }
+        }
+
+        $save_result = $this->MakeAndSave($data_arr,$this_type);
+
+        if ($save_result){
+            Alert::success('อัพเดทข้อมูลสมบูรณ์!')->autoclose(2000);
+        }else{
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+        }
+
+    }
+
+    public function asiaScraping(){
+        $data_arr = array();
+
+        $file = fopen(storage_path("/files/store_csv/asia.csv"),"r");
+
+        while(! feof($file))
+        {
+            $place_from_csv = trim(fgetcsv($file)[3]);
+            if ($place_from_csv != "" && $place_from_csv != null){
+                array_push($data_arr,$place_from_csv);
+            }
+
+        }
+
+        fclose($file);
+
+        $this_type = Type::where('name','เอเชียประกันภัย')->first();
+        if (!$this_type){
+            $this_type = new Type();
+            $this_type->name = 'เอเชียประกันภัย';
+            $this_type->token = str_random(16);
+            try{
+                $this_type->save();
+            }catch (\Exception $x){
+            }
+        }
+
+        $save_result = $this->MakeAndSave($data_arr,$this_type);
+
+        if ($save_result){
+            Alert::success('อัพเดทข้อมูลสมบูรณ์!')->autoclose(2000);
+        }else{
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+        }
+
+    }
+
+    public function lmgScraping(){
+        $data_arr = array();
+
+        $file = fopen(storage_path("/files/store_csv/lmg.csv"),"r");
+
+        while(! feof($file))
+        {
+            $place_from_csv = trim(fgetcsv($file)[2]);
+            if ($place_from_csv != "" && $place_from_csv != null){
+                array_push($data_arr,$place_from_csv);
+            }
+
+        }
+
+        fclose($file);
+
+        $this_type = Type::where('name','แอลเอ็มจีประกันภัย')->first();
+        if (!$this_type){
+            $this_type = new Type();
+            $this_type->name = 'แอลเอ็มจีประกันภัย';
+            $this_type->token = str_random(16);
+            try{
+                $this_type->save();
+            }catch (\Exception $x){
+            }
+        }
+
+        $save_result = $this->MakeAndSave($data_arr,$this_type);
+
+        if ($save_result){
+            Alert::success('อัพเดทข้อมูลสมบูรณ์!')->autoclose(2000);
+        }else{
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+        }
+    }
+
+    public function navakijScraping(){
+        $data_arr = array();
+
+        $file = fopen(storage_path("/files/store_csv/nvk_official.csv"),"r");
+
+        while(! feof($file))
+        {
+            $place_from_csv = trim(fgetcsv($file)[0]);
+            if ($place_from_csv != "" && $place_from_csv != null){
+                array_push($data_arr,$place_from_csv);
+            }
+
+        }
+
+        fclose($file);
+
+        $this_type = Type::where('name','นวกิจประกันภัย')->first();
+        if (!$this_type){
+            $this_type = new Type();
+            $this_type->name = 'นวกิจประกันภัย';
+            $this_type->token = str_random(16);
+            try{
+                $this_type->save();
+            }catch (\Exception $x){
+            }
+        }
+
+        $save_result = $this->MakeAndSave($data_arr,$this_type);
+
+        if ($save_result){
+            Alert::success('อัพเดทข้อมูลสมบูรณ์!')->autoclose(2000);
+        }else{
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+        }
+    }
+
+    public function thaivivatScraping(){
+        $data_arr = array();
+        for ($i = 1;$i <= 15;$i++){
+            libxml_use_internal_errors(true);
+            $html = file_get_contents("https://www.thaivivat.co.th/th/service.php?page=$i&perpage=20&province=&type=&brand=&district=&keyword=");
+            $DOM = new \DOMDocument();
+            $DOM->loadHTML($html);
+            $finder = new \DomXPath($DOM);
+            $classname = 'search-detail';
+
+            for ($j = 2;$j <= 20;$j++){
+                $nodes = $finder->query("//*[@id=\"service_type\"]/div[21]/div[2]/table/tbody/tr[$j]/td[1]/a");
+                preg_match('/([1-9]*.) (.*)/', $nodes[0]->nodeValue, $output_array);
+                $tosave = trim($output_array[2]);
+                if (!in_array($tosave,$data_arr)){
+                    array_push($data_arr,$tosave);
+                }
+            }
+        }
+
+        $this_type = Type::where('name','ไทยวิวัฒน์ประกันภัย')->first();
+        if (!$this_type){
+            $this_type = new Type();
+            $this_type->name = 'ไทยวิวัฒน์ประกันภัย';
+            $this_type->token = str_random(16);
+            try{
+                $this_type->save();
+            }catch (\Exception $x){
+            }
+        }
+
+        $save_result = $this->MakeAndSave($data_arr,$this_type);
+
+        if ($save_result){
+            dd('pass');
+            Alert::success('อัพเดทข้อมูลสมบูรณ์!')->autoclose(2000);
+        }else{
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+        }
+
+    }
+
 
     public function MakeAndSave($place_array,$type_obj)
     {
@@ -153,88 +410,88 @@ class InsuranceScrapingController extends Controller
 
             $outputs = json_decode($outputs,true);
 
-
-
-            if ($outputs['candidates']){
-                foreach ($outputs['candidates'] as $shop_place){
-                    $check = Shop::where('map_id',$shop_place['id'])->first();
-                    if (!$check){
-                        $shop = new Shop();
-                        $shop->name = $shop_place['name'];
-                        $shop->formatted_address = $shop_place['formatted_address'];
-                        $shop->lat = $shop_place['geometry']['location']['lat'];
-                        $shop->lng = $shop_place['geometry']['location']['lng'];
-                        $shop->map_id = $shop_place['id'];
-                        $shop->place_id = $shop_place['place_id'];
-                        $shop->rating = $shop_place['rating'];
-                        $shop->token = str_random(16);
-                        if (array_key_exists('photos',$shop_place)){
-                            $shop->photo_ref = $shop_place['photos'][0]['photo_reference'];
-                        }
-
-                        // ไปเอา detail
-                        $urlGetdata = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$shop->place_id&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk";
-                        $jsonDetail = file_get_contents($urlGetdata);
-                        $dataDetail = json_decode($jsonDetail,true);
-
-                        if (array_key_exists('result',$dataDetail)) {
-
-                            if (array_key_exists('international_phone_number',$dataDetail['result'])){
-                                $phone_number = $dataDetail['result']['international_phone_number'];
-                                $phone_number = str_replace(' ','-',$phone_number);
-                            }else{
-                                $phone_number = null;
+            if ($outputs['status'] == 'OK'){
+                if ($outputs['candidates']){
+                    foreach ($outputs['candidates'] as $shop_place){
+                        $check = Shop::where('map_id',$shop_place['id'])->first();
+                        if (!$check){
+                            $shop = new Shop();
+                            $shop->name = $shop_place['name'];
+                            $shop->formatted_address = $shop_place['formatted_address'];
+                            $shop->lat = $shop_place['geometry']['location']['lat'];
+                            $shop->lng = $shop_place['geometry']['location']['lng'];
+                            $shop->map_id = $shop_place['id'];
+                            $shop->place_id = $shop_place['place_id'];
+                            $shop->rating = $shop_place['rating'] != null ? $shop_place['rating']:0;
+                            $shop->token = str_random(16);
+                            if (array_key_exists('photos',$shop_place)){
+                                $shop->photo_ref = $shop_place['photos'][0]['photo_reference'];
                             }
 
-                            if (array_key_exists('url',$dataDetail['result'])){
-                                $urlNav = $dataDetail['result']['url'];
-                            }else{
-                                $urlNav = null;
-                            }
+                            // ไปเอา detail
+                            $urlGetdata = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$shop->place_id&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk";
+                            $jsonDetail = file_get_contents($urlGetdata);
+                            $dataDetail = json_decode($jsonDetail,true);
 
-                            $shop->phone_number = $phone_number;
-                            $shop->url_nav = $urlNav;
-                            try{
-                                $shop->save();
-                            }catch (\Exception $x){
-                                $return_result = false;
-                            }
+                            if (array_key_exists('result',$dataDetail)) {
 
-                            foreach ($dataDetail['result']['types'] as $type){
-                                $checktype = Type::where('name',$type)->first();
-                                if (!$checktype){
-                                    $checktype = new Type();
-                                    $checktype->name = $type;
-                                    $checktype->token = str_random(16);
-                                    try{
-                                        $checktype->save();
-                                    }catch (\Exception $x){
-                                        $return_result = false;
-                                    }
+                                if (array_key_exists('international_phone_number',$dataDetail['result'])){
+                                    $phone_number = $dataDetail['result']['international_phone_number'];
+                                    $phone_number = str_replace(' ','-',$phone_number);
+                                }else{
+                                    $phone_number = null;
                                 }
 
-                                $checkShoptype = ShopType::where('shop_id',$shop->id)->where('type_id',$checktype->id)->first();
-                                $check_insurance_type = ShopType::where('shop_id',$shop->id)->where('type_id',$type_obj->id)->first();
-                                if (!$checkShoptype){
-                                    $shoptype = new ShopType();
-                                    $shoptype->shop_id = $shop->id;
-                                    $shoptype->type_id = $checktype->id;
-                                    $shoptype->token = str_random(16);
-                                    try{
-                                        $shoptype->save();
-                                    }catch (\Exception $x){
-                                        $return_result = false;
-                                    }
+                                if (array_key_exists('url',$dataDetail['result'])){
+                                    $urlNav = $dataDetail['result']['url'];
+                                }else{
+                                    $urlNav = null;
                                 }
-                                if (!$check_insurance_type){
-                                    $shoptype_insurance = new ShopType();
-                                    $shoptype_insurance->shop_id = $shop->id;
-                                    $shoptype_insurance->type_id = $type_obj->id;
-                                    $shoptype_insurance->token = str_random(16);
-                                    try{
-                                        $shoptype_insurance->save();
-                                    }catch (\Exception $x){
-                                        $return_result = false;
+
+                                $shop->phone_number = $phone_number;
+                                $shop->url_nav = $urlNav;
+                                try{
+                                    $shop->save();
+                                }catch (\Exception $x){
+                                    $return_result = false;
+                                }
+
+                                foreach ($dataDetail['result']['types'] as $type){
+                                    $checktype = Type::where('name',$type)->first();
+                                    if (!$checktype){
+                                        $checktype = new Type();
+                                        $checktype->name = $type;
+                                        $checktype->token = str_random(16);
+                                        try{
+                                            $checktype->save();
+                                        }catch (\Exception $x){
+                                            $return_result = false;
+                                        }
+                                    }
+
+                                    $checkShoptype = ShopType::where('shop_id',$shop->id)->where('type_id',$checktype->id)->first();
+                                    $check_insurance_type = ShopType::where('shop_id',$shop->id)->where('type_id',$type_obj->id)->first();
+                                    if (!$checkShoptype){
+                                        $shoptype = new ShopType();
+                                        $shoptype->shop_id = $shop->id;
+                                        $shoptype->type_id = $checktype->id;
+                                        $shoptype->token = str_random(16);
+                                        try{
+                                            $shoptype->save();
+                                        }catch (\Exception $x){
+                                            $return_result = false;
+                                        }
+                                    }
+                                    if (!$check_insurance_type){
+                                        $shoptype_insurance = new ShopType();
+                                        $shoptype_insurance->shop_id = $shop->id;
+                                        $shoptype_insurance->type_id = $type_obj->id;
+                                        $shoptype_insurance->token = str_random(16);
+                                        try{
+                                            $shoptype_insurance->save();
+                                        }catch (\Exception $x){
+                                            $return_result = false;
+                                        }
                                     }
                                 }
                             }
@@ -242,6 +499,7 @@ class InsuranceScrapingController extends Controller
                     }
                 }
             }
+
         }
         return $return_result;
     }

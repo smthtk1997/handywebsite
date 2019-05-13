@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Brand;
+use App\Insurance;
+use App\Type;
 use App\UserCars;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,6 +69,27 @@ class AdminController extends Controller
         }catch (\Exception $x){
             Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
             return back()->withInput();
+        }
+    }
+
+
+    public function insurance_Data()
+    {
+        $all_insurance = ['กรุงเทพประกันภัย','ทิพยประกันภัย','วิริยะประกันภัย','เมืองไทยประกันภัย','อาคเนย์ประกันภัย','ไทยวิวัฒน์ประกันภัย',
+            'เอเชียประกันภัย','สินมั่นคงประกันภัย','นวกิจประกันภัย','แอลเอ็มจีประกันภัย'];
+        foreach ($all_insurance as $insurance){
+            $type = Type::where('name',$insurance)->first();
+            if ($type){
+                $new_insurance = new Insurance([
+                   'name'=>$insurance,
+                   'type_id'=>$type->id,
+                   'token'=>str_random(16)
+                ]);
+                try{
+                    $new_insurance->save();
+                }catch (\Exception $x){
+                }
+            }
         }
     }
 }
