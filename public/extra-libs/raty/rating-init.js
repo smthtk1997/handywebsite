@@ -1,6 +1,6 @@
 $(function() {
 
-    $.fn.raty.defaults.path = '../../assets/images/rating/';
+    $.fn.raty.defaults.path = 'http://localhost:8000'+'/images/rating/';
 
     // Default
     $('#default-star-rating').raty();

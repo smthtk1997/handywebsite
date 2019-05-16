@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\ApiController\InsuranceScrapingController;
+use App\Review;
 use App\Shop;
 use App\ShopType;
 use App\Type;
@@ -210,9 +211,18 @@ class SearchEngineController extends Controller
                 $photos_arr = $dataDetail['result']['photos'];
                 $photo_toshow = array();
                 if ($photos_arr){
-                    $shop->photo_ref = $photos_arr[0]['photo_reference'];
+                    $ref_update = $photos_arr[0]['photo_reference'];
+                    $check_ref_update = $this->check_url("https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=$ref_update&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk");
+                    if ($check_ref_update == '302'){
+                        $shop->photo_ref = $ref_update;
+                    }
                     foreach ($photos_arr as $photo){
-                        array_push($photo_toshow,$photo['photo_reference']);
+                        $ref = $photo['photo_reference'];
+                        $check_url_status = $this->check_url("https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=$ref&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk");
+                        if ($check_url_status == '302'){
+                            array_push($photo_toshow,$photo['photo_reference']);
+                        }
+
                     }
                 }
             }
@@ -237,13 +247,30 @@ class SearchEngineController extends Controller
         }catch (\Exception $x){
         }
 
+        $review_inhandy = Review::where('shop_id',$shop->id)->get();
+
         return view('Home.placeDetail',[
             'shop'=>$shop,
             'openNow'=>$openNow,
             'weekdays'=>$weekdays,
             'photo_toshow'=>$photo_toshow,
-            'reviews_toshow'=>$reviews_toshow
+            'reviews_toshow'=>$reviews_toshow,
+            'reviews_handy'=>$review_inhandy
         ]);
+    }
+
+
+    function check_url($url) {
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch , CURLOPT_RETURNTRANSFER, 1);
+        $data = curl_exec($ch);
+        $headers = curl_getinfo($ch);
+        curl_close($ch);
+
+        return $headers['http_code'];
     }
 
 

@@ -250,4 +250,10 @@ Route::get('/insurance/scraping/navakij', [
     'uses' => 'ApiController\InsuranceScrapingController@navakijScraping']);
 
 
+//////////// Review /////////////
+Route::post('/save/review', [
+    'as' => 'save.review',
+    'uses' => 'ShopController@save_review']);
+
+
 

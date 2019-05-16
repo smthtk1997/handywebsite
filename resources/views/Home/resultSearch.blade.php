@@ -5,17 +5,12 @@
     <style>
 
         .shopEach{
-            padding: 20px;
             transition: 500ms;
         }
 
         .shopEach:hover{
             cursor: pointer;
-            background-color: #f9f9f9;
-        }
-
-        .shopEach:active{
-            background-color: #efefef;
+            color: #eb232e;
         }
 
         html {
@@ -79,7 +74,7 @@
                     <h3 style="margin-bottom: 1.8rem">ผลลัพธ์การค้นหาทั้งหมด: {{$results ? count($results).' ที่':''}}</h3>
                     @if ($results)
                         @foreach ($results as $shop)
-                            <div class="row shopEach" data-lat="{{$shop['shop_lat']}}" data-lng="{{$shop['shop_lng']}}">
+                            <div class="row">
                                 <div class="col-12 col-md-4 col-lg-3">
                                     @if ($shop['shop_photo_ref'] != null)
                                         <img class="image-popup-vertical-fit imageGrow mb-md-0 mb-3" href="https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference={{$shop['shop_photo_ref']}}&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"
@@ -94,8 +89,8 @@
                                     @endif
                                 </div>
                                 <div class="col-12 col-md-8 col-lg-9">
-                                    <h4 style="margin-bottom: 15px">{{$shop['shop_name']}}</h4>
-                                    <p style="margin-bottom: 12px;font-size: 15px"><i class="fas fa-map-marker-alt"></i> ที่อยู่: {{$shop['formatted_address']}}</p>
+                                    <h4 class="shopEach" style="display: initial" data-lat="{{$shop['shop_lat']}}" data-lng="{{$shop['shop_lng']}}">{{$shop['shop_name']}}</h4>
+                                    <p style="margin-top:12px;margin-bottom: 12px;font-size: 15px"><i class="fas fa-map-marker-alt"></i> ที่อยู่: {{$shop['formatted_address']}}</p>
                                     <p style="margin-bottom: 12px;font-size: 15px">
                                         <i class="far fa-smile"></i> คะแนนจากเว็บ:
                                         @if (!$shop['shop_rating'])
@@ -250,7 +245,7 @@
                 let lng = parseFloat($(this).attr('data-lng'));
                 map.panTo({lat: lat,lng: lng});
                 map.setZoom(16);
-                //window.location = '#map';
+                window.location = '#map';
             });
         }
     </script>

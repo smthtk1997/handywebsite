@@ -55,7 +55,6 @@ class UserCarsController extends Controller
             return redirect()->route('fuellog.app.index');
 
         }catch (\Exception $x){
-            dd($x);
             Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
             return back()->withInput();
         }

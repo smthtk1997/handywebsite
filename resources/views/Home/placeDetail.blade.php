@@ -160,9 +160,42 @@
                                 </div>
                                 <hr>
                             @endforeach
-                            @else
+                        @endif
+                        @if ($reviews_handy)
+                            @foreach ($reviews_handy as $handy)
+                                <div class="d-flex flex-row comment-row m-t-0">
+                                    <div class="p-2"><img src="{{url('imgs/'.$handy->get_user->avatar)}}" alt="user" width="50" class="rounded-circle"></div>
+                                    <div class="comment-text">
+                                        <h6 class="font-medium">{{$handy->get_user->name}}</h6>
+                                        <span class="m-b-15 d-block">{{$handy->message}}</span>
+                                        <div class="comment-footer" style="margin-top: 0.3rem">
+                                            <span class="text-muted float-right">ให้คะแนน: {{$handy->rating}}/5</span>
+                                            <small class="text-muted">รีวิวจากผู้ใช้ Handy</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                            @endforeach
+                        @endif
+                        @if (!$reviews_handy && $reviews_toshow)
                             <p class="text-info">ยังไม่มีรีวิวจากลูกค้า</p>
                         @endif
+                        <div >
+                            <form action="{{route('save.review')}}" method="post">
+                                @csrf
+                                <label for="new_review">เพิ่มรีวิวของคุณ</label>
+                                <textarea type="text" id="new_review" class="form-control" name="new_review" rows="3"></textarea>
+                                <input type="hidden" value="{{$shop->id}}" name="shop_id">
+                                <div class="row" style="margin-top: 0.8rem">
+                                    <div class="col-md-6">
+                                        <div id="round-enabled"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-cyan btn-rounded btn-sm text-white waves-light waves-effect float-right"><i class="fas fa-paper-plane"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -173,6 +206,8 @@
 @stop
 
 @section('script')
+    <script src="{{asset('libs/raty-js/lib/jquery.raty.js')}}"></script>
+    <script src="{{asset('extra-libs/raty/rating-init.js')}}"></script>
     <script src="{{asset('libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('libs/magnific-popup/meg.init.js')}}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk&libraries=places"></script>
@@ -184,6 +219,9 @@
 
         $(document).ready(function () {
            showMarker();
+            $('#round-enabled').raty({
+                score: 0
+            });
         });
 
         function showMarker() {

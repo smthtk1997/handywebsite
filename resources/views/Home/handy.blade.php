@@ -36,7 +36,7 @@
                     @csrf
                     <div class="form-row">
                         <div class="col-md-5 col-12 inputField">
-                            <input type="text" class="form-control" id="inputName" name="inputName" placeholder="ค้นหาอู่">
+                            <input type="search" class="form-control" id="inputName" name="inputName" placeholder="ค้นหาอู่">
                         </div>
                         <div id="typeDiv" class="col-md-4 col-12 inputField">
                             <select id="inputType" class="form-control" name="inputType">
@@ -65,9 +65,8 @@
                                 <option value="0" selected>ไม่จำกัด</option>
                                 <option value="3000">3 กิโลเมตร</option>
                                 <option value="5000">5 กิโลเมตร</option>
+                                <option value="8000">8 กิโลเมตร</option>
                                 <option value="10000">10 กิโลเมตร</option>
-                                <option value="15000">15 กิโลเมตร</option>
-                                <option value="20000">20 กิโลเมตร</option>
                             </select>
                         </div>
                         <div class="col-md-1 col-12 inputField text-right">
