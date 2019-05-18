@@ -169,6 +169,7 @@
                 defaultDate: 'today',
                 maxDate: "today",
                 time_24hr: false,
+                disableMobile: "true",
             });
 
             $('#selectorTime').val(hour+":"+minute);
@@ -178,7 +179,8 @@
                 noCalendar: true,
                 time_24hr: true,
                 minuteIncrement: 1,
-                enableSeconds: true
+                enableSeconds: true,
+                disableMobile: "true",
             });
 
             $('#date_now').on('click tap',function () {

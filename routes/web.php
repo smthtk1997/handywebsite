@@ -256,4 +256,10 @@ Route::post('/save/review', [
     'uses' => 'ShopController@save_review']);
 
 
+////////////// MyLog Query ////////////////
+Route::post('/api/fuel/mylog/query', [
+    'as' => 'api.fuel.mylog.query',
+    'uses' => 'FuelLogController@inMonth']);
+
+
 

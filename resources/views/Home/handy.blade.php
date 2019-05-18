@@ -43,7 +43,7 @@
                                 <option value="" selected disabled>ประเภท</option>
                                 <option value="6">อู่ซ่อมรถยนต์</option>
                                 <option value="1">ศูนย์รถยนต์</option>
-                                <option value="">ในเครือประกันภัย</option>
+                                <option value="typeInsure">ในเครือประกันภัย</option>
                                 <option value="8">ล้างรถ-เคลือบสี</option>
                                 <option value="5">ปั้มน้ำมัน</option>
                                 <option value="15">ยาง และ ล้อแม็ก</option>
@@ -72,7 +72,7 @@
                         <div class="col-md-1 col-12 inputField text-right">
                             <input type="hidden" id="inputLat" name="inputLat" value="">
                             <input type="hidden" id="inputLng" name="inputLng" value="">
-                            <button type="submit" class="btn waves-effect waves-light btn-danger btn-block" value="Submit" id="btnSubmit" disabled>รอสักครู่...</button>
+                            <button type="submit" class="btn waves-effect waves-light btn-danger btn-block" value="Submit" id="btnSubmit" onclick="return confirmSearch()" disabled>รอสักครู่...</button>
                         </div>
                     </div>
                 </form>
@@ -143,6 +143,35 @@
                     x.innerHTML = "An unknown error occurred.";
                     break;
             }
+        }
+
+        function confirmSearch() {
+            let name = $('#inputName').val();
+            let type = $('#inputType').val();
+            let insurance = $('#inputInsurance').val();
+            let range = $('#inputRange').val();
+            if (name === '' && type == null && insurance == null && range === '0'){
+                Swal.fire({
+                    type: 'warning',
+                    title: 'กรุณาใส่ข้อมูลค้นหา!',
+                });
+                return false;
+            }
+            if (type === 'typeInsure'){
+                $('#inputType').val('');
+                if (insurance != null){
+                    $.blockUI({ message: null});
+                    return true
+                }else{
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'กรุณาเลือกประกันภัย!',
+                    });
+                    return false;
+                }
+            }
+            $.blockUI({ message: null});
+            return true;
         }
 
     </script>

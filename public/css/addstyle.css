@@ -148,7 +148,7 @@ body{
 }
 
 .toTop:before {
-    line-height: 47px;
+    line-height: 49px;
     font-size: 22px;
     font-weight: 700;
     content: '^';

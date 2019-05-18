@@ -26,7 +26,16 @@ class FuelLogController extends Controller
 
     public function myLogIndex(UserCars $car)
     {
-        return view('users.FuelLog.myLog',['car'=>$car]);
+        $logs = FuelLog::orderBy('filling_date','desc')->where('car_id',$car->id)->get();
+
+        if ($logs->count() > 0){
+            $last_year = $logs[count($logs)-1]->filling_date;
+        }else{
+            $logs = null;
+            $last_year = null;
+        }
+        $month = Carbon::now()->format('F Y');
+        return view('users.FuelLog.myLog',['car'=>$car,'logs'=>$logs,'last_year'=>$last_year,'month'=>$month]);
     }
 
     public function myLogRefuel(UserCars $car){
@@ -94,6 +103,34 @@ class FuelLogController extends Controller
             return back()->withInput();
         }
 
+    }
+
+
+    public function inMonth()
+    {
+        $form_data = array();
+        $date_toquery = '1-'.$_POST['date'];
+        $carID_toquery = $_POST['car'];
+
+        $date_format = Carbon::createFromFormat('d-M-Y',$date_toquery);
+        $date_format = Carbon::parse($date_format)->toDateString();
+        $month = Carbon::parse($date_format)->month;
+        $year = Carbon::parse($date_format)->year;
+
+        $logs = FuelLog::orderBy('filling_date','desc')->whereYear('filling_date', '=', $year)
+            ->whereMonth('filling_date', '=', $month)
+            ->where('car_id',$carID_toquery)
+            ->get();
+
+        if ($logs->count() > 0){
+            $form_data['logs'] = $logs;
+            $form_data['date_Show'] = Carbon::parse($date_format)->format('F Y');
+            $form_data['status'] = true;
+        }else{
+            $form_data['status'] = false;
+        }
+
+        return json_encode($form_data, JSON_UNESCAPED_UNICODE);
     }
 
 
