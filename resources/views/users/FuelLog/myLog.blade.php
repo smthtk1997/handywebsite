@@ -8,7 +8,7 @@
             transition: 0.4s;
         }
         .innerText:hover{
-            color: #c44569;
+            color: #d63031;
         }
 
         .toFuel {
@@ -69,6 +69,24 @@
             font-size: 20px;
             color: #4834d4;
         }
+
+        #logEdit{
+            color: #aaaaaa;
+            transition: 0.3s;
+        }
+
+        #logEdit:hover{
+            color: #4e5662;
+        }
+
+        #logMap{
+            color: #4b7bec;
+            transition: 0.3s;
+        }
+
+        #logMap:hover{
+            color: #1b4de6;
+        }
     </style>
 @endsection
 @section('content')
@@ -99,8 +117,8 @@
                 <span>
                     <h3 id="headTopic" style="display: initial">ทั้งหมด</h3>
                     <div class="float-right" style="margin-top: -5px">
-                        <a id="goEdit" class="btn btn-sm btn-info text-white waves-effect waves-light" data-toggle="tooltip" title="แก้ไขข้อมูลรถ" data-placement="top"><i class="far fa-edit"></i></a>
-                        <a id="delete" class="btn btn-sm btn-danger text-white waves-effect waves-light" data-toggle="tooltip" title="ลบรถคันนี้" data-placement="top"><i class="far fa-trash-alt"></i></a>
+                        <a id="goEdit" href="{{route('fuellog.app.edit.car.view',['car'=>$car->token])}}" class="btn btn-sm btn-info text-white waves-effect waves-light" data-toggle="tooltip" title="แก้ไขข้อมูลรถ" data-placement="top"><i class="far fa-edit"></i></a>
+                        <a id="delete" href="{{route('fuellog.app.delete.car',['car'=>$car->token])}}" onclick="return confirm('คุณต้องการลบรถคันนี้ใช่ หรือ ไม่ ?')" class="btn btn-sm btn-danger text-white waves-effect waves-light" data-toggle="tooltip" title="ลบรถคันนี้" data-placement="top"><i class="far fa-trash-alt"></i></a>
                     </div>
                 </span>
                 <hr style="margin-top: 0px">
@@ -120,7 +138,7 @@
                                             <button id="queryMonth" class="btn btn-warning text-white waves-effect waves-light" style="margin-top: -3px"><i class="mdi mdi-magnify"></i></button>
                                         </div>
                                         <div class="col-12 col-md-1">
-                                            <a class="btn btn-sm btn-primary waves-light waves-effect float-left float-md-right text-white mt-md-0 mt-2">สรุปยอด</a>
+                                            <a href="{{route('fuellog.myLog.conclude',['car'=>$car->token])}}" class="btn btn-sm btn-primary waves-light waves-effect float-left float-md-right text-white mt-md-0 mt-2">ข้อมูลรายปี</a>
                                         </div>
                                     </div>
                                 </div>
@@ -134,6 +152,7 @@
                                         </div>
                                         <div class="timeline-panel">
                                             <div class="timeline-heading">
+                                                <span><a href="#" id="logEdit" class="float-right" data-toggle="tooltip" title="แก้ไขข้อมูล" data-placement="top"><i class="far fa-edit"></i></a></span>
                                                 <h5 class="timeline-title">{{\Carbon\Carbon::parse($log->filling_date)->format('j F Y')}}</h5>
                                                 <p>
                                                     <small><i class="fa fa-clock-o"></i> {{\Carbon\Carbon::parse($log->filling_date)->diffForHumans()}}
@@ -159,6 +178,7 @@
                                                     </div>
                                                     <div class="col-12 col-md-4">
                                                         <p class=""><i class="mdi mdi-clock"></i> เวลา: {{\Carbon\Carbon::parse($log->filling_time)->format('H:i')}}</p>
+                                                        <span><a href="{{url('https://www.google.co.th/maps/@'.$log->filling_lat.','.$log->filling_lng.',15z?hl=en&authuser=0')}}" target="_blank" id="logMap" class="float-right" data-toggle="tooltip" title="ตำแหน่งที่เติม" data-placement="top"><i class="fas fa-map-marked-alt"></i></a></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -194,7 +214,7 @@
         ];
 
         $(document).ready(function () {
-            var car_id = '{!! !empty($logs[0]) == true ? $logs[0]->car_id:null !!}';
+            var car_id = '{!! !empty($car) == true ? $car->id:null !!}';
             $("#dateAir").flatpickr({
                 dateFormat: "M-Y",
                 mode: 'single',

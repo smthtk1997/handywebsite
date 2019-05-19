@@ -81,8 +81,8 @@
                         <div class="form-group col-12 col-md-4">
                             <label for="mileage">ระยะทางรวม (กิโลเมตร)</label>
                             <input type="number" id="mileage" class="form-control" placeholder="ระยะทางรวม" name="mileage">
-                            @if ($last_fuel)
-                                <small class="text-muted">ระยะทางรวมล่าสุด: {{$last_fuel->mileage}}</small>
+                            @if ($car)
+                                <small class="text-muted">ระยะทางรวมล่าสุด: {{number_format($car->mileage)}} กิโลเมตร</small>
                             @endif
                         </div>
                         <div class="col-12 col-md-4" style="margin-top: 0.25rem;">
@@ -473,7 +473,7 @@
 
         function check() {
             let mile = $('#mileage').val();
-            let old_mile = '{!! $last_fuel ? $last_fuel->mileage:null !!}';
+            let old_mile = '{!! $car ? $car->mileage:null !!}';
 
             if (mile >= old_mile){
                 $.blockUI({ message: null});

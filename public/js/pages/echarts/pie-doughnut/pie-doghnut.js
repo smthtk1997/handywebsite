@@ -477,9 +477,9 @@ $(function() {
                 // Add legend
                 legend: {
                     orient: 'vertical',
-                    x: document.getElementById('pole-chart').offsetWidth / 2,
-                    y: 30,
-                    x: '55%',
+                    // x: document.getElementById('pole-chart').offsetWidth / 2,
+                    // y: 30,
+                    // x: '55%',
                     itemGap: 15,
                     data: ['60% Definitely yes','30% Could be better','10% Not at the moment']
                 },

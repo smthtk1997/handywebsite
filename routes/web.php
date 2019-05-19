@@ -132,6 +132,18 @@ Route::post('/fuellog/application/create/car/store', [ // เพิ่มรถ�
     'as' => 'fuellog.app.create.car.store',
     'uses' => 'UserCarsController@storeCar']);
 
+Route::get('/fuellog/application/edit/car/view/{car}', [ // แก้ไขรถยนต์
+    'as' => 'fuellog.app.edit.car.view',
+    'uses' => 'UserCarsController@showEditCar']);
+
+Route::post('/fuellog/application/edit/car/update/{car}', [ // อัพเดทรถยนต์
+    'as' => 'fuellog.app.edit.car.update',
+    'uses' => 'UserCarsController@updateCar']);
+
+Route::get('/fuellog/application/delete/car/{car}', [ // ลบรถยนต์
+    'as' => 'fuellog.app.delete.car',
+    'uses' => 'UserCarsController@deleteCar']);
+
 Route::get('/files/user_car_img/{filename}', function($filename) // แสดงรูปของหน้า app fuel index
 {
     $filePath = storage_path().'/files/user_car_img/'.$filename;
@@ -176,6 +188,10 @@ Route::get('/fuellog/application/myLog/refuel/{car}', [ // ไปหน้าเ
 Route::post('/fuellog/application/myLog/refuel/save/{car}', [ // save log
     'as' => 'fuellog.myLog.refuel.save',
     'uses' => 'FuelLogController@myLogRefuel_save']);
+
+Route::get('/fuellog/application/myLog/conclude/{car}', [ // ไปหน้าสรุปยอด
+    'as' => 'fuellog.myLog.conclude',
+    'uses' => 'FuelLogController@myLogConclude']);
 
 Route::get('admin/fuellog/application/brand', [ // ไปหน้ายี่ห้อทั้งหมด
     'as' => 'admin.fuellog.brand',
@@ -260,6 +276,10 @@ Route::post('/save/review', [
 Route::post('/api/fuel/mylog/query', [
     'as' => 'api.fuel.mylog.query',
     'uses' => 'FuelLogController@inMonth']);
+
+Route::post('/api/fuel/mylog/query/year.api', [
+    'as' => 'api.fuel.mylog.query.year',
+    'uses' => 'FuelLogController@queryYear']);
 
 
 

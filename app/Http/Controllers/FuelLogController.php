@@ -7,6 +7,7 @@ use App\UserCars;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Alert;
 
@@ -39,8 +40,8 @@ class FuelLogController extends Controller
     }
 
     public function myLogRefuel(UserCars $car){
-        $last_fuel = FuelLog::where('car_id',$car->id)->orderBy('created_at','desc')->first();
-        return view('users.FuelLog.reFuel',['car'=>$car,'last_fuel'=>$last_fuel]);
+        //$last_fuel = FuelLog::where('car_id',$car->id)->orderBy('created_at','desc')->first();
+        return view('users.FuelLog.reFuel',['car'=>$car]);
     }
 
     public function myLogRefuel_save(Request $request,UserCars $car)
@@ -58,25 +59,25 @@ class FuelLogController extends Controller
             'user_lng'=>'required',
         ]);
 
-        if($request->hasFile('slip_img')) {
-            $files = $request->file('slip_img');
-            $file = Input::file('slip_img')->getClientOriginalName();
-            $filename = pathinfo($file, PATHINFO_FILENAME);
-            $path = $filename.'-'.time() . '.' . $files->getClientOriginalExtension();
-            $destinationPath = storage_path('/files/fuel_log_slip/');
-            $files->move($destinationPath, $path);
-            $file_path_toDB = $path;
-
-        }else{
-            $file_path_toDB = null;
-        }
+//        if($request->hasFile('slip_img')) {
+//            $files = $request->file('slip_img');
+//            $file = Input::file('slip_img')->getClientOriginalName();
+//            $filename = pathinfo($file, PATHINFO_FILENAME);
+//            $path = $filename.'-'.time() . '.' . $files->getClientOriginalExtension();
+//            $destinationPath = storage_path('/files/fuel_log_slip/');
+//            $files->move($destinationPath, $path);
+//            $file_path_toDB = $path;
+//
+//        }else{
+//            $file_path_toDB = null;
+//        }
 
         $date_format = Carbon::createFromFormat('d/m/y',$request->selectorDate);
         $date_format = Carbon::parse($date_format)->toDateString();
 
         $refuel = new FuelLog([
             'car_id'=>$car->id,
-            'img_slip'=>$file_path_toDB,
+            'img_slip'=>null,
             'filling_date'=>$date_format,
             'filling_time'=>Carbon::parse($request->selectorTime)->format('H:i:s'),
             'mileage'=>$request->mileage,
@@ -131,6 +132,102 @@ class FuelLogController extends Controller
         }
 
         return json_encode($form_data, JSON_UNESCAPED_UNICODE);
+    }
+
+
+
+    public function myLogConclude(UserCars $car)
+    {
+        $month = ['Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sept','Oct','Nov','Dec'];
+        $this_year = Carbon::now()->year;
+        $all_year = FuelLog::where('car_id',$car->id)->distinct()->get([DB::raw('YEAR(filling_date) as all_year')]);
+
+
+        $sended = array();
+
+        $sended['data'] = FuelLog::orderBy('filling_date','desc')
+            ->where('car_id',$car->id)
+            ->whereYear('filling_date', '=', $this_year)
+            ->get();
+
+        if ($all_year->count() == 0 && sizeof($sended) == 0){
+            $all_year = null;
+            $sended = null;
+        }
+
+        if (sizeof($sended) > 0){
+            $total_price = 0;
+            $total_liter = 0;
+            for ($i = 0; $i < 12 ; $i++){
+                $month_price = 0;
+                $month_liter = 0;
+                foreach ($sended['data'] as $log){
+                    if (Carbon::parse($log->filling_date)->month -1 == $i){
+                        $month_price += (int)$log->total_price;
+                        $month_liter += (float)$log->total_liter;
+                    }
+                }
+                $sended['month_price'][$month[$i]] = $month_price;
+                $sended['month_liter'][$month[$i]] = $month_liter;
+                $total_price += (int)$month_price;
+                $total_liter += (float)$month_liter;
+            }
+            $sended['total_price'] = $total_price;
+            $sended['total_liter'] = $total_liter;
+            $sended = json_encode($sended, JSON_UNESCAPED_UNICODE);
+        }else{
+            $sended = null;
+        }
+
+        return view('users.FuelLog.LogConclude',
+            [
+                'car'=>$car,
+                'this_year'=>$this_year,
+                'all_year'=>$all_year,
+                'logs_data'=>$sended
+            ]);
+    }
+
+    public function queryYear()
+    {
+        $sended = array();
+        $month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+        $year = $_POST['year'];
+        $carID_toquery = $_POST['car_id'];
+
+        $sended['data'] = FuelLog::orderBy('filling_date', 'desc')
+            ->where('car_id', $carID_toquery)
+            ->whereYear('filling_date', '=', $year)
+            ->get();
+
+        if (sizeof($sended) > 0) {
+            $total_price = 0;
+            $total_liter = 0;
+            for ($i = 0; $i < 12; $i++) {
+                $month_price = 0;
+                $month_liter = 0;
+                foreach ($sended['data'] as $log) {
+                    if (Carbon::parse($log->filling_date)->month - 1 == $i) {
+                        $month_price += (int)$log->total_price;
+                        $month_liter += (float)$log->total_liter;
+                    }
+                }
+                $sended['month_price'][$month[$i]] = $month_price;
+                $sended['month_liter'][$month[$i]] = $month_liter;
+                $total_price += (int)$month_price;
+                $total_liter += (float)$month_liter;
+            }
+            $sended['total_price'] = $total_price;
+            $sended['total_liter'] = $total_liter;
+            $sended['year'] = $year;
+
+            $sended['status'] = true;
+
+        }else{
+            $sended['status'] = false;
+        }
+
+        return json_encode($sended, JSON_UNESCAPED_UNICODE);
     }
 
 
