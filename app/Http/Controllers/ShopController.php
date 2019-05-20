@@ -22,7 +22,7 @@ class ShopController extends Controller
             return redirect()->back();
         }
 
-        if ($request->new_review == null && $request->score){
+        if ($request->new_review != null && $request->score){
             $review = new Review([
                 'user_id'=>Auth::user()->id,
                 'shop_id' => $request->shop_id,
