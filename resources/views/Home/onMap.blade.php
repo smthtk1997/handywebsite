@@ -39,8 +39,8 @@
                 <h4 style="margin-top: 20px">เลือกตามประเภท</h4>
                 <div class="row">
                     <div id="typeDiv" class="col-md-12 col-12 inputField">
-                        <select id="inputType" class="form-control" name="inputType">
-                            <option value="" selected disabled>ประเภท</option>
+                        <select id="inputType" class="form-control" name="inputType" disabled>
+                            <option value="all" selected>ทุกประเภท</option>
                             <option value="6">อู่ซ่อมรถยนต์</option>
                             <option value="1">ศูนย์รถยนต์</option>
                             <option value="typeInsure">ในเครือประกันภัย</option>
@@ -80,6 +80,10 @@
         var placeMarker;
         var marker_inmap, i_lap;
         var marker_array = [];
+        var nord;
+        var est;
+        var sud;
+        var ovest;
 
         var type;
         var insurance;
@@ -92,22 +96,36 @@
 
             $('#inputType').on('change',function () {
                 let choose = $('#inputType option:selected').val();
+
                 if (choose === 'typeInsure'){
                     $('#typeDiv').removeClass('col-md-12');
                     $('#typeDiv').addClass('col-md-6');
                     $('#insuranceDiv').fadeIn('slow');
+                    type = $('#inputType option:selected').val();
+                }
+                else if (choose === 'all'){
+                    $('#insuranceDiv').hide();
+                    $('#inputInsurance').val("");
+                    $('#typeDiv').removeClass('col-md-6');
+                    $('#typeDiv').addClass('col-md-12');
+                    type = null;
+                    insurance = null;
+                    apiAjax(nord,est,sud,ovest,type,insurance);
+
                 }else{
                     $('#insuranceDiv').hide();
                     $('#inputInsurance').val("");
                     $('#typeDiv').removeClass('col-md-6');
                     $('#typeDiv').addClass('col-md-12');
                     insurance = null;
+                    type = $('#inputType option:selected').val();
+                    apiAjax(nord,est,sud,ovest,type,insurance);
                 }
-                type = $('#inputType option:selected').val();
             });
 
             $('#inputInsurance').on('change',function () {
                 insurance = $('#inputInsurance option:selected').val();
+                apiAjax(nord,est,sud,ovest,type,insurance);
             })
         });
 
@@ -179,16 +197,17 @@
             $('#map').fadeIn('slow');
 
             google.maps.event.addListener(map, 'idle', function() {
-                let aNord   =   map.getBounds().getNorthEast().lat();
-                let aEst    =   map.getBounds().getNorthEast().lng();
-                let aSud    =   map.getBounds().getSouthWest().lat();
-                let aOvest  =   map.getBounds().getSouthWest().lng();
+                nord  = map.getBounds().getNorthEast().lat();
+                est   = map.getBounds().getNorthEast().lng();
+                sud   = map.getBounds().getSouthWest().lat();
+                ovest = map.getBounds().getSouthWest().lng();
 
-                apiAjax(aNord,aEst,aSud,aOvest,type,insurance);
+                $('#inputType').prop('disabled',false);
+
+                apiAjax(nord,est,sud,ovest,type,insurance);
+
                 //$.blockUI({ message: null});
-
             });
-
         }
 
         function apiAjax(aNord,aEst,aSud,aOvest,type,insurance) {
@@ -209,7 +228,6 @@
                             data: {aNord: aNord,aEst: aEst,aSud: aSud,aOvest: aOvest,type: type,insurance: insurance}
                         }).done(function (msg) {
                             let data = JSON.parse(JSON.parse(JSON.stringify(msg)));
-                            console.log(data.places);
                             if (data.status === true) {
                                 setMarker(data.places);
                             }else{
@@ -228,7 +246,6 @@
                         data: {aNord: aNord,aEst: aEst,aSud: aSud,aOvest: aOvest,type: type,insurance: insurance}
                     }).done(function (msg) {
                         let data = JSON.parse(JSON.parse(JSON.stringify(msg)));
-                        console.log(data.places);
                         if (data.status === true) {
                             setMarker(data.places);
                         }else{
@@ -246,7 +263,6 @@
                     data: {aNord: aNord,aEst: aEst,aSud: aSud,aOvest: aOvest}
                 }).done(function (msg) {
                     let data = JSON.parse(JSON.parse(JSON.stringify(msg)));
-                    console.log(data.places);
                     if (data.status === true) {
                         setMarker(data.places);
                     }else{
