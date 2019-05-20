@@ -32,7 +32,7 @@
                     </a>
                 </div>
                 <span class="mt-4 mb-2"><h2><span style="color: #df3031">ค้นหา</span>บริการรถยนต์ <small style="font-size: 18px">Search Car Service in Handy</small></h2></span>
-                <form action="{{route('shop.search')}}" method="post">
+                <form action="{{route('shop.search')}}" method="get">
                     @csrf
                     <div class="form-row">
                         <div class="col-md-5 col-12 inputField">
@@ -91,8 +91,8 @@
             getLocation();
 
             $('#inputType').on('change',function () {
-                let choose = $('#inputType option:selected').text();
-                if (choose === 'ในเครือประกันภัย'){
+                let choose = $('#inputType option:selected').val();
+                if (choose === 'typeInsure'){
                     $('#typeDiv').removeClass('col-md-4');
                     $('#typeDiv').addClass('col-md-2');
                     $('#insuranceDiv').fadeIn('slow');

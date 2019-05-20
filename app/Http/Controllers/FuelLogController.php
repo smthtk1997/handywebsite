@@ -231,4 +231,53 @@ class FuelLogController extends Controller
     }
 
 
+    public function myLogRefuelEdit(FuelLog $log)
+    {
+        return view('users.FuelLog.reFuelEdit',['log'=>$log]);
+    }
+
+    public function myLogRefuelUpdate(Request $request,FuelLog $log)
+    {
+        $this->validate($request,[
+            'selectorDate' => 'required',
+            'selectorTime' => 'required',
+            'mileage' => 'required',
+            'gas_station'=> 'required',
+            'fuel_type'=>'required',
+            'price_liter'=>'required',
+            'total_price'=>'required',
+            'total_liter'=>'required'
+        ]);
+
+        try{
+            $date_format = Carbon::createFromFormat('d/m/y',$request->selectorDate);
+            $date_format = Carbon::parse($date_format)->toDateString();
+
+        }catch (\Exception $x){
+            $date_format = Carbon::createFromFormat('d/m/Y',$request->selectorDate);
+            $date_format = Carbon::parse($date_format)->toDateString();
+        }
+
+        $log->filling_date = $date_format;
+        $log->filling_time = Carbon::parse($request->selectorTime)->format('H:i:s');
+        $log->mileage = $request->mileage;
+        $log->gas_station = $request->gas_station;
+        $log->fuel_type = $request->fuel_type;
+        $log->price_liter = $request->price_liter;
+        $log->total_price = $request->total_price;
+        $log->total_liter = $request->total_liter;
+
+        try{
+            $log->save();
+            Alert::success('อัพเดทข้อมูลเรียบร้อย','สำเร็จ!')->autoclose(2000);
+            return redirect()->route('fuellog.myLog',['car'=>$log->get_car()->first()]);
+
+        }catch (\Exception $x){
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+            return back()->withInput();
+        }
+
+    }
+
+
 }

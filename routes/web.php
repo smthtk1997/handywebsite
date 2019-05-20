@@ -108,7 +108,7 @@ Route::get('/search/on/map/view', [ // ค้นหาบนแผนที่
 
 
 // ค้นหา
-Route::post('/handy/shop/search', [
+Route::get('/handy/shop/search', [
     'as' => 'shop.search',
     'uses' => 'SearchEngineController@shopSearch']);
 
@@ -201,12 +201,25 @@ Route::post('admin/fuellog/application/brand/store', [ // เก็บยี่�
     'as' => 'admin.fuellog.brand.store',
     'uses' => 'AdminController@myFuelLog_brand_store']);
 
+Route::get('/fuellog/application/myLog/refuel/edit/{log}', [ // ไปหน้าแก้ไขเติมน้ำมัน
+    'as' => 'fuellog.myLog.refuel.edit',
+    'uses' => 'FuelLogController@myLogRefuelEdit']);
+
+Route::post('/fuellog/application/myLog/refuel/update/{log}', [ // อัพเดทเติมน้ำมัน
+    'as' => 'fuellog.myLog.refuel.update',
+    'uses' => 'FuelLogController@myLogRefuelUpdate']);
+
+
 
 ////////////// Map Bound API ////////////////
 
 Route::post('/api/map/bound.api', [
     'as' => 'api.map.bound',
     'uses' => 'SearchEngineController@get_Place_inBound']);
+
+Route::post('/api/map/type/bound.api', [
+    'as' => 'api.map.type.bound',
+    'uses' => 'SearchEngineController@get_type_inBound']);
 
 
 ////////////// Fuel Price API ////////////////

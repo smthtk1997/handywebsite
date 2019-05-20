@@ -154,12 +154,12 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-{{--                        <li class="sidebar-item">--}}
-{{--                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('home')}}">--}}
-{{--                                <i class="mdi mdi-home"></i>--}}
-{{--                                <span class="hide-menu">หน้าหลัก</span>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('search.on.map.view')}}">
+                                <i class="mdi mdi-google-maps"></i>
+                                <span class="hide-menu">ค้นหาบนแผนที่</span>
+                            </a>
+                        </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                                 <i class="mdi mdi-wrench"></i>
@@ -358,6 +358,12 @@
                                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('fuellog.app.index')}}" aria-expanded="false">
                                         <i class="mdi mdi-gas-station"></i>
                                         <span class="hide-menu">myFuelLog</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('search.on.map.view')}}">
+                                        <i class="mdi mdi-google-maps"></i>
+                                        <span class="hide-menu">ค้นหาบนแผนที่</span>
                                     </a>
                                 </li>
 {{--                                <li class="sidebar-item">--}}

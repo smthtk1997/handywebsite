@@ -71,7 +71,7 @@
                 <div id="map"></div>
                 <a href="{{route('search.on.map.view')}}"><button class="mt-3 btn btn-outline-danger btn-block waves-effect waves-light">ค้นหาบนแผนที่</button></a>
                 <div style="margin-top: 2.5rem">
-                    <h3 style="margin-bottom: 1.8rem">ผลลัพธ์การค้นหาทั้งหมด: {{$results ? count($results).' ที่':''}}</h3>
+                    <h3 style="margin-bottom: 1.8rem">ผลลัพธ์การค้นหาทั้งหมด: {{$size_shop}} ที่</h3>
                     @if ($results)
                         @foreach ($results as $shop)
                             <div class="row">
@@ -121,6 +121,9 @@
                             </div>
                             <hr>
                         @endforeach
+                        <div class="align-content-sm-center align-content-center pt-2">
+                            {{$results->appends(request()->all())->links()}}
+                        </div>
                         @else
                         <p class="text-danger">ไม่มีร้านที่คุณกำลังค้นหา</p>
                     @endif
@@ -153,10 +156,14 @@
 
         $(document).ready(function () {
             getPlace();
+
+            $('.page-item').on('click',function () {
+                $.blockUI({ message: null});
+            });
         });
 
         function getPlace() {
-            var locations = {!! json_encode($results) !!};
+            var locations = {!! json_encode($toMark) !!};
             var iconUser = {
                 url: '{{ URL::asset('images/MapPointer/place_user.png') }}', // url
                 scaledSize: new google.maps.Size(38, 38), // scaled size

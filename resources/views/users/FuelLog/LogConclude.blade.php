@@ -19,6 +19,9 @@
                             <li class="breadcrumb-item">
                                 <a href="{{route('home')}}">หน้าหลัก</a>
                             </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{route('fuellog.app.index')}}">myFuelLog</a>
+                            </li>
                             <li class="breadcrumb-item active">ข้อมูลรายปีของ {{$car->name}}</li>
                         </ol>
                     </nav>

@@ -4,19 +4,6 @@
     <link href="{{asset('libs/magnific-popup/dist/magnific-popup.css')}}" rel="stylesheet">
     <style>
 
-        .shopEach{
-            padding: 20px;
-            transition: 500ms;
-        }
-
-        .shopEach:hover{
-            cursor: pointer;
-            background-color: #f9f9f9;
-        }
-
-        .shopEach:active{
-            background-color: #efefef;
-        }
 
     </style>
 @stop
@@ -43,13 +30,37 @@
     <div class="container-fluid containerStyle">
         <div class="shadow bg-white rounded">
             <div class="card intable" style="padding-bottom: 100px">
-                <h3 style="margin-bottom: 20px">ค้นหาบนแผนที่</h3>
+                <h3 style="margin-bottom: 20px">เลื่อนแผนที่เพื่อค้นหาร้าน</h3>
                 <div class="i-am-centered" id="loadingRadio" style="margin-bottom: 20px">
                     <img class="loading text-center"  src="{{asset('images/Radio-1s-200px.svg')}}" alt="" height="120px"><br>
                     <small class="text-danger">กำลังค้นหาสัญญาณ GPS</small>
                 </div>
                 <div id="map" style="display: none"></div>
-                <h4 style="margin-top: 20px">เลื่อนแผนที่เพื่อค้นหาร้าน</h4>
+                <h4 style="margin-top: 20px">เลือกตามประเภท</h4>
+                <div class="row">
+                    <div id="typeDiv" class="col-md-12 col-12 inputField">
+                        <select id="inputType" class="form-control" name="inputType">
+                            <option value="" selected disabled>ประเภท</option>
+                            <option value="6">อู่ซ่อมรถยนต์</option>
+                            <option value="1">ศูนย์รถยนต์</option>
+                            <option value="typeInsure">ในเครือประกันภัย</option>
+                            <option value="8">ล้างรถ-เคลือบสี</option>
+                            <option value="5">ปั้มน้ำมัน</option>
+                            <option value="15">ยาง และ ล้อแม็ก</option>
+                            <option value="16">เครื่องเสียง</option>
+                            <option value="17">ประดับยนต์</option>
+                            <option value="9">บริการเช่ารถ</option>
+                        </select>
+                    </div>
+                    <div id="insuranceDiv" class="col-md-6 col-12 inputField" style="display: none">
+                        <select id="inputInsurance" class="form-control" name="inputInsurance">
+                            <option value="" selected disabled>ประกันภัย</option>
+                            @foreach ($insurances as $insurance)
+                                <option value="{{$insurance->type_id}}">{{$insurance->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -70,8 +81,34 @@
         var marker_inmap, i_lap;
         var marker_array = [];
 
+        var type;
+        var insurance;
+
         $(document).ready(function () {
             getLocation();
+
+            type = null;
+            insurance = null;
+
+            $('#inputType').on('change',function () {
+                let choose = $('#inputType option:selected').val();
+                if (choose === 'typeInsure'){
+                    $('#typeDiv').removeClass('col-md-12');
+                    $('#typeDiv').addClass('col-md-6');
+                    $('#insuranceDiv').fadeIn('slow');
+                }else{
+                    $('#insuranceDiv').hide();
+                    $('#inputInsurance').val("");
+                    $('#typeDiv').removeClass('col-md-6');
+                    $('#typeDiv').addClass('col-md-12');
+                    insurance = null;
+                }
+                type = $('#inputType option:selected').val();
+            });
+
+            $('#inputInsurance').on('change',function () {
+                insurance = $('#inputInsurance option:selected').val();
+            })
         });
 
 
@@ -146,40 +183,78 @@
                 let aEst    =   map.getBounds().getNorthEast().lng();
                 let aSud    =   map.getBounds().getSouthWest().lat();
                 let aOvest  =   map.getBounds().getSouthWest().lng();
-                //console.log(aNord+'-'+aEst+"-"+aSud+"-"+'-'+aOvest);
-                apiAjax(aNord,aEst,aSud,aOvest);
-                $.blockUI({ message: null});
+
+                apiAjax(aNord,aEst,aSud,aOvest,type,insurance);
+                //$.blockUI({ message: null});
 
             });
 
-            $('.shopEach').on('click tap',function () {
-                let lat = parseFloat($(this).attr('data-lat'));
-                let lng = parseFloat($(this).attr('data-lng'));
-                map.panTo({lat: lat,lng: lng});
-                map.setZoom(16);
-            })
         }
 
-        function apiAjax(aNord,aEst,aSud,aOvest) {
-            $.ajax({
-                url: '{!! url('/api/map/bound.api') !!}',
-                method: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {aNord: aNord,aEst: aEst,aSud: aSud,aOvest: aOvest}
-            }).done(function (msg) {
-                let data = JSON.parse(JSON.parse(JSON.stringify(msg)));
-                console.log(data.places);
-                if (data.status === true) {
-                    setMarker(data.places);
-                    // $.each(data.model, function (index, val) {
-                    //
-                    // });
-                }else{
-                    $.unblockUI();
+        function apiAjax(aNord,aEst,aSud,aOvest,type,insurance) {
+            if (type != null){
+                if (insurance == null){
+                    if (type === 'typeInsure'){
+                        Swal.fire({
+                            type: 'warning',
+                            title: 'กรุณาเลือกประกันภัย!',
+                        });
+                    }else{
+                        $.ajax({
+                            url: '{!! url('/api/map/type/bound.api') !!}',
+                            method: "POST",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {aNord: aNord,aEst: aEst,aSud: aSud,aOvest: aOvest,type: type,insurance: insurance}
+                        }).done(function (msg) {
+                            let data = JSON.parse(JSON.parse(JSON.stringify(msg)));
+                            console.log(data.places);
+                            if (data.status === true) {
+                                setMarker(data.places);
+                            }else{
+                                removeMarker();
+                            }
+                        });
+                    }
                 }
-            });
+                if (insurance != null){
+                    $.ajax({
+                        url: '{!! url('/api/map/type/bound.api') !!}',
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {aNord: aNord,aEst: aEst,aSud: aSud,aOvest: aOvest,type: type,insurance: insurance}
+                    }).done(function (msg) {
+                        let data = JSON.parse(JSON.parse(JSON.stringify(msg)));
+                        console.log(data.places);
+                        if (data.status === true) {
+                            setMarker(data.places);
+                        }else{
+                            removeMarker();
+                        }
+                    });
+                }
+            }else{
+                $.ajax({
+                    url: '{!! url('/api/map/bound.api') !!}',
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {aNord: aNord,aEst: aEst,aSud: aSud,aOvest: aOvest}
+                }).done(function (msg) {
+                    let data = JSON.parse(JSON.parse(JSON.stringify(msg)));
+                    console.log(data.places);
+                    if (data.status === true) {
+                        setMarker(data.places);
+                    }else{
+                        removeMarker();
+                    }
+                });
+            }
+
         }
 
         function setMarker(place) {
@@ -239,7 +314,7 @@
 
             }
 
-            $.unblockUI();
+            //$.unblockUI();
         }
 
 

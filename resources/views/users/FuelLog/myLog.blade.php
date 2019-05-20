@@ -8,7 +8,7 @@
             transition: 0.4s;
         }
         .innerText:hover{
-            color: #d63031;
+            color: #2d2d2d;
         }
 
         .toFuel {
@@ -103,6 +103,9 @@
                             <li class="breadcrumb-item">
                                 <a href="{{route('home')}}">หน้าหลัก</a>
                             </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{route('fuellog.app.index')}}">myFuelLog</a>
+                            </li>
                             <li class="breadcrumb-item active">ข้อมูลของ {{$car->name}}</li>
                         </ol>
                     </nav>
@@ -152,7 +155,7 @@
                                         </div>
                                         <div class="timeline-panel">
                                             <div class="timeline-heading">
-                                                <span><a href="#" id="logEdit" class="float-right" data-toggle="tooltip" title="แก้ไขข้อมูล" data-placement="top"><i class="far fa-edit"></i></a></span>
+                                                <span><a href="{{route('fuellog.myLog.refuel.edit',['log'=>$log->token])}}" id="logEdit" class="float-right" data-toggle="tooltip" title="แก้ไขข้อมูล" data-placement="top"><i class="far fa-edit"></i></a></span>
                                                 <h5 class="timeline-title">{{\Carbon\Carbon::parse($log->filling_date)->format('j F Y')}}</h5>
                                                 <p>
                                                     <small><i class="fa fa-clock-o"></i> {{\Carbon\Carbon::parse($log->filling_date)->diffForHumans()}}

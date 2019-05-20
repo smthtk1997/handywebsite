@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\ApiController\InsuranceScrapingController;
+use App\Insurance;
 use App\Review;
 use App\Shop;
 use App\ShopType;
@@ -16,6 +17,7 @@ class SearchEngineController extends Controller
 
         $lat = $request->inputLat;
         $lng = $request->inputLng;
+        $size_shop = 0;
 
         if ($request->inputRange == 0){
             $range = 0;
@@ -44,17 +46,17 @@ class SearchEngineController extends Controller
         if ($request->inputName){ // มีชื่ออู่
             $nameSearch = $request->inputName;
             if ($range != 0){ // จำกัดระยะ มีชื่อ
-                $shops = Shop::where('name','LIKE','%'.$request->inputName.'%')->whereBetween('lat',[$minLat,$maxLat])->whereBetween('lng',[$minLong,$maxLong])->get();
+                $shops = Shop::orderBy('rating','desc')->where('name','LIKE','%'.$request->inputName.'%')->whereBetween('lat',[$minLat,$maxLat])->whereBetween('lng',[$minLong,$maxLong])->get();
             }else{ // ไม่จำกัดระยะ มีชื่อ
-                $shops = Shop::where('name','LIKE','%'.$request->inputName.'%')->get();
+                $shops = Shop::orderBy('rating','desc')->where('name','LIKE','%'.$request->inputName.'%')->get();
             }
 
         }else{ // ไม่มีชื่อ ก็เอาทั้งหมด ในระยะ
             $nameSearch = null;
             if ($range != 0){ // ไม่มีชื่อ จำกัดระยะ
-                $shops = Shop::whereBetween('lat',[$minLat,$maxLat])->whereBetween('lng',[$minLong,$maxLong])->get();
+                $shops = Shop::orderBy('rating','desc')->whereBetween('lat',[$minLat,$maxLat])->whereBetween('lng',[$minLong,$maxLong])->get();
             }else{ // ไม่มีชื่อ ไม่จำกัดระยะ
-                $shops = Shop::all();
+                $shops = Shop::orderBy('rating','desc')->get();
             }
         }
 
@@ -149,8 +151,13 @@ class SearchEngineController extends Controller
 
         if ($shop_and_type == null){
             Alert::warning('ไม่พบข้อมูลที่คุณต้องการ','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+            $size_shop = 0;
         }
-        return view('Home.resultSearch',['results'=>$shop_and_type,'nameSearch'=>$nameSearch,'type'=>$typeInput,'insurance'=>$insurance_input,'range'=>$range,'lat'=>$lat,'lng'=>$lng]);
+
+        $size_shop = sizeof($shop_and_type);
+        $to_marker = $shop_and_type;
+
+        return view('Home.resultSearch',['results'=> collect($shop_and_type)->paginate(30),'toMark'=>$to_marker,'nameSearch'=>$nameSearch,'type'=>$typeInput,'insurance'=>$insurance_input,'range'=>$range,'lat'=>$lat,'lng'=>$lng,'size_shop'=>$size_shop]);
 
     }
 
@@ -176,9 +183,57 @@ class SearchEngineController extends Controller
 
     }
 
+    public function get_type_inBound()
+    {
+        $form_data = array();
+        $aNord = $_POST['aNord'];
+        $aEst = $_POST['aEst'];
+        $aSud = $_POST['aSud'];
+        $aOvest = $_POST['aOvest'];
+        $type = $_POST['type'];
+        $insurance = $_POST['insurance'];
+
+        $sended = array();
+
+        if ($type != 'typeInsure'){
+
+            $places = ShopType::where('type_id',$type)->get();
+
+            if ($insurance == null){
+                foreach ($places as $place){
+                    $shop = $place->shop()->whereBetween('lat',[$aSud,$aNord])->whereBetween('lng',[$aOvest,$aEst])->first();
+                    if ($shop != null){
+                        array_push($sended,$shop);
+                    }
+                }
+            }
+        }else{
+            if ($insurance != null){
+                $places = ShopType::where('type_id',$insurance)->get();
+
+                foreach ($places as $place){
+                    $shop = $place->shop()->whereBetween('lat',[$aSud,$aNord])->whereBetween('lng',[$aOvest,$aEst])->first();
+                    if ($shop != null){
+                        array_push($sended,$shop);
+                    }
+                }
+            }
+        }
+
+        if (sizeof($sended) > 0){
+            $form_data['places'] = $sended;
+            $form_data['status'] = true;
+        }else{
+            $form_data['status'] = false;
+        }
+
+        return json_encode($form_data, JSON_UNESCAPED_UNICODE);
+    }
+
     public function search_on_map_view()
     {
-        return view('Home.onMap');
+        $insurances = Insurance::all();
+        return view('Home.onMap',['insurances'=>$insurances]);
     }
 
     public function placeDetail($place_id)
@@ -212,17 +267,18 @@ class SearchEngineController extends Controller
                 $photo_toshow = array();
                 if ($photos_arr){
                     $ref_update = $photos_arr[0]['photo_reference'];
-                    $check_ref_update = $this->check_url("https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=$ref_update&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk");
-                    if ($check_ref_update == '302'){
-                        $shop->photo_ref = $ref_update;
-                    }
+//                    $check_ref_update = $this->check_url("https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=$ref_update&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk");
+//                    if ($check_ref_update == '302'){
+//                        $shop->photo_ref = $ref_update;
+//                    }
+                    $shop->photo_ref = $ref_update;
                     foreach ($photos_arr as $photo){
-                        $ref = $photo['photo_reference'];
-                        $check_url_status = $this->check_url("https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=$ref&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk");
-                        if ($check_url_status == '302'){
-                            array_push($photo_toshow,$photo['photo_reference']);
-                        }
-
+//                        $ref = $photo['photo_reference'];
+//                        $check_url_status = $this->check_url("https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=$ref&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk");
+//                        if ($check_url_status == '302'){
+//                            array_push($photo_toshow,$photo['photo_reference']);
+//                        }
+                        array_push($photo_toshow,$photo['photo_reference']);
                     }
                 }
             }

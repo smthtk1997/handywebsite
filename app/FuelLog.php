@@ -28,4 +28,9 @@ class FuelLog extends Model
     {
         return 'token';
     }
+
+    public function get_car()
+    {
+        return $this->hasOne('App\UserCars','id','car_id');
+    }
 }
