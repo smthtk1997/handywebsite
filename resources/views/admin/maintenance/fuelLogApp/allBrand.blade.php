@@ -16,11 +16,9 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="{{route('home')}}">หน้าหลักระบบ</a>
+                                <a href="{{route('admin.index')}}">หน้าหลักระบบ</a>
                             </li>
-                            <li class="breadcrumb-item active">
-                                myFuelLog App
-                            </li>
+                            <li class="breadcrumb-item">ดูแลระบบ</li>
                             <li class="breadcrumb-item active" aria-current="page">ยี่ห้อรถยนต์ทั้งหมด</li>
                         </ol>
                     </nav>
@@ -61,7 +59,6 @@
                             <th class="wd-10p">ชื่อยี่ห้อ</th>
                             <th>วันที่เพิ่ม</th>
                             <th class="wd-10p">แก้ไขล่าสุด</th>
-                            <th class="text-center">แก้ไข</th>
                             <th class="text-center">ลบ</th>
                         </tr>
                         </thead>
@@ -72,9 +69,8 @@
                                 <td class="text-info">{{ucfirst($brand->name)}}</td>
                                 <td>{{\Carbon\Carbon::parse($brand->created_at)->format('d / M / Y')}}</td>
                                 <td>{{\Carbon\Carbon::parse($brand->updated_at)->format('d / M / Y')}}</td>
-                                <td class="text-center align-middle">แก้ไข</td>
                                 <td class="text-center align-middle">
-                                    <a href="#" class="text-inverse"><i class="ti-trash text-danger" onclick="return confirm('ต้องการลบใช่ หรือ ไม่ ?')"></i></a>
+                                    <a href="{{route('admin.fuellog.brand.delete',['brand'=>$brand->token])}}" class="text-inverse"><i class="ti-trash text-danger" onclick="return confirm('ต้องการลบใช่ หรือ ไม่ ?')"></i></a>
                                 </td>
                             </tr>
                         @endforeach

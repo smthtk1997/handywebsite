@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use App\Insurance;
+use App\Shop;
 use App\Type;
 use App\UserCars;
 use Illuminate\Http\Request;
@@ -90,6 +91,57 @@ class AdminController extends Controller
                 }catch (\Exception $x){
                 }
             }
+        }
+    }
+
+    public function myFuelLog_brand_delete(Brand $brand)
+    {
+        try{
+            $brand->delete();
+            Alert::success('ลบข้อมูลแล้ว','สำเร็จ!')->autoclose(2000);
+            return redirect()->back();
+
+        }catch (\Exception $x){
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+            return back()->withInput();
+        }
+    }
+
+    public function maintenance_AllShop()
+    {
+        $shops = Shop::orderBy('rating','desc')->paginate(100);
+        return view('admin.maintenance.shop.allShop',['shops'=>$shops]);
+    }
+
+    public function maintenance_DeleteShop(Shop $shop)
+    {
+        try{
+            $shop->delete();
+            Alert::success('ลบข้อมูลแล้ว','สำเร็จ!')->autoclose(2000);
+            return redirect()->back();
+
+        }catch (\Exception $x){
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+            return back()->withInput();
+        }
+    }
+
+    public function maintenance_AllInsurance()
+    {
+        $insurances = Insurance::all();
+        return view('admin.maintenance.insurance.allInsurance',['insurances'=>$insurances]);
+    }
+
+    public function maintenance_DeleteInsurance(Insurance $insurance)
+    {
+        try{
+            $insurance->delete();
+            Alert::success('ลบข้อมูลแล้ว','สำเร็จ!')->autoclose(2000);
+            return redirect()->back();
+
+        }catch (\Exception $x){
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+            return back()->withInput();
         }
     }
 }

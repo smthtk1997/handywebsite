@@ -40,6 +40,17 @@ Route::get('imgs/{filename}', function($filename) {
 
 });
 
+Route::get('user_img/{filename}', function($filename) {
+
+    $filePath = storage_path().'/imgs/user_avatar/'.$filename;
+    if (!File::exists($filePath)) {
+        return response()->view('guest.404', [], 404);
+    }
+    $fileContents = File::get($filePath);
+    return Response::make($fileContents, 200);
+
+});
+
 
 Route::get('/backpage', [
     'as' => 'back.page',
@@ -201,6 +212,10 @@ Route::post('admin/fuellog/application/brand/store', [ // เก็บยี่�
     'as' => 'admin.fuellog.brand.store',
     'uses' => 'AdminController@myFuelLog_brand_store']);
 
+Route::get('admin/fuellog/application/brand/delete/{brand}', [ // เก็บยี่ห้อใหม่
+    'as' => 'admin.fuellog.brand.delete',
+    'uses' => 'AdminController@myFuelLog_brand_delete']);
+
 Route::get('/fuellog/application/myLog/refuel/edit/{log}', [ // ไปหน้าแก้ไขเติมน้ำมัน
     'as' => 'fuellog.myLog.refuel.edit',
     'uses' => 'FuelLogController@myLogRefuelEdit']);
@@ -293,6 +308,37 @@ Route::post('/api/fuel/mylog/query', [
 Route::post('/api/fuel/mylog/query/year.api', [
     'as' => 'api.fuel.mylog.query.year',
     'uses' => 'FuelLogController@queryYear']);
+
+////////////// User ///////////////////
+Route::get('user/information/view', [ // ข้อมูลผู้ใช้
+    'as' => 'user.information.view',
+    'uses' => 'UserController@user_detail']);
+
+Route::post('user/change/password', [ // ข้อมูลผู้ใช้
+    'as' => 'user.change.password',
+    'uses' => 'UserController@change_password']);
+
+Route::post('user/edit/user/information', [ // ข้อมูลผู้ใช้
+    'as' => 'user.edit.user.information',
+    'uses' => 'UserController@edit_detail']);
+
+
+////////////// Admin ////////////////////
+Route::get('admin/maintenance/all/shop', [ // ร้านค้าในระบบทั้งหมด
+    'as' => 'admin.maintenance.all.shop',
+    'uses' => 'AdminController@maintenance_AllShop']);
+
+Route::get('admin/maintenance/delete/shop/{shop}', [ // ลบร้านค้าในระบบ
+    'as' => 'admin.maintenance.delete.shop',
+    'uses' => 'AdminController@maintenance_DeleteShop']);
+
+Route::get('admin/maintenance/all/insurance', [ // ประกันในระบบ
+    'as' => 'admin.maintenance.all.insurance',
+    'uses' => 'AdminController@maintenance_AllInsurance']);
+
+Route::get('admin/maintenance/delete/insurance/{insurance}', [ // ลบประกันในระบบ
+    'as' => 'admin.maintenance.delete.insurance',
+    'uses' => 'AdminController@maintenance_DeleteInsurance']);
 
 
 

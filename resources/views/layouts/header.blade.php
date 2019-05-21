@@ -63,25 +63,25 @@
 
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
 
-                <ul class="navbar-nav float-left mr-auto">
-                    <li class="nav-item search-box">
-                        <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">
-                            <div class="d-flex align-items-center">
-                                <i class="mdi mdi-magnify font-20 mr-1"></i>
-                                <div class="ml-1 d-none d-sm-block">
-                                    <span>ค้นหา</span>
-                                </div>
-                            </div>
-                        </a>
-                        <form class="app-search position-absolute" action="#" method="post" style="display: none;">
-                            @csrf
-                            <input type="search" class="form-control" name="search_input" placeholder="ค้นหา...">
-                            <a class="srh-btn">
-                                <i class="ti-close"></i>
-                            </a>
-                        </form>
-                    </li>
-                </ul>
+{{--                <ul class="navbar-nav float-left mr-auto">--}}
+{{--                    <li class="nav-item search-box">--}}
+{{--                        <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">--}}
+{{--                            <div class="d-flex align-items-center">--}}
+{{--                                <i class="mdi mdi-magnify font-20 mr-1"></i>--}}
+{{--                                <div class="ml-1 d-none d-sm-block">--}}
+{{--                                    <span>ค้นหา</span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+{{--                        <form class="app-search position-absolute" action="#" method="post" style="display: none;">--}}
+{{--                            @csrf--}}
+{{--                            <input type="search" class="form-control" name="search_input" placeholder="ค้นหา...">--}}
+{{--                            <a class="srh-btn">--}}
+{{--                                <i class="ti-close"></i>--}}
+{{--                            </a>--}}
+{{--                        </form>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
 
                 <ul class="navbar-nav float-left mr-auto"></ul>
 
@@ -102,7 +102,7 @@
                     @else
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{url('imgs/'.Auth::user()->avatar)}}" alt="user" class="rounded-circle mr-2" width="40">
+                                <img src="{{url('user_img/'.Auth::user()->avatar)}}" alt="user" class="rounded-circle mr-2" style="object-fit: cover;width: 40px;height: 40px;border-radius: 50%;margin-top: -3px">
                                 <span class="m-l-5 font-medium d-none d-sm-inline-block">{{Auth::user()->name}} <i class="mdi mdi-chevron-down"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
@@ -111,7 +111,7 @@
                                 </span>
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10 p-3">
                                     <div class="">
-                                        <img src="{{url('imgs/'.Auth::user()->avatar)}}" alt="user" class="rounded-circle mr-2" width="60">
+                                        <img src="{{url('user_img/'.Auth::user()->avatar)}}" alt="user" class="rounded-circle mr-3" style="object-fit: cover;width: 60px;height: 60px;border-radius: 50%;margin-top: -3px">
                                     </div>
                                     <div class="m-l-10">
                                         <h4 class="m-b-0">{{Auth::user()->name}}</h4>
@@ -119,16 +119,15 @@
                                     </div>
                                 </div>
                                 <div class="profile-dis scrollable">
+                                    {{--                                    <a class="dropdown-item" href="{{route('user.my.product.view')}}">--}}
+                                    {{--                                        <i class="ti-package m-r-5 m-l-5"></i> ขายสินค้า</a>--}}
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                    <a class="dropdown-item" href="{{ route('user.information.view') }}">
+                                        <i class="ti ti-user m-r-5 m-l-5"></i> ข้อมูลผู้ใช้</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                        <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                                        <i class="fa fa-power-off m-r-5 m-l-5"></i> ออกจากระบบ</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -317,27 +316,51 @@
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav">
                             <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{route('dashboard')}}" aria-expanded="false">
-                                    <i class="mdi mdi-cube-send"></i>
-                                    <span class="hide-menu">AdminDashboard</span>
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('search.on.map.view')}}">
+                                    <i class="mdi mdi-google-maps"></i>
+                                    <span class="hide-menu">ค้นหาบนแผนที่</span>
                                 </a>
                             </li>
                             <li class="sidebar-item">
-                                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{route('dashboard')}}" aria-expanded="false">
+                                    <i class="mdi mdi-view-dashboard"></i>
+                                    <span class="hide-menu">ภาพรวมระบบ</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                                     <i class="mdi mdi-tune"></i>
-                                    <span class="hide-menu">Submenu Type </span>
+                                    <span class="hide-menu">ดูแลระบบ</span>
                                 </a>
                                 <ul aria-expanded="false" class="collapse  first-level">
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">
-                                            <i class="mdi mdi-view-quilt"></i>
-                                            <span class="hide-menu"> Submenu 1 </span>
+                                        <a href="{{route('admin.maintenance.all.shop')}}" class="sidebar-link">
+                                            <i class="mdi mdi-chevron-right"></i>
+                                            <span class="hide-menu">ร้านค้าทั้งหมด</span>
                                         </a>
                                     </li>
                                     <li class="sidebar-item">
                                         <a href="#" class="sidebar-link">
-                                            <i class="mdi mdi-view-parallel"></i>
-                                            <span class="hide-menu"> Submenu 2 </span>
+                                            <i class="mdi mdi-chevron-right"></i>
+                                            <span class="hide-menu">เพิ่ม/อัพเดทสถานที่</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="#" class="sidebar-link">
+                                            <i class="mdi mdi-chevron-right"></i>
+                                            <span class="hide-menu">ผู้ใช้ทั้งหมด</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="{{route('admin.fuellog.brand')}}" class="sidebar-link">
+                                            <i class="mdi mdi-chevron-right"></i>
+                                            <span class="hide-menu">ยี่ห้อรถยนต์</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="{{route('admin.maintenance.all.insurance')}}" class="sidebar-link">
+                                            <i class="mdi mdi-chevron-right"></i>
+                                            <span class="hide-menu">ประกันภัย</span>
                                         </a>
                                     </li>
                                 </ul>

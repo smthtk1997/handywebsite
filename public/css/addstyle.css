@@ -1,8 +1,15 @@
 body{
     font-family: 'Prompt', sans-serif;
 }
+
 .i-am-centered {
     margin: auto; max-width: 450px;
+}
+
+.centerOfRow{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .cardStyleMargin{
