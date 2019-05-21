@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Brand;
 use App\Insurance;
 use App\Shop;
+use App\ShopType;
 use App\Type;
 use App\UserCars;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -143,5 +145,145 @@ class AdminController extends Controller
             Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
             return back()->withInput();
         }
+    }
+
+    public function maintenance_ActionShop(Request $request)
+    {
+        $this->validate($request,[
+            'searchType' => 'required' ,
+            'searchRange' => 'required',
+            'lat'=> 'required|numeric',
+            'lng'=> 'required|numeric'
+        ]);
+
+        $lat = $request->lat;
+        $lng = $request->lng;
+        $range = $request->searchRange;
+        $type = [
+            'car'=>'car',
+            '6'=>'car%20repair',
+            '1'=>'car%20dealer',
+            '8'=>'car%20wash',
+            '5'=>'gas%20station',
+            '15'=>'tire',
+            '16'=>'car%20audio',
+            '17'=>'car%20accessory',
+            '9'=>'car%20rental'
+        ];
+
+        $type_search = $type[$request->searchType];
+
+//        if ($request->searchType == 'car'){
+//            $type = 'car';
+//        }else{
+//            $type = Type::findOrFail($request->searchType);
+//        }
+
+        $endpoint = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=$type_search&location=$lat,$lng&radius=$range&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk";
+        $headers = [];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $endpoint);
+        // SSL important
+        curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE );
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $outputs = curl_exec($ch);
+        curl_close($ch);
+
+
+        $outputs = json_decode($outputs,true);
+        $add_shop = 0;
+        if ($outputs){
+            if ($outputs['status'] == 'OK'){
+                foreach ($outputs['results'] as $each){
+                    $check = Shop::where('map_id',$each['id'])->first();
+                    if (!$check){
+                        $shop = new Shop();
+                        $shop->name = $each['name'];
+                        $shop->formatted_address = $each['formatted_address'];
+                        $shop->lat = $each['geometry']['location']['lat'];
+                        $shop->lng = $each['geometry']['location']['lng'];
+                        $shop->map_id = $each['id'];
+                        $shop->place_id = $each['place_id'];
+                        $shop->rating = $each['rating'];
+                        $shop->token = str_random(16);
+                        if (array_key_exists('photos',$each)){
+                            $shop->photo_ref = $each['photos'][0]['photo_reference'];
+                        }
+
+                        // ไปเอา detail
+                        $urlGetdata = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$shop->place_id&key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk";
+                        $jsonDetail = file_get_contents($urlGetdata);
+                        $dataDetail = json_decode($jsonDetail,true);
+
+                        if (array_key_exists('result',$dataDetail)) {
+                            if (array_key_exists('international_phone_number',$dataDetail['result'])){
+                                $phone_number = $dataDetail['result']['international_phone_number'];
+                                $phone_number = str_replace(' ','-',$phone_number);
+                            }else{
+                                $phone_number = null;
+                            }
+
+                            if (array_key_exists('url',$dataDetail['result'])){
+                                $urlNav = $dataDetail['result']['url'];
+                            }else{
+                                $urlNav = null;
+                            }
+                        }
+                        $shop->phone_number = $phone_number;
+                        $shop->url_nav = $urlNav;
+                        $shop->save();
+                        $add_shop++;
+                    }else{
+                        $shop = $check;
+                        $add_shop++;
+                    }
+
+                    if ($type_search == 'car'){
+                        foreach ($each['types'] as $type){
+                            $checktype = Type::where('name',$type)->first();
+                            if (!$checktype){
+                                $checktype = new Type();
+                                $checktype->name = $type;
+                                $checktype->token = str_random(16);
+                                $checktype->save();
+                            }
+
+                            $checkShoptype = ShopType::where('shop_id',$shop->id)->where('type_id',$checktype->id)->first();
+                            if (!$checkShoptype){
+                                $shoptype = new ShopType();
+                                $shoptype->shop_id = $shop->id;
+                                $shoptype->type_id = $checktype->id;
+                                $shoptype->token = str_random(16);
+                                $shoptype->save();
+                            }
+                        }
+                    }else{
+                        $offer_type = str_replace('%20','_',$type_search);
+                        $checktype = Type::where('name',$offer_type)->first(); //เอาไว้เวลาจะเพิ่มแบบ manual
+                        if (!$checktype){
+                            $checktype = new Type();
+                            $checktype->name = $offer_type;
+                            $checktype->token = str_random(16);
+                            $checktype->save();
+                        }
+
+                        $checkShoptype = ShopType::where('shop_id',$shop->id)->where('type_id',$checktype->id)->first();
+                        if (!$checkShoptype){
+                            $shoptype = new ShopType();
+                            $shoptype->shop_id = $shop->id;
+                            $shoptype->type_id = $checktype->id;
+                            $shoptype->token = str_random(16);
+                            $shoptype->save();
+                        }
+                    }
+                }
+                Alert::success('สำเร็จ!','เพิ่ม/อัพเดททั้งหมด '.$add_shop.' สถานที่')->persistent('Ok');
+                return redirect()->back();
+            }
+        }
+        Alert::warning('ไม่พบสถานที่!','กรุณาลองใหม่อีกครั้ง')->autoclose(2000);
+        return redirect()->back();
     }
 }

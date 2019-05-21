@@ -109,25 +109,6 @@ class PlaceAPIController extends Controller
                         $shoptype->save();
                     }
                 }
-
-
-//                $checktype = Type::where('name','car_accessory')->first(); //เอาไว้เวลาจะเพิ่มแบบ manual
-//                if (!$checktype){
-//                    $checktype = new Type();
-//                    $checktype->name = 'car_accessory';
-//                    $checktype->token = str_random(16);
-//                    $checktype->save();
-//                }
-//
-//                $checkShoptype = ShopType::where('shop_id',$shop->id)->where('type_id',$checktype->id)->first();
-//                if (!$checkShoptype){
-//                    $shoptype = new ShopType();
-//                    $shoptype->shop_id = $shop->id;
-//                    $shoptype->type_id = $checktype->id;
-//                    $shoptype->token = str_random(16);
-//                    $shoptype->save();
-//                }
-
             }
             Alert::success('Update Map Successfully!')->autoclose(2000);
         }else{

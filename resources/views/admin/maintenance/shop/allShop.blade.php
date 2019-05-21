@@ -32,6 +32,9 @@
                 <div class="col-12 col-md-10">
                     <label class="section-title">สถานที่ทั้งหมด</label>
                 </div>
+                <div class="col-12 col-md-2">
+                    <button type="button" class="btn btn-outline-danger btn-block mt-2" data-toggle="modal" data-target="#actionShop">เพิ่ม/อัพเดท</button>
+                </div>
             </div>
             @if ($errors->any())
                 <div class="">
@@ -87,37 +90,57 @@
                 <p class="text-danger">ไม่มีสถานที่ในระบบ</p>
             @endif
         </div>
-{{--        <!-- Modal Add -->--}}
-{{--        <div class="modal fade" id="addBrand" tabindex="-1" role="dialog" aria-labelledby="addBrand">--}}
-{{--            <div class="modal-dialog modal-dialog-centered" role="document">--}}
-{{--                <div class="modal-content">--}}
-{{--                    <div class="modal-header">--}}
-{{--                        <h4 class="modal-title" id="exampleModalLabel1">เพิ่มยี่ห้อในระบบ</h4>--}}
-{{--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}}
-{{--                    </div>--}}
-{{--                    <form action="{{ route('admin.fuellog.brand.store') }}" method="post" enctype="multipart/form-data">--}}
-{{--                        @csrf--}}
-{{--                        <div class="modal-body">--}}
-{{--                            <div class="form-group">--}}
-{{--                                <label for="addBrand">ยี่ห้อ <span class="text-danger">*</span></label>--}}
-{{--                                <input type="text" id="addBrand" class="mt-1 mb-1 form-control" name="addBrand" value="" placeholder="ยี่ห้อ">--}}
-{{--                            </div>--}}
-{{--                            <div style="margin-top: 0.25rem;">--}}
-{{--                                <label for="img_logo">รูปภาพยี่ห้อ <span class="text-danger">*</span></label>--}}
-{{--                                <div class="custom-file">--}}
-{{--                                    <input type="file" accept="image/*" class="custom-file-input" name="img_logo" id="img_logo" required data-toggle="tooltip" data-placement="bottom" title="รูปภาพยี่ห้อ" onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])">--}}
-{{--                                    <label class="custom-file-label" for="car_img" style="font-weight: normal">เลือกไฟล์</label>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="modal-footer">--}}
-{{--                            <button type="button" class="btn btn-default" data-dismiss="modal" >ปิด</button>--}}
-{{--                            <button type="submit" class="btn btn-primary">ยืนยัน</button>--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+        <!-- Modal Add -->
+        <div class="modal fade" id="actionShop" tabindex="-1" role="dialog" aria-labelledby="addBrand">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel1">เพิ่ม/อัพเดทสถานที่</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <form action="{{ route('admin.maintenance.action.shop') }}" method="post">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="searchType">ประเภท <span class="text-danger">*</span></label>
+                                <select id="searchType" class="form-control" name="searchType" required>
+                                    <option value="car" selected>รถยนต์</option>
+                                    <option value="6">อู่ซ่อมรถยนต์</option>
+                                    <option value="1">ศูนย์รถยนต์</option>
+                                    <option value="8">ล้างรถ-เคลือบสี</option>
+                                    <option value="5">ปั้มน้ำมัน</option>
+                                    <option value="15">ยาง และ ล้อแม็ก</option>
+                                    <option value="16">เครื่องเสียง</option>
+                                    <option value="17">ประดับยนต์</option>
+                                    <option value="9">บริการเช่ารถ</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="searchRange">ระยะค้นหา <span class="text-danger">*</span></label>
+                                <select id="searchRange" class="form-control" name="searchRange" required>
+                                    <option value="3000">3 กิโลเมตร</option>
+                                    <option value="5000" selected>5 กิโลเมตร</option>
+                                    <option value="10000">10 กิโลเมตร</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="lat">ละติจูด <span class="text-danger">*</span></label>
+                                <input type="number" step="any" id="lat" class="mt-1 mb-1 form-control" name="lat" placeholder="lat" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lng">ลองติจูด <span class="text-danger">*</span></label>
+                                <input type="number" step="any" id="lng" class="mt-1 mb-1 form-control" name="lng" placeholder="lng" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <h5 id="waitText" class="text-left text-danger" style="display: none;margin-top: 5px">กรุณารอสักครู่...</h5>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+                            <button type="submit" class="btn btn-default" onclick="this.form.submit();$('#waitText').fadeIn(400);this.disabled=true;$(this).text('กำลังทำงาน')">ยืนยัน</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @stop
 @section('script')

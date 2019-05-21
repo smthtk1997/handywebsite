@@ -332,6 +332,10 @@ Route::get('admin/maintenance/delete/shop/{shop}', [ // ลบร้านค้
     'as' => 'admin.maintenance.delete.shop',
     'uses' => 'AdminController@maintenance_DeleteShop']);
 
+Route::post('admin/maintenance/action/shop/', [ // ลบร้านค้าในระบบ
+    'as' => 'admin.maintenance.action.shop',
+    'uses' => 'AdminController@maintenance_ActionShop']);
+
 Route::get('admin/maintenance/all/insurance', [ // ประกันในระบบ
     'as' => 'admin.maintenance.all.insurance',
     'uses' => 'AdminController@maintenance_AllInsurance']);

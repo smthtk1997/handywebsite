@@ -106,7 +106,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal" >ปิด</button>
-                            <button type="submit" class="btn btn-primary">ยืนยัน</button>
+                            <button type="submit" class="btn btn-primary" onclick="this.form.submit();this.disabled=true;$(this).text('กำลังทำงาน')">ยืนยัน</button>
                         </div>
                     </form>
                 </div>

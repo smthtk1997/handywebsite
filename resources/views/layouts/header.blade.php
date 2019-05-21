@@ -316,12 +316,6 @@
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav">
                             <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('search.on.map.view')}}">
-                                    <i class="mdi mdi-google-maps"></i>
-                                    <span class="hide-menu">ค้นหาบนแผนที่</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{route('dashboard')}}" aria-expanded="false">
                                     <i class="mdi mdi-view-dashboard"></i>
                                     <span class="hide-menu">ภาพรวมระบบ</span>
@@ -330,19 +324,13 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                                     <i class="mdi mdi-tune"></i>
-                                    <span class="hide-menu">ดูแลระบบ</span>
+                                    <span class="hide-menu">จัดการระบบ</span>
                                 </a>
                                 <ul aria-expanded="false" class="collapse  first-level">
                                     <li class="sidebar-item">
                                         <a href="{{route('admin.maintenance.all.shop')}}" class="sidebar-link">
                                             <i class="mdi mdi-chevron-right"></i>
-                                            <span class="hide-menu">ร้านค้าทั้งหมด</span>
-                                        </a>
-                                    </li>
-                                    <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">
-                                            <i class="mdi mdi-chevron-right"></i>
-                                            <span class="hide-menu">เพิ่ม/อัพเดทสถานที่</span>
+                                            <span class="hide-menu">จัดการสถานที่</span>
                                         </a>
                                     </li>
                                     <li class="sidebar-item">
