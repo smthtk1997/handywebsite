@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
+
 <head>
 
     <!-- WittyLight -->
@@ -14,8 +16,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Custom CSS -->
     <link href="https://fonts.googleapis.com/css?family=Prompt:400" rel="stylesheet" type="text/css">
-    <link href="{{asset('css/style.min.css')}}" rel="stylesheet">
-    <link href="{{asset('css/addStyle.css')}}" rel="stylesheet">
+    <link href="{{asset('css/style.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/addstyle.css')}}" rel="stylesheet" type="text/css">
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     @yield('style')
