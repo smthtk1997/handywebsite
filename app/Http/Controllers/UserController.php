@@ -66,11 +66,11 @@ class UserController extends Controller
 
     public function edit_detail(Request $request)
     {
-        $this->validate($request,[
-            'name_edit' => 'required' ,
-            'email_edit' => 'required',
-            'telephone_edit' => 'required'
-        ]);
+//        $this->validate($request,[
+//            'name_edit' => 'required' ,
+//            'email_edit' => 'required',
+//            'telephone_edit' => 'required'
+//        ]);
 
         $user = Auth::user();
         $img_path = null;
