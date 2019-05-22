@@ -44,11 +44,11 @@
                                 </div>
                                 <div class="col-12 col-md-6 mt-md-2">
                                     <label for="user_tel">เบอร์โทรศัพท์</label>
-                                    <input type="text" id="user_tel" class="mt-1 mb-1 form-control" name="user_tel"  value="{{$user->telephone}}" readonly>
+                                    <input type="text" id="user_tel" class="mt-1 mb-1 form-control" name="user_tel"  value="{{$user->telephone ?? '-'}}" readonly>
                                 </div>
                                 <div class="col-12 col-md-6 mt-md-2">
                                     <label for="user_status">สถานะ</label>
-                                    <input type="text" id="user_status" class="mt-1 mb-1 form-control {{$user->status == 0 ? 'text-success':'text-danger'}}" name="user_status"  value="{{$user->status == 0 ? 'Active':'Suspend'}}" readonly>
+                                    <input type="text" id="user_status" class="mt-1 mb-1 form-control {{$user->status == 0 ? 'text-success':'text-danger'}}" name="user_status"  value="{{$user->status == 0 ? 'เปิดใช้งาน':'ถูกระงับ'}}" readonly>
                                 </div>
                             </div>
                             <div class="mt-3">

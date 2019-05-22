@@ -334,9 +334,9 @@
                                         </a>
                                     </li>
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">
+                                        <a href="{{route('admin.maintenance.all.user.page')}}" class="sidebar-link">
                                             <i class="mdi mdi-chevron-right"></i>
-                                            <span class="hide-menu">ผู้ใช้ทั้งหมด</span>
+                                            <span class="hide-menu">จัดการผู้ใช้</span>
                                         </a>
                                     </li>
                                     <li class="sidebar-item">

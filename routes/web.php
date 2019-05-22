@@ -344,5 +344,30 @@ Route::get('admin/maintenance/delete/insurance/{insurance}', [ // ลบปร�
     'as' => 'admin.maintenance.delete.insurance',
     'uses' => 'AdminController@maintenance_DeleteInsurance']);
 
+Route::get('admin/maintenance/all/user/page', [ // user ทั้งหมด
+    'as' => 'admin.maintenance.all.user.page',
+    'uses' => 'AdminController@maintenance_allUser']);
+
+Route::get('admin/maintenance/update/user/status/{user}/{status}', [ // user ทั้งหมด
+    'as' => 'admin.maintenance.update.user.status',
+    'uses' => 'AdminController@maintenance_updateUserStatus']);
+
+
+////////// Facebook /////////
+Route::get('/redirect/{provider}', 'SocialAuthFacebookController@redirect');
+
+
+Route::get('/callback/{provider}', [ // fb
+    'as' => 'facebook.callback',
+    'uses' => 'SocialAuthFacebookController@callback']);
+
+Route::get('/logout', 'SocialAuthFacebookController@logout');
+
+Route::get('/policy',[
+    'as' => 'policy',
+    'uses' => function(){
+        return view('policy');
+    }]);
+
 
 

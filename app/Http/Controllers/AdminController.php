@@ -7,6 +7,7 @@ use App\Insurance;
 use App\Shop;
 use App\ShopType;
 use App\Type;
+use App\User;
 use App\UserCars;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
@@ -25,7 +26,18 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.index');
+        $shops = Shop::all();
+        $users = User::all();
+        $insurances = Insurance::all();
+        $brands = Brand::all();
+        $lasted_add = Shop::orderBy('created_at','desc')->take(20)->get();
+        return view('admin.maintenance.dashboard',[
+            'shops'=>$shops,
+            'users'=>$users,
+            'insurances'=>$insurances,
+            'brands'=>$brands,
+            'lasted_add'=>$lasted_add
+        ]);
     }
 
     public function myFuelLog_brand()
@@ -285,5 +297,34 @@ class AdminController extends Controller
         }
         Alert::warning('ไม่พบสถานที่!','กรุณาลองใหม่อีกครั้ง')->autoclose(2000);
         return redirect()->back();
+    }
+
+    public function maintenance_allUser()
+    {
+        $users = User::all();
+        return view('admin.maintenance.user.allUser',['users'=>$users]);
+    }
+
+    public function maintenance_updateUserStatus(User $user,$status)
+    {
+        if (md5('0') == $status){
+            $to_update = "0";
+        }
+        elseif (md5('1') == $status){
+            $to_update = "1";
+        }else{
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+            return back()->withInput();
+        }
+        try{
+            $user->status = $to_update;
+            $user->save();
+            Alert::success('อัพเดทสถานะผู้ใช้แล้ว','สำเร็จ!')->autoclose(2000);
+            return redirect()->back();
+
+        }catch (\Exception $x){
+            Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
+            return back()->withInput();
+        }
     }
 }

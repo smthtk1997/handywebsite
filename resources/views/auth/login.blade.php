@@ -1,5 +1,5 @@
 @extends('auth.header')
-@section('title','Login')
+@section('title','ลงชื่อเข้าใช้')
 @section('content')
 
     <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url(imgs/auth-bg.jpg) no-repeat center center;">
@@ -48,7 +48,7 @@
                                     <button class="btn btn-block btn-lg btn-info block-default" type="submit">เข้าสู่ระบบ</button>
                                 </div>
                                 <hr>
-                                <a href="#" class="btn btn-block btn-lg btn-facebook"><i class="fab fa-facebook-square"></i>&nbsp;เข้าสู่ระบบด้วย Facebook</a>
+                                <a href="{{url('/redirect/facebook')}}" class="btn btn-block btn-lg btn-facebook"><i class="fab fa-facebook-square"></i>&nbsp;เข้าสู่ระบบด้วย Facebook</a>
                             </div>
                             <div class="form-group m-b-0 mt-3">
                                 <div class="col-sm-12 text-center">

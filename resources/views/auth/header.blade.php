@@ -12,7 +12,7 @@
 
     <!-- Favicon icon & Title -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{url('imgs/favicon.png')}}">
-    <title>@yield('title', 'Home') | {{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title', 'หน้าหลัก') | HandyTH</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Custom CSS -->
     <link href="https://fonts.googleapis.com/css?family=Prompt:400" rel="stylesheet" type="text/css">
