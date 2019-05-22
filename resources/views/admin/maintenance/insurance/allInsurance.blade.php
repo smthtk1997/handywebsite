@@ -26,7 +26,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="min-height: 100vh;padding-top: 0px;margin-bottom: 200px">
+    <div class="container-fluid" style="margin-top: 30px;min-height: 100vh;padding-top: 0px;margin-bottom: 200px">
         <div class="section-wrapper">
             <div class="row mb-3">
                 <div class="col-12 col-md-10">
