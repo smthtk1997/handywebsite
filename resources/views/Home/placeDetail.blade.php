@@ -164,7 +164,13 @@
                         @if ($reviews_handy)
                             @foreach ($reviews_handy as $handy)
                                 <div class="d-flex flex-row comment-row m-t-0">
-                                    <div class="p-2"><img src="{{url('imgs/'.$handy->get_user->avatar)}}" alt="user" width="50" class="rounded-circle"></div>
+                                    <div class="p-2">
+                                        @if ($handy->get_user->avatar)
+                                            <img src="{{url('user_img/'.$handy->get_user->avatar)}}" alt="user" width="50" class="rounded-circle">
+                                            @else
+                                            <img src="{{url('user_img/'.'user.jpg')}}" alt="user" width="50" class="rounded-circle">
+                                        @endif
+                                    </div>
                                     <div class="comment-text">
                                         <h6 class="font-medium">{{$handy->get_user->name}}</h6>
                                         <span class="m-b-15 d-block">{{$handy->message}}</span>
