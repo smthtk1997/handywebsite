@@ -94,7 +94,7 @@
 
                                     <div class="form-group col-12 col-md-6">
                                         <label for="milleage">ระยะทางรวม (กิโลเมตร)</label>
-                                        <input type="number" min="0" id="milleage" class="mt-1 mb-1 form-control" name="milleage" value="{{$car->mileage}}" required>
+                                        <input type="number" min="0" max="999999" id="milleage" class="mt-1 mb-1 form-control" name="milleage" value="{{$car->mileage}}" required>
                                     </div>
 
 

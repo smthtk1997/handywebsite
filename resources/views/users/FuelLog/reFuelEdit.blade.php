@@ -74,7 +74,7 @@
 
                         <div class="form-group col-12 col-md-4">
                             <label for="mileage">ระยะทางรวม (กิโลเมตร)</label>
-                            <input type="number" id="mileage" class="form-control" value="{{$log->mileage}}" name="mileage">
+                            <input type="number" min="0" max="999999" id="mileage" class="form-control" value="{{$log->mileage}}" name="mileage">
                             @if ($log->get_car)
                                 <small class="text-muted">ระยะทางรวมล่าสุด: {{number_format($log->get_car->mileage)}} กิโลเมตร</small>
                             @endif
@@ -199,8 +199,8 @@
                         title: 'กรุณาเลือกปั้มน้ำมันก่อน!',
                         timer:2000,
                         showConfirmButton: false
-
-                    })
+                    });
+                    $('#fuel_type').val('');
                 }
             });
 
@@ -300,14 +300,16 @@
                             type: 'error',
                             title: 'ไม่พบข้อมูล!',
                             text: 'เนื่องจากปั้มไม่มีน้ำมันประเภทนี้',
-                        })
+                        });
+                        $('#fuel_type').val('');
                     }
                 }else{
                     Swal.fire({
                         type: 'error',
                         title: 'ไม่พบข้อมูล!',
                         text: 'กรุณาลองอีกครั้ง',
-                    })
+                    });
+                    $('#fuel_type').val('');
                 }
             });
         }

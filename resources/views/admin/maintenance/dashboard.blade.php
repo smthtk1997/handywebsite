@@ -60,7 +60,7 @@
                                                 <p class="font-16 m-b-5">สถานที่ทั้งหมด</p>
                                             </div>
                                             <div class="ml-auto">
-                                                <h1 class="font-light text-right">{{$shops->count()}}</h1>
+                                                <h1 class="font-light text-right">{{number_format($shops->count())}}</h1>
                                             </div>
                                         </div>
                                     </div>

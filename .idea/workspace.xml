@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e29b2d4-80ad-4575-82c4-3b2cc09b10d6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/maintenance/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/maintenance/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/users/FuelLog/editCar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/FuelLog/editCar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/users/FuelLog/reFuel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/FuelLog/reFuel.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/users/FuelLog/reFuelEdit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/FuelLog/reFuelEdit.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +75,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/database/migrations/2019_05_13_152928_create_insurances_table.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ApiController/InsuranceScrapingController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" />
         <option value="$PROJECT_DIR$/resources/views/layouts/noti" />
@@ -80,15 +84,12 @@
         <option value="$PROJECT_DIR$/public/js/pages/echarts/bar/bar.js" />
         <option value="$PROJECT_DIR$/public/extra-libs/raty/rating-init.js" />
         <option value="$PROJECT_DIR$/resources/views/users/FuelLog/fuellogIndex.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/users/FuelLog/editCar.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserCarsController.php" />
         <option value="$PROJECT_DIR$/public/js/pages/echarts/pie-doughnut/pie-doghnut.js" />
         <option value="$PROJECT_DIR$/resources/views/users/FuelLog/LogConclude.blade.php" />
         <option value="$PROJECT_DIR$/app/FuelLog.php" />
-        <option value="$PROJECT_DIR$/resources/views/users/FuelLog/reFuel.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FuelLogController.php" />
         <option value="$PROJECT_DIR$/resources/views/users/FuelLog/myLog.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/users/FuelLog/reFuelEdit.blade.php" />
         <option value="$PROJECT_DIR$/public/libs/dropzone/dist/min/dropzone.min.css" />
         <option value="$PROJECT_DIR$/public/libs/dropzone/dist/min/dropzone.min.js" />
         <option value="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" />
@@ -105,7 +106,6 @@
         <option value="$PROJECT_DIR$/resources/views/layouts/header.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/users/userDetail/detail.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" />
-        <option value="$PROJECT_DIR$/resources/views/admin/maintenance/dashboard.blade.php" />
         <option value="$PROJECT_DIR$/config/app.php" />
         <option value="$PROJECT_DIR$/config/services.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_05_22_154331_create_social_facebook_accounts_table.php" />
@@ -121,6 +121,11 @@
         <option value="$PROJECT_DIR$/resources/views/admin/maintenance/insurance/allInsurance.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/maintenance/fuelLogApp/allBrand.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
+        <option value="$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/users/FuelLog/editCar.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/admin/maintenance/dashboard.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/users/FuelLog/reFuel.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/users/FuelLog/reFuelEdit.blade.php" />
       </list>
     </option>
   </component>
@@ -328,6 +333,14 @@
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="users" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="handywebsite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="handywebsite" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="users" type="462c0819:PsiDirectoryNode" />
+              <item name="FuelLog" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="handywebsite" type="b2602c69:ProjectViewProjectNode" />
@@ -583,16 +596,19 @@
       <workItem from="1558520963821" duration="227000" />
       <workItem from="1558523133521" duration="170000" />
       <workItem from="1558524055765" duration="221000" />
+      <workItem from="1558593801672" duration="167000" />
+      <workItem from="1558596540538" duration="301000" />
+      <workItem from="1558596927781" duration="111000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="436741000" />
+    <option name="totallyTimeSpent" value="437320000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="833" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2725322" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2832618" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -642,34 +658,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/libs/dropzone/dist/min/dropzone.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3284" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/libs/dropzone/dist/min/dropzone.min.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FuelLogController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="274" column="23" selection-start-line="274" selection-start-column="23" selection-end-line="274" selection-end-column="23" />
-          <folding>
-            <element signature="e#40#56#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Providers/AppServiceProvider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
-          <folding>
-            <element signature="e#33#80#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/ShopType.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -964,13 +952,6 @@
     <entry file="file://$PROJECT_DIR$/resources/views/admin/index.blade.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin/maintenance/dashboard.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="106" column="70" selection-start-line="106" selection-start-column="70" selection-end-line="106" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/admin/maintenance/user/allUser.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="282">
@@ -1023,6 +1004,41 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1038">
           <caret line="46" column="148" selection-start-line="46" selection-start-column="148" selection-end-line="46" selection-end-column="148" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/createCar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="91" column="77" lean-forward="true" selection-start-line="91" selection-start-column="65" selection-end-line="91" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/editCar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="96" column="82" selection-start-line="96" selection-start-column="82" selection-end-line="96" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin/maintenance/dashboard.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="62" column="113" selection-start-line="62" selection-start-column="113" selection-end-line="62" selection-end-column="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/reFuelEdit.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="469">
+          <caret line="202" column="44" selection-start-line="202" selection-start-column="44" selection-end-line="202" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/users/FuelLog/reFuel.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="631">
+          <caret line="208" column="43" selection-start-line="208" selection-start-column="43" selection-end-line="208" selection-end-column="43" />
         </state>
       </provider>
     </entry>
